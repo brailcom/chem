@@ -1,0 +1,43 @@
+The code present in this directory uses a chemical library "oasa".
+This library is hosted elsewhere using GNU Arch.
+To check-out this library it is necessary to have either GNU Arch
+(tla, http://savannah.gnu.org/projects/gnu-arch) or Baz
+(baz, alternative implementation of Arch) installed.
+Once Arch is installed, the following steps should be enough to check-out oasa:
+
+---
+>> tla register-archive http://bkchem.zirael.org/arch/2004
+...
+Registering archive: beda@zirael.org--2004
+---
+---
+>> tla get -A beda@zirael.org--2004 oasa--develop oasa
+...
+long output
+...
+---
+
+When baz is used, it would probably complain that:
+arch: no default archive set
+
+In this case, you have to set a default archive first:
+
+---
+>> baz my-default-archive beda@zirael.org--2004
+---
+
+You could then proceed with the 'get' command.
+Once you have the 'oasa' directory set up, the code in this directory should work.
+
+
+
+You can update its content of the oasa directory by doing:
+---
+>> cd oasa
+>> tla update
+---
+or 
+---
+>> cd oasa
+>> baz update
+---
