@@ -4,10 +4,12 @@ After that, you should be able to run the source code.
 
 The following programs are available now:
 
-pyro_fake_server.py:
+pyro_server.py:
 
-This is a server based on Pyro intended for demonstrational purposes.
-It does not process any chemical data sent to it and always returns
+This is a server based on Pyro.
+Under the hood it uses either the normal or fake chem_reader, depending
+on the configuration in config.py.
+At present time only the fake chem_reader does something - it always returns
 the same result (based on hardcoded data).
 You should start the server to use any of the test clients.
 
