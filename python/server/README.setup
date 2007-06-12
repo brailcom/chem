@@ -1,8 +1,12 @@
+
+MANDATORY: BASIC SETUP
+--------------------------------------------------
+
 The code present in this directory uses a chemical library "oasa".
 This library is hosted elsewhere using GNU Arch.
 To check-out this library it is necessary to have either GNU Arch
 (tla, http://savannah.gnu.org/projects/gnu-arch) or Baz
-(baz, alternative implementation of Arch) installed.
+(bazaar, alternative implementation of Arch) installed.
 Once Arch is installed, the following steps should be enough to check-out oasa:
 
 ---
@@ -41,3 +45,28 @@ or
 >> cd oasa
 >> baz update
 ---
+
+
+OPTIONAL: InChI and naming support
+--------------------------------------------------
+
+The OASA library uses the International Chemical Identifier (InChI)
+for the purpose of chemical structure hashing and name generation.
+To be able to use these features, you have obtain the InChI software
+from IUPAC, install it onto your system and change the config.py
+configuration file to point to the InChI binary.
+The InChI software may be obtained at http://www.iupac.org/inchi/license.html.
+The installation process involves just unpacking of the obtained zip file
+somewhere onto you computer.
+The last step is changing the line 
+
+--
+    oasa_inchi_binary_path = "/home/beda/inchi/cInChI-1"
+--
+
+to point to the executable InChI program you just unpacked, e.g.:
+
+--
+    oasa_inchi_binary_path = "/usr/local/bin/cInChI-1"
+--
+

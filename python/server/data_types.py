@@ -34,6 +34,7 @@ class DataTypeFactory:
                    "FRAGMENTS": ("Fragments", "Molecular fragments"),
                    "ATOMS": ("Atoms", "Atoms"),
                    "ATOM": ("Atom", "Atom"),
+                   "NAME": ("Name", "Molecule name"),
 
                    "REL_REACTANT": ("Reactant","Reactant of a reaction"),
                    "REL_PRODUCT": ("Product","Product of a reaction"),

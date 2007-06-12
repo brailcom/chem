@@ -1,0 +1,17 @@
+2007-06-12   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: Work started on non-fake reader.
+	The rest modified to use this reader.
+	Use naming added to OASA where possible. 
+			
+	* gtk_test_client.py: drop some debugging output.
+	Do not run an extra local session on startup for check purposes.
+
+	When additional argument from command-line is given, use it as
+	the input SMILES, otherwise use a default value.
+
+	* error_logger.py: central point for reporting errors and warnings
+	to the user
+
+	* README.setup: added info about InChI program installation
+	

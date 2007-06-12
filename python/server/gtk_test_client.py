@@ -106,9 +106,16 @@ class BasicTreeViewExample:
 
 
 if __name__ == "__main__":
-
+    # try to get the SMILES to process from command line or use the default
+    import sys
+    if not len( sys.argv) > 1:
+        default = "Oc1ccccc1C"
+        print "No SMILES given, using the default '%s'" % default
+        smiles = default
+    else:
+        smiles = sys.argv[1]
+    # start the pyro machinery
     import Pyro.core, Pyro.naming
-
     Pyro.core.initClient()
     locator = Pyro.naming.NameServerLocator()
     ns = locator.getNS()
@@ -119,9 +126,9 @@ if __name__ == "__main__":
     # request a session
     session = server.connect()
     # make the session object process a string
-    data = session.process_string("") # for fake server it does not matter what we send
+    data = session.process_string(smiles)
     # now process the data
-    print data
+    #print data
     tvexample = BasicTreeViewExample(data)
     try:
         gtk.main()

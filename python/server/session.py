@@ -11,6 +11,7 @@ class Session:
         return self._number
 
     def process_string(self, data):
+        Config.startup()
         self._data = Config.chem_reader_class.process_string(data) 
         return self.data()
 
