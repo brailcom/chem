@@ -1,9 +1,10 @@
 import Pyro.core
-from object_types import Value, Part, Complex, MultiView, Relation, PartMultiView, ValuePart
-from data_types import DataTypeFactory
+from object_types import Value, Part, Complex, MultiView, Relation, PartMultiView, ValuePart, ValuePartMultiView
+from data_types import DataTypeFactory, DataType
 import oasa
 import os, sys
 from error_logger import ErrorLogger
+from detail_periodic_table import symbol2properties
 
 class ChemReaderException (Exception):
 
@@ -72,7 +73,10 @@ class ChemReader:
         mol_data.add_view(mol_data_atoms)
         _atom_to_a_data = {}
         for atom in mol.atoms:
-            a_data = ValuePart(id2t("ATOM"), atom.symbol)
+            a_data = ValuePartMultiView(id2t("ATOM"), atom.symbol)
+            for key in ('ATOM_SYMBOL','NAME_CZ','VAL_ELECTRONS','DESC','EN','NAME_EN','NAME_LAT','OX_NUMBERS','PROTON_NUMBER','ATOM_WEIGHT'):
+                if key in symbol2properties[atom.symbol]:
+                    a_data.add_view(Value(id2t(key), symbol2properties[atom.symbol][key]))
             _atom_to_a_data[atom] = a_data
             mol_data_atoms.add_part(Relation(id2t('REL_COMPOSED_FROM'), a_data))
         for atom in mol.atoms:

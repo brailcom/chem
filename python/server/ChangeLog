@@ -1,3 +1,12 @@
+2007-06-29   Beda Kosata <kosatab@vscht.cz>
+
+	* detail_periodic_table.py: simple python script
+	containing information about chemical elements taken from
+	several sources.
+	
+	* chem_reader.py: make use of the information in detail_periodic_table.py
+	
+	
 2007-06-12   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: Work started on non-fake reader.

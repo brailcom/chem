@@ -36,6 +36,18 @@ class DataTypeFactory:
                    "ATOM": ("Atom", "Atom"),
                    "NAME": ("Name", "Molecule name"),
 
+                   "ATOM_SYMBOL": ("Symbol", "Atom symbol"),
+                   "EN": ("Electronegativity", "Electronegativity"),
+                   "ATOM_WEIGHT": ("Atomic weight", "Atomic weight"),
+                   "VAL_ELECTRONS": ("Valence electrons", "Number of valence electrons"),
+                   "PROTON_NUMBER": ("Proton number", "Proton number"),
+                   "OX_NUMBERS": ("Oxidation numbers", "Possible oxidation numbers for an atom"),
+                   "NAME_LAT": ("Latin name", "Latin name"),
+                   "NAME_CZ": ("Czech name", "Czech name"),
+                   "NAME_EN": ("English name", "English name"),
+                   "DESC": ("Description", "Description"),
+                   
+
                    "REL_REACTANT": ("Reactant","Reactant of a reaction"),
                    "REL_PRODUCT": ("Product","Product of a reaction"),
                    "REL_SINGLE_BOND": ("Single bond", "Single bond"),

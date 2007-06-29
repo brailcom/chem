@@ -135,4 +135,4 @@ class Relation (Data):
 
 PartMultiView = CombiningMeta.create_composite("PartMultiView", (Part, MultiView))
 ValuePart = CombiningMeta.create_composite("ValuePart", (Value, Part))
-
+ValuePartMultiView = CombiningMeta.create_composite("ValuePartMultiView", (Value, Part, MultiView))
