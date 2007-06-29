@@ -76,7 +76,10 @@ class ChemReader:
             a_data = ValuePartMultiView(id2t("ATOM"), atom.symbol)
             for key in ('ATOM_SYMBOL','NAME_CZ','VAL_ELECTRONS','DESC','EN','NAME_EN','NAME_LAT','OX_NUMBERS','PROTON_NUMBER','ATOM_WEIGHT'):
                 if key in symbol2properties[atom.symbol]:
-                    a_data.add_view(Value(id2t(key), symbol2properties[atom.symbol][key]))
+                    value = symbol2properties[atom.symbol][key]
+                    if type(value) == type([]):
+                        value = ",".join(map(str, value))
+                    a_data.add_view(Value(id2t(key), value))
             _atom_to_a_data[atom] = a_data
             mol_data_atoms.add_part(Relation(id2t('REL_COMPOSED_FROM'), a_data))
         for atom in mol.atoms:
