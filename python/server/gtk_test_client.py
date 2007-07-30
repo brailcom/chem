@@ -108,12 +108,20 @@ class BasicTreeViewExample:
 if __name__ == "__main__":
     # try to get the SMILES to process from command line or use the default
     import sys
-    if not len( sys.argv) > 1:
+    import os
+    if not len(sys.argv) > 1:
         default = "Oc1ccccc1C"
         print "No SMILES given, using the default '%s'" % default
-        smiles = default
+        text = default
+        format = "SMILES"
+    elif os.path.exists(sys.argv[1]):
+        format = "Molfile"
+        f = file(sys.argv[1], "r")
+        text = f.read()
+        f.close()
     else:
-        smiles = sys.argv[1]
+        text = sys.argv[1]
+        format = "SMILES"        
     # start the pyro machinery
     import Pyro.core, Pyro.naming
     Pyro.core.initClient()
@@ -126,7 +134,7 @@ if __name__ == "__main__":
     # request a session
     session = server.connect()
     # make the session object process a string
-    data = session.process_string(smiles)
+    data = session.process_string(text, format=format)
     # now process the data
     #print data
     tvexample = BasicTreeViewExample(data)

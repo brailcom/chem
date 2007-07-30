@@ -30,10 +30,16 @@ class ChemReader:
     def _read_smiles(self, text):
         mol = oasa.smiles.text_to_mol(text)
         return mol
+
+    @classmethod
+    def _read_molfile(self, text):
+        mol = oasa.molfile.text_to_mol(text)
+        return mol
     #// reader methods for different formats
 
     # known formats
-    formats = { "SMILES": _read_smiles,
+    formats = { "SMILES": "_read_smiles",
+                "Molfile": "_read_molfile",
                 }
 
 
@@ -50,7 +56,7 @@ class ChemReader:
     def process_molecule_string(self, text, format="SMILES"):
         # check if the format is supported
         if format in self.formats:
-            mol = self._read_smiles(text)
+            mol = getattr(self,self.formats[format])(text)
         else:
             raise ChemReaderException("unknown format: "+format)
         # shortcut

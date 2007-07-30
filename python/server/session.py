@@ -10,9 +10,9 @@ class Session:
     def number(self):
         return self._number
 
-    def process_string(self, data):
+    def process_string(self, data, format):
         Config.startup()
-        self._data = Config.chem_reader_class.process_string(data) 
+        self._data = Config.chem_reader_class.process_string(data, format=format) 
         return self.data()
 
     def data(self):
