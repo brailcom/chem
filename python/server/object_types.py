@@ -2,6 +2,8 @@
 reside.
 """
 
+import thread
+
 
 ### -------------------- factory classes --------------------
 
@@ -26,9 +28,21 @@ class CombiningMeta (type):
 class Data(object):
     """The ancestor of all the data."""
 
+    _id_counter = 1
+    _id_lock = thread.allocate_lock()
+    
     def __init__(self, data_type):
         super(Data, self).__init__()
         self._data_type = data_type
+        Data._id_lock.acquire()
+        try:
+            self._id = Data._id_counter
+            Data._id_counter += 1
+        finally:
+            Data._id_lock.release()
+
+    def id(self):
+        return self._id
 
     def data_type(self):
         return self._data_type
