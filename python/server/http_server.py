@@ -17,6 +17,8 @@
 
 import BaseHTTPServer
 import codecs
+import os
+import urllib
 import xml.sax.saxutils
 
 from chem_server import ChemServer
@@ -28,16 +30,17 @@ class DataProvider(object):
         super(DataProvider, self).__init__(*args, **kwargs)
         self._server = ChemServer()
 
-    def request_answer(self):
-        data = self._ask_server()
+    def request_answer(self, request_path):
+        data = self._ask_server(request_path)
         xml_data = self._transform_to_xml(data)
         return xml_data
 
-    def _ask_server(self):
+    def _ask_server(self, request_path):
         server = self._server
+        molecule = os.path.basename(urllib.unquote_plus(request_path)) or 'Oc1ccccc1C'
         session = server.connect()
         try:
-            data = session.process_string('Oc1ccccc1C', format="SMILES")
+            data = session.process_string(molecule, format="SMILES")
         finally:
             server.disconnect(session.number())
         return data
@@ -87,7 +90,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             data_provider = self._data_provider
         except AttributeError:
             data_provider = self._data_provider = DataProvider()            
-        xml_data = data_provider.request_answer()
+        xml_data = data_provider.request_answer(self.path)
         self.send_response(200)
         self.send_header('Content-type', 'application/xml')
         self.send_header('Content-Length', str(len(xml_data)))
