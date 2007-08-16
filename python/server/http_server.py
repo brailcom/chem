@@ -53,6 +53,7 @@ class DataProvider(object):
         def transform(data, level=0):
             data_type = data.data_type()
             id = data.id()
+            data_type_id = data_type.id()
             description = data_type.description()
             long_description = data_type.long_description()
             prefix = ' '*level
@@ -74,8 +75,8 @@ class DataProvider(object):
                 for view in data.views():
                     contents += transform(view, level+1)
                 contents += '%s</views>\n' % (prefix,)
-            return ('%(prefix)s<data id=%(id)s description=%(description)s long=%(long)s>\n%(contents)s%(prefix)s</data>\n' %
-                    dict(prefix=prefix, id=attr_escape(unicode(id)),
+            return ('%(prefix)s<data id=%(id)s type=%(data_type_id)s description=%(description)s long=%(long)s>\n%(contents)s%(prefix)s</data>\n' %
+                    dict(prefix=prefix, id=attr_escape(unicode(id)), data_type_id=attr_escape(data_type_id),
                          description=attr_escape(description), long=attr_escape(long_description), contents=contents))
         return '<?xml version="1.0"?>\n' + transform(data)
 
