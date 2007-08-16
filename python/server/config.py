@@ -9,7 +9,7 @@ class Config:
     # this can be used to swap between the fake and normal chem_reader
     chem_reader_class = chem_reader.ChemReader
     # this should point to the InChI binary, it overrides the default value in OASA
-    oasa_inchi_binary_path = "/home/beda/inchi/cInChI-1"
+    oasa_inchi_binary_path = "/usr/local/bin/cInChI-1"
     
     # // THE CONFIGURATION ENDS HERE
 
