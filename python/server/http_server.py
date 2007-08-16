@@ -68,7 +68,7 @@ class DataProvider(object):
             if isinstance(data, Part):
                 contents += '%s<neighbors>\n' % (prefix,)
                 for neighbor in data.neighbors():
-                    contents += '%s<link id="%s"/>' % (prefix, neighbor.target().id(),)
+                    contents += '%s <link id="%s"/>\n' % (prefix, neighbor.target().id(),)
                 contents += '%s</neighbors>\n' % (prefix,)
             if isinstance(data, MultiView):
                 contents += '%s<views>\n' % (prefix,)
