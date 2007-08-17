@@ -94,11 +94,12 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         except AttributeError:
             data_provider = self._data_provider = DataProvider()            
         xml_data = data_provider.request_answer(self.path)
+        encoded_xml_data = codecs.getencoder('utf-8')(xml_data)[0]
         self.send_response(200)
         self.send_header('Content-type', 'application/xml')
-        self.send_header('Content-Length', str(len(xml_data)))
+        self.send_header('Content-Length', str(len(encoded_xml_data)))
         self.end_headers()
-        self.wfile.write(codecs.getencoder('utf-8')(xml_data)[0])
+        self.wfile.write(encoded_xml_data)
 
 def run():
     server = BaseHTTPServer.HTTPServer(('', 8000,), RequestHandler)
