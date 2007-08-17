@@ -57,24 +57,26 @@ class DataProvider(object):
             description = data_type.description()
             long_description = data_type.long_description()
             prefix = ' '*level
+            prefix1 = prefix + ' '
+            prefix2 = prefix1 + ' '
             contents = ''
             if isinstance(data, Value):
-                contents += '%s<value>%s</value>\n' % (prefix, escape(unicode(data.value())),)
+                contents += '%s<value>%s</value>\n' % (prefix1, escape(unicode(data.value())),)
             if isinstance(data, Complex):
-                contents += '%s<parts>\n' % (prefix,)
+                contents += '%s<parts>\n' % (prefix1,)
                 for part in data.parts():
-                    contents += transform(part.target(), level+1)
-                contents += '%s</parts>\n' % (prefix,)
+                    contents += transform(part.target(), level+2)
+                contents += '%s</parts>\n' % (prefix1,)
             if isinstance(data, Part):
-                contents += '%s<neighbors>\n' % (prefix,)
+                contents += '%s<neighbors>\n' % (prefix1,)
                 for neighbor in data.neighbors():
-                    contents += '%s <link id="%s"/>\n' % (prefix, neighbor.target().id(),)
-                contents += '%s</neighbors>\n' % (prefix,)
+                    contents += '%s<link id="%s"/>\n' % (prefix2, neighbor.target().id(),)
+                contents += '%s</neighbors>\n' % (prefix1,)
             if isinstance(data, MultiView):
-                contents += '%s<views>\n' % (prefix,)
+                contents += '%s<views>\n' % (prefix1,)
                 for view in data.views():
-                    contents += transform(view, level+1)
-                contents += '%s</views>\n' % (prefix,)
+                    contents += transform(view, level+2)
+                contents += '%s</views>\n' % (prefix1,)
             return ('%(prefix)s<data id=%(id)s type=%(data_type_id)s description=%(description)s long=%(long)s>\n%(contents)s%(prefix)s</data>\n' %
                     dict(prefix=prefix, id=attr_escape(unicode(id)), data_type_id=attr_escape(data_type_id),
                          description=attr_escape(description), long=attr_escape(long_description), contents=contents))
