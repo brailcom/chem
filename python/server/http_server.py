@@ -17,6 +17,7 @@
 
 import BaseHTTPServer
 import codecs
+import optparse
 import os
 import urllib
 import xml.sax.saxutils
@@ -102,7 +103,10 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         self.wfile.write(encoded_xml_data)
 
 def run():
-    server = BaseHTTPServer.HTTPServer(('', 8000,), RequestHandler)
+    option_parser = optparse.OptionParser()
+    option_parser.add_option('-p', '--port', dest='port', help="port number to listen on", metavar="PORT", type='int', default=8000)
+    options, args = option_parser.parse_args()
+    server = BaseHTTPServer.HTTPServer(('', options.port,), RequestHandler)
     server.serve_forever()
 
 if __name__ == '__main__':
