@@ -1,0 +1,4 @@
+content bkch chrome/content/
+skin bkch default skin/
+locale bkch en-US locale/
+locale bkch cs-CZ locale/cs/

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://bkch/skin/bkch.css" type="text/css"?>
+<!DOCTYPE window [
+          <!ENTITY % bkchDTD SYSTEM "chrome://bkch/locale/bkch.dtd">
+          %bkchDTD;
+          ]>
+<window id="bkch-window"
+        title="bkch main application window"
+        orient="vertical"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml">
+
+<vbox id="main-box" flex="1">
+  <script src="bkch.js"/>
+  <description>&main.text.intro;</description>
+  <spacer style="height: 10px"/>
+  <vbox id="function-box">
+    <groupbox id="molecule-box">
+      <caption id="molecule-caption" label="&main.caption.molecule;" accesskey="m"/>
+      <label value="&main.label.molecule;" control="molecule-input-box"/>
+      <hbox id="molecule-input-box">
+        <textbox id="molecule-textbox" value="Oc1ccccc1C"/>
+        <button id="molecule-button" label="&main.button.molecule;" oncommand="bkch_molecule();"/>
+      </hbox>
+    </groupbox>
+    <groupbox id="periodic-box">
+      <caption id="periodic-caption" label="&main.caption.periodic;" accesskey="p"/>
+      <label value="&main.label.periodic;" control="periodic-button"/>
+      <button id="periodic-button" label="&main.button.periodic;" oncommand="bkch_periodic_table();"/>
+    </groupbox>
+    <groupbox id="preferences-box">
+      <caption id="preferences-caption" label="&main.caption.preferences;" accesskey="s"/>
+      <label value="&main.label.preferences;" control="preferences-button"/>
+      <button id="preferences-button" label="&main.button.preferences;" oncommand="bkch_preferences();"/>
+    </groupbox>
+  </vbox>
+  <separator class="groove"/>
+  <iframe id="bkch-frame" src="chrome://bkch/content/empty.xul" type="content" flex="1"/>
+</vbox>
+
+</window>
