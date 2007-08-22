@@ -1,0 +1,4 @@
+<!ENTITY preferences.button.ok "Proveď nastavení">
+<!ENTITY preferences.label.preferences "Nastavení">
+<!ENTITY preferences.label.host "Server">
+<!ENTITY preferences.label.port "Port">

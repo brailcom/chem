@@ -1,1 +1,4 @@
-<!ENTITY preferences.not-implemented "Not yet implemented.">
+<!ENTITY preferences.button.ok "Set preferences">
+<!ENTITY preferences.label.preferences "Preferences">
+<!ENTITY preferences.label.host "Host">
+<!ENTITY preferences.label.port "Port">

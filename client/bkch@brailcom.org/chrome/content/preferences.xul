@@ -7,5 +7,22 @@
         orient="vertical"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
-  <description>&preferences.not-implemented;</description>
+  <script src="bkch.js"/>
+  <description class="header" value="&preferences.label.preferences;"/>
+  <groupbox id="bkchem-server-prefs">
+    <caption label="Bkchem server"/>
+    <grid>
+      <rows>
+        <row>
+          <label for="pref-bkchem-host" value="&preferences.label.host;"/>
+          <textbox id="pref-bkchem-host"/>
+        </row>
+        <row>
+          <label for="pref-bkchem-port" value="&preferences.label.port;"/>
+          <textbox id="pref-bkchem-port" maxlength="5"/>
+        </row>
+      </rows>
+    </grid>
+  </groupbox>
+  <button id="bkchem-submit-prefs" label="&preferences.button.ok;" oncommand="bkch_set_preferences()"/>
 </window>
