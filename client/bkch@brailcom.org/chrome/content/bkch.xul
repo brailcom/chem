@@ -18,7 +18,7 @@
   <vbox id="function-box">
     <groupbox id="molecule-box">
       <caption id="molecule-caption" label="&main.caption.molecule;" accesskey="m"/>
-      <label value="&main.label.molecule;" control="molecule-input-box"/>
+      <label value="&main.label.molecule;" control="molecule-textbox"/>
       <hbox id="molecule-input-box">
         <textbox id="molecule-textbox" value="Oc1ccccc1C"/>
         <button id="molecule-button" label="&main.button.molecule;" oncommand="bkch_molecule();"/>
