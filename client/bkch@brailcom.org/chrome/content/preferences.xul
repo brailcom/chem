@@ -14,11 +14,11 @@
     <grid>
       <rows>
         <row>
-          <label for="pref-bkchem-host" value="&preferences.label.host;"/>
+          <label control="pref-bkchem-host" value="&preferences.label.host;"/>
           <textbox id="pref-bkchem-host"/>
         </row>
         <row>
-          <label for="pref-bkchem-port" value="&preferences.label.port;"/>
+          <label control="pref-bkchem-port" value="&preferences.label.port;"/>
           <textbox id="pref-bkchem-port" maxlength="5"/>
         </row>
       </rows>
