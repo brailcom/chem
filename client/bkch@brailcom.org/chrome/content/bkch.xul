@@ -32,7 +32,7 @@
     <groupbox id="preferences-box">
       <caption id="preferences-caption" label="&main.caption.preferences;" accesskey="s"/>
       <label value="&main.label.preferences;" control="preferences-button"/>
-      <button id="preferences-button" label="&main.button.preferences;" oncommand="bkch_preferences();"/>
+      <button id="preferences-button" label="&main.button.preferences;" oncommand="bkch_edit_preferences();"/>
     </groupbox>
   </vbox>
   <separator class="groove"/>

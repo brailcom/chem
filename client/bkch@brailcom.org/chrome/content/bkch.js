@@ -1,35 +1,61 @@
-var bkch_prefs;
+var bkch_preferences = {
+    
+    _preferences: false,
 
-function bkch_init_preferences ()
-{
-    if (! bkch_prefs) {
+    _default_values: {'server.host': 'localhost', 'server.port': 8000},
+    
+    initialize_preferences: function () 
+    {
         var prefs = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
-        bkch_prefs = prefs.getBranch ('bkchem.');
-    }
-}
+        this._preferences = prefs.getBranch ('bkchem.');
+    },
 
-function bkch_get_char_pref (pref, default_value)
-{
-    try {
-        var result = bkch_prefs.getCharPref (pref);
-    }
-    catch (e) {
-        bkch_prefs.setCharPref (pref, default_value);
-        result = default_value;
-    }
-    return result;
-}
+    _default_value: function (name)
+    {
+        if (! this._preferences)
+            this.initialize_preferences ();
+        return this._default_values[name];
+    },
 
-function bkch_get_int_pref (pref, default_value)
-{
-    try {
-        var result = bkch_prefs.getIntPref (pref);
-    }
-    catch (e) {
-        bkch_prefs.setIntPref (pref, default_value);
-        result = default_value;
-    }
-    return result;
+    _get_preference: function (name, reader, writer)
+    {
+        try {
+            var result = reader (name);
+        }
+        catch (e) {
+            result = this._default_value (name)
+            writer (name, result);
+        }
+        return result;
+    },
+
+    char: function (name)
+    {
+        if (! this._preferences)
+            this.initialize_preferences ();
+        return this._get_preference (name, this._preferences.getCharPref, this._preferences.setCharPref);
+    },
+    
+    int: function (name)
+    {
+        if (! this._preferences)
+            this.initialize_preferences ();
+        return this._get_preference (name, this._preferences.getIntPref, this._preferences.setIntPref);
+    },
+
+    set_char: function (name, value)
+    {
+        if (! this._preferences)
+            this.initialize_preferences ();
+        this._preferences.setCharPref (name, value);
+    },
+    
+    set_int: function (name, value)
+    {
+        if (! this._preferences)
+            this.initialize_preferences ();
+        this._preferences.setIntPref (name, value);
+    },
 }
 
 function bkch_switch_page (uri)
@@ -43,7 +69,7 @@ function bkch_periodic_table ()
     bkch_switch_page ("chrome://bkch/content/periodic.xul");
 }
 
-function bkch_preferences ()
+function bkch_edit_preferences ()
 {
     bkch_switch_page ("chrome://bkch/content/preferences.xul");
     var frame = document.getElementById ("bkch-frame");
@@ -62,9 +88,8 @@ function bkch_preferences ()
 
 function bkch_update_preferences (frame)
 {
-    bkch_init_preferences ();
-    var host = bkch_get_char_pref ('server.host', 'localhost');
-    var port = bkch_get_int_pref ('server.port', 8000);
+    var host = bkch_preferences.char ('server.host');
+    var port = bkch_preferences.int ('server.port');
     var document = frame.contentDocument;
     var host_field = document.getElementById ('pref-bkchem-host');
     if (! host_field)
@@ -76,9 +101,8 @@ function bkch_update_preferences (frame)
 
 function bkch_set_preferences ()
 {
-    bkch_init_preferences ();
-    bkch_prefs.setCharPref ('server.host', document.getElementById ('pref-bkchem-host').value);
-    bkch_prefs.setIntPref ('server.port', document.getElementById ('pref-bkchem-port').value);
+    bkch_preferences.set_char ('server.host', document.getElementById ('pref-bkchem-host').value);
+    bkch_preferences.set_int ('server.port', document.getElementById ('pref-bkchem-port').value);
 }
 
 function bkch_molecule ()
@@ -103,14 +127,13 @@ function bkch_remove_children (node)
 function bkch_display_molecule (frame, smiles)
 {
     // Fetch data
-    bkch_init_preferences ();
     netscape.security.PrivilegeManager.enablePrivilege ("UniversalXPConnect");
     var bkchem = Components.classes["@brailcom.org/bkch/bkchem;1"].createInstance (Components.interfaces.nsIBkchem);
     if (! bkchem) {
         alert ("bkchem component not found!");
         return false;
     }
-    var doc = bkchem.fetch_xml (bkch_get_char_pref ('server.host', 'localhost'), bkch_get_int_pref ('server.port', 8000), smiles);
+    var doc = bkchem.fetch_xml (bkch_preferences.char ('server.host'), bkch_preferences.int ('server.port'), smiles);
     if (doc == null) {
         alert (bkchem.error_message);
         return false;
