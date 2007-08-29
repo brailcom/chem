@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://bkch/skin/molecule.css" type="text/css"?>
 <!DOCTYPE window SYSTEM "chrome://bkch/locale/molecule.dtd">
 
 <window id="bkch-molecule-window"

@@ -2,7 +2,10 @@ var bkch_preferences = {
     
     _preferences: false,
 
-    _default_values: {'server.host': 'localhost', 'server.port': 8000},
+    _default_values: {
+        'server.host': 'localhost', 'server.port': 8000,
+        'display.preferred_views': 'ATOM_SYMBOL;NAME',
+    },
     
     initialize_preferences: function () 
     {
@@ -124,6 +127,37 @@ function bkch_remove_children (node)
         node.removeChild (node.childNodes[0]);
 }
 
+function bkch_element_value (element)
+{
+    var children = element.childNodes;
+    for (var i = 0; i < children.length; i++) {
+        if (children[i].nodeName == 'value')
+            return children[i].childNodes[0].nodeValue;
+    }
+    return null;
+}
+
+function bkch_map_element (func, element)
+{
+    var children = element.childNodes;
+    for (i = 0; i < children.length; i++)
+        if (func (children[i]))
+            return true;
+    return false;
+}
+
+function bkch_filter_element (func, element)
+{
+    children = [];
+    function filter (element)
+    {
+        if (func (element))
+            children.push (element);
+    }
+    bkch_map_element (filter, element);
+    return children;
+}
+
 function bkch_display_molecule (frame, smiles)
 {
     // Fetch data
@@ -143,28 +177,33 @@ function bkch_display_molecule (frame, smiles)
     bkch_remove_children (top_box);
     // Display data
     var element = doc.documentElement;
-    bkch_display_element (element, top_box, 1);
+    bkch_display_element (element, top_box, 1, 1);
 }
 
-function bkch_display_element (element, box, level)
+function bkch_display_element (element, box, header_level)
 {
     // Get node's contents
-    var value, views, parts, neighbors;
+    var value, neighbors, parts;
+    var views = [];
+    var parts_as_views = [];
     for (var index = 0; index < element.childNodes.length; index++) {
         var child = element.childNodes[index];
         if (child.nodeName == 'value')
             value = child.childNodes[0].nodeValue;
-        else if (child.nodeName == 'views')
-            views = child.childNodes;
+        else if (child.nodeName == 'views') {
+            for (var i = 0; i < child.childNodes.length; i++) {
+                var c = child.childNodes[i];
+                // just a hack to handle complex views for now
+                if (bkch_map_element (function (element) { return element.nodeName == 'parts'; }, c))
+                    parts_as_views.push (c);
+                else
+                    views.push (c);
+            }
+        }
+        else if (child.nodeName == 'neighbors')
+            neighbors = bkch_filter_element (function (element) { return element instanceof Element; }, child);
         else if (child.nodeName == 'parts')
             parts = child.childNodes;
-        else if (child.nodeName == 'neighbors')
-            {
-                neighbors = [];
-                for (var i = 0; i < child.childNodes.length; i++)
-                    if (child.childNodes[i] instanceof Element)
-                        neighbors.push (child.childNodes[i]);
-            }        
     }
     // How much is the node empty?
     var has_no_subparts = ((views == undefined || views.length == 0) &&
@@ -198,10 +237,20 @@ function bkch_display_element (element, box, level)
             description.setAttribute ('class', style);
         return description;
     }
-    function make_section (caption)
+    function make_section (caption, level)
     {
         var box = document.createElement ('vbox');
         var header = make_description (caption, 'header');
+        if (level)
+            header.setAttribute ('level', level);
+        box.appendChild (header);
+        return box;
+    }
+    function make_group (caption)
+    {
+        var box = document.createElement ('groupbox');
+        var header = document.createElement ('caption');
+        header.setAttribute ('label', caption);
         box.appendChild (header);
         return box;
     }
@@ -211,8 +260,6 @@ function bkch_display_element (element, box, level)
         return element;
     }
     // Show label or a property pair
-    if (level > 6)
-        level = 6;
     if (has_no_subparts) {
         if (value != undefined)
             add_element (make_description (label+': '+value, null), box);
@@ -220,23 +267,48 @@ function bkch_display_element (element, box, level)
     }
     if (value != undefined)
         label = value;
-    add_element (make_description (label, 'header'), box);
+    else if (views) {
+        var preferred_views = bkch_preferences.char ('display.preferred_views').split (';');
+        var chosen_label_index = 10000;
+        for (var i = 0; i < views.length; i++) {
+            var view = views[i];
+            if (view.nodeName == 'data') {
+                var value = bkch_element_value (view);
+                if (value) {
+                    var type = view.getAttribute ('type');
+                    if (type) {
+                        for (var j = 0; j < preferred_views.length && j < chosen_label_index; j++)
+                            if (preferred_views[j] == type) {
+                                label = value;
+                                chosen_label_index = j;
+                                break;
+                            }
+                    }
+                }
+            }
+        }
+    }
+    add_element (make_section (label, header_level), box);
     // Views
     if (views && views.length > 0) {
-        var view_box = add_element (make_section ('Views', 'header'), box);
+        var view_box = add_element (make_group ("Properties"), box);
         for (var i = 0; i < views.length; i++)
-            bkch_display_element (views[i], view_box, level+1);
+            bkch_display_element (views[i], view_box, header_level);
     }
     // Neighbors
     if (neighbors && neighbors.length > 0) {
-        var neighbor_box = add_element (make_section ('Neighbors', 'header'), box);
+        var neighbor_box = add_element (make_group ("References"), box);
         for (var i = 0; i < neighbors.length; i++)
             add_element (make_description (neighbors[i].getAttribute ('id')), neighbor_box);
     }
     // Parts
     if (parts && parts.length > 0) {
-        var part_box = add_element (make_section ('Parts', 'header'), box);
         for (var i = 0; i < parts.length; i++)
-            bkch_display_element (parts[i], part_box, level+1);
+            bkch_display_element (parts[i], box, header_level+1);
+    }
+    // Parts disguised as views
+    if (parts_as_views) {
+        for (var i = 0; i < parts_as_views.length; i++)
+            bkch_display_element (parts_as_views[i], box, header_level+1);
     }
 }
