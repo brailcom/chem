@@ -6,10 +6,11 @@
 <window id="bkch-periodic-window"
         title="bkch periodic table window"
         orient="vertical"
+        style="-moz-user-focus: normal;"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
   <script src="util.js"/>
   <script src="periodic.js"/>
 
-  <description>&periodic.not-implemented;</description>
+  <description style="-moz-user-focus: normal;">&periodic.not-implemented;</description>
 </window>

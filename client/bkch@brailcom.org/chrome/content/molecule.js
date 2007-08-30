@@ -9,6 +9,8 @@ function bkch_update_molecule ()
     var smiles = document.getElementById ('molecule-textbox').value;
     var frame = document.getElementById ('bkch-frame');
     bkch_display_molecule (frame, smiles);
+    var focus_element = frame.contentDocument.getElementsByTagName ('description')[0];
+    focus_element.focus ();
 }
     
 function bkch_display_molecule (frame, smiles)

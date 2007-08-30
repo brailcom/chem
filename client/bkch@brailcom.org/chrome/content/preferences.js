@@ -17,6 +17,8 @@ function bkch_update_preferences (frame)
     var port = bkch_preferences.int ('server.port');
     host_field.setAttribute ('value', host);
     document.getElementById ('pref-bkchem-port').setAttribute ('value', port);
+    var focus_element = document.getElementsByTagName ('window')[0];
+    focus_element.focus ();
     return true;
 }
 

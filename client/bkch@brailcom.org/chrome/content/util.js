@@ -33,6 +33,7 @@ function bkch_switch_page (uri)
 {
     var frame = document.getElementById ("bkch-frame");
     frame.setAttribute ('src', uri);
+    return frame;
 }
 
 function bkch_run_timer (callback)
