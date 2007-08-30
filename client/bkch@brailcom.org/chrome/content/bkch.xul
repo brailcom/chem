@@ -10,9 +10,14 @@
         orient="vertical"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
+<script src="util.js"/>
+<script src="error.js"/>
+<script src="molecule.js"/>
+<script src="periodic.js"/>
+<script src="preferences.js"/>
+<script src="bkch.js"/>
 
 <vbox id="main-box" flex="1">
-  <script src="bkch.js"/>
   <description>&main.text.intro;</description>
   <spacer style="height: 10px"/>
   <vbox id="function-box">

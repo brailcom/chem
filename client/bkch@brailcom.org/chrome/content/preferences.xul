@@ -7,7 +7,9 @@
         orient="vertical"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
-  <script src="bkch.js"/>
+  <script src="util.js"/>
+  <script src="preferences.js"/>
+
   <description class="header" value="&preferences.label.preferences;"/>
   <groupbox id="bkchem-server-prefs">
     <caption label="Bkchem server"/>
@@ -20,17 +22,6 @@
         <row>
           <label control="pref-bkchem-port" value="&preferences.label.port;"/>
           <textbox id="pref-bkchem-port" maxlength="5"/>
-        </row>
-      </rows>
-    </grid>
-  </groupbox>
-  <groupbox id="bkchem-server-prefs">
-    <caption label="Displayed information"/>
-    <grid>
-      <rows>
-        <row>
-          <label control="pref-display-primaryview" value="&preferences.label.primaryview;"/>
-          <textbox id="pref-display-primaryview"/>
         </row>
       </rows>
     </grid>
