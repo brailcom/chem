@@ -67,6 +67,19 @@ function bkch_switch_page (uri)
     frame.setAttribute ('src', uri);
 }
 
+function bkch_run_timer (callback)
+{
+    var timer = Components.classes['@mozilla.org/timer;1'].createInstance (Components.interfaces.nsITimer);
+    var callback_object =
+    {
+        notify: function (timer) {
+            if (callback ())
+                timer.cancel ()
+        }
+    }
+    timer.initWithCallback (callback_object, 100, timer.TYPE_REPEATING_SLACK);
+}
+
 function bkch_periodic_table ()
 {
     bkch_switch_page ("chrome://bkch/content/periodic.xul");
@@ -78,25 +91,17 @@ function bkch_edit_preferences ()
     var frame = document.getElementById ("bkch-frame");
     // The preferences.xul elements don't get accessible immediately, so we
     // have to use a timer to wait until they appear
-    var timer = Components.classes['@mozilla.org/timer;1'].createInstance (Components.interfaces.nsITimer);
-    var callback =
-    {
-        notify: function (timer) {
-            if (bkch_update_preferences (frame))
-                timer.cancel ()
-        }
-    }
-    timer.initWithCallback (callback, 100, timer.TYPE_REPEATING_SLACK);
+    bkch_run_timer (function () { return bkch_update_preferences (frame); });
 }
 
 function bkch_update_preferences (frame)
 {
-    var host = bkch_preferences.char ('server.host');
-    var port = bkch_preferences.int ('server.port');
     var document = frame.contentDocument;
     var host_field = document.getElementById ('pref-bkchem-host');
     if (! host_field)
         return false;
+    var host = bkch_preferences.char ('server.host');
+    var port = bkch_preferences.int ('server.port');
     host_field.setAttribute ('value', host);
     document.getElementById ('pref-bkchem-port').setAttribute ('value', port);
     return true;
@@ -158,6 +163,23 @@ function bkch_filter_element (func, element)
     return children;
 }
 
+function bkch_display_error (message)
+{
+    bkch_switch_page ("chrome://bkch/content/error.xul");
+    var frame = document.getElementById ("bkch-frame");
+    bkch_run_timer (function () { return bkch_update_error (frame, message); });
+}
+
+function bkch_update_error (frame, message)
+{
+    var document = frame.contentDocument;
+    var description_element = document.getElementById ('error-description');
+    if (! description_element)
+        return false;
+    description_element.setAttribute ('value', message);
+    return true;    
+}
+    
 function bkch_display_molecule (frame, smiles)
 {
     // Fetch data
@@ -177,7 +199,10 @@ function bkch_display_molecule (frame, smiles)
     bkch_remove_children (top_box);
     // Display data
     var element = doc.documentElement;
-    bkch_display_element (element, top_box, 1, 1);
+    if (element.nodeName == 'inputerror')
+        bkch_display_error (element.childNodes[0].nodeValue);
+    else
+        bkch_display_element (element, top_box, 1, 1);
 }
 
 function bkch_display_element (element, box, header_level)

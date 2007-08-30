@@ -22,6 +22,8 @@ import os
 import urllib
 import xml.sax.saxutils
 
+import oasa
+
 from chem_server import ChemServer
 from object_types import *
 
@@ -88,19 +90,27 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, *args, **kwargs)
         self._data_provider = DataProvider()
-    
+
+    def _send_response(self, code, content_type, body):
+        encoded_body = codecs.getencoder('utf-8')(body)[0]
+        self.send_response(code)
+        self.send_header('Content-Type', content_type)
+        self.send_header('Content-Length', str(len(encoded_body)))
+        self.end_headers()
+        self.wfile.write(encoded_body)
+        
     def do_GET(self):
         try:
             data_provider = self._data_provider
         except AttributeError:
-            data_provider = self._data_provider = DataProvider()            
-        xml_data = data_provider.request_answer(self.path)
-        encoded_xml_data = codecs.getencoder('utf-8')(xml_data)[0]
-        self.send_response(200)
-        self.send_header('Content-type', 'application/xml')
-        self.send_header('Content-Length', str(len(encoded_xml_data)))
-        self.end_headers()
-        self.wfile.write(encoded_xml_data)
+            data_provider = self._data_provider = DataProvider()
+        try:
+            xml_data = data_provider.request_answer(self.path)
+        except oasa.oasa_exceptions.oasa_error, e:
+            self._send_response(200, 'application/xml',
+                                '<?xml version="1.0"?>\n<inputerror>%s</inputerror>\n' % (xml.sax.saxutils.escape(str(e)),))
+            return
+        self._send_response(200, 'application/xml', xml_data)
 
 def run():
     option_parser = optparse.OptionParser()

@@ -24,5 +24,16 @@
       </rows>
     </grid>
   </groupbox>
+  <groupbox id="bkchem-server-prefs">
+    <caption label="Displayed information"/>
+    <grid>
+      <rows>
+        <row>
+          <label control="pref-display-primaryview" value="&preferences.label.primaryview;"/>
+          <textbox id="pref-display-primaryview"/>
+        </row>
+      </rows>
+    </grid>
+  </groupbox>
   <button id="bkchem-submit-prefs" label="&preferences.button.ok;" oncommand="bkch_set_preferences()"/>
 </window>
