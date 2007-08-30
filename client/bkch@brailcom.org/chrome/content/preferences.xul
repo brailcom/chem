@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://bkch/skin/bkch.css" type="text/css"?>
 <!DOCTYPE window SYSTEM "chrome://bkch/locale/preferences.dtd">
 
 <window id="bkch-preferences-window"
