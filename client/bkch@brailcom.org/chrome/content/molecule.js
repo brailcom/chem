@@ -1,16 +1,20 @@
 function bkch_molecule ()
 {
     bkch_switch_page ("chrome://bkch/content/molecule.xul");
-    bkch_update_molecule ();
+    bkch_run_timer (function () { return bkch_update_molecule (frame, smiles); });
+    var frame = document.getElementById ('bkch-frame');
+    var smiles = document.getElementById ('molecule-textbox').value;
 }
 
-function bkch_update_molecule ()
+function bkch_update_molecule (frame, smiles)
 {
-    var smiles = document.getElementById ('molecule-textbox').value;
-    var frame = document.getElementById ('bkch-frame');
+    var document = frame.contentDocument;
+    if (! document.getElementById ('molecule-display-box'))
+        return false;
     bkch_display_molecule (frame, smiles);
-    var focus_element = frame.contentDocument.getElementsByTagName ('description')[0];
+    var focus_element = document.getElementsByTagName ('description')[0];
     focus_element.focus ();
+    return true;
 }
     
 function bkch_display_molecule (frame, smiles)
