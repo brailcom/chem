@@ -1,3 +1,9 @@
+2007-09-03   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: add support for reading summary formulas (Na2SO4 etc.)
+	                  (this does not provide structure of the compound - just a
+	                   set of disconnected atoms)
+	
 2007-07-30   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: add support for reading Molfiles (from strings)

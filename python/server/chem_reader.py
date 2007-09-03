@@ -35,11 +35,23 @@ class ChemReader:
     def _read_molfile(self, text):
         mol = oasa.molfile.text_to_mol(text)
         return mol
+
+    @classmethod
+    def _read_summary_formula(self, text):
+        sum_dict = oasa.periodic_table.formula_dict(text)
+        mol = oasa.molecule()
+        for (symbol,count) in sum_dict.iteritems():
+            for i in range(count):
+                a = oasa.atom(symbol)
+                a.valency = 0
+                mol.add_vertex(a)
+        return mol
     #// reader methods for different formats
 
     # known formats
     formats = { "SMILES": "_read_smiles",
                 "Molfile": "_read_molfile",
+                "summary": "_read_summary_formula",
                 }
 
 
