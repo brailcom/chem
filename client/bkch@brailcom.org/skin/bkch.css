@@ -28,3 +28,9 @@ description.header[level="4"] {
 description.header[level="5"] {
   font-size: 120%;
 }
+
+.bkch-reference {
+  color: blue;
+  -moz-user-focus: normal;
+  -moz-binding: url('chrome://bkch/content/bkch.xml#reference');
+}

@@ -34,11 +34,14 @@ function bkch_display_molecule (frame, smiles)
     var element = doc.documentElement;
     if (element.nodeName == 'inputerror')
         bkch_display_error (element.childNodes[0].nodeValue);
-    else
-        bkch_display_element (element, top_box, 1, 1);
+    else {
+        var references = [], labels = {};
+        bkch_display_element (element, top_box, 1, references, labels);
+        bkch_backpatch_references (references, labels);
+    }
 }
 
-function bkch_display_element (element, box, header_level)
+function bkch_display_element (element, box, header_level, references, labels)
 {
     // Get node's contents
     var value, neighbors, parts;
@@ -87,10 +90,15 @@ function bkch_display_element (element, box, header_level)
     var label = element.getAttribute ('description');
     // Utility functions for displaying
     var document = box.ownerDocument;
-    function make_description (text, style)
+    function make_description (text, style, use_value)
     {
         var description = document.createElement ('description');
-        description.appendChild (document.createCDATASection (text));
+        if (! text)
+            null;
+        else if (use_value)
+            description.setAttribute ('value', text);
+        else
+            description.appendChild (document.createCDATASection (text));
         if (style)
             description.setAttribute ('class', style);
         return description;
@@ -99,6 +107,7 @@ function bkch_display_element (element, box, header_level)
     {
         var box = document.createElement ('vbox');
         var header = make_description (caption, 'header');
+        header.setAttribute ('style', '-moz-user-focus: normal;')
         if (level)
             header.setAttribute ('level', level);
         box.appendChild (header);
@@ -155,28 +164,61 @@ function bkch_display_element (element, box, header_level)
             }
         }
     }
-    element.setAttribute ('label', label);
-    add_element (make_section (label, header_level), box);
+    var displayed_element = add_element (make_section (label, header_level), box);
+    var bkch_id = element.getAttribute ('id');
+    displayed_element.setAttribute ('bkch-id', bkch_id);
+    displayed_element.setAttribute ('id', bkch_id);
+    labels[bkch_id] = label;
     // Views
     if (views && views.length > 0) {
         var view_box = add_element (make_group ("Properties"), box);
         for (var i = 0; i < views.length; i++)
-            bkch_display_element (views[i], view_box, header_level);
+            bkch_display_element (views[i], view_box, header_level, references, labels);
     }
     // Neighbors
     if (neighbors && neighbors.length > 0) {
         var neighbor_box = add_element (make_group ("References"), box);
-        for (var i = 0; i < neighbors.length; i++)
-            add_element (make_description (neighbors[i].getAttribute ('id')), neighbor_box);
+        for (var i = 0; i < neighbors.length; i++) {
+            var id = neighbors[i].getAttribute ('id');
+            var reference_element = add_element (document.createElement ('bkchreference'), neighbor_box);
+            reference_element.setAttribute ('bkch-reference', id);
+            references.push (reference_element);
+        }
     }
     // Parts
     if (parts && parts.length > 0) {
         for (var i = 0; i < parts.length; i++)
-            bkch_display_element (parts[i], box, header_level+1);
+            bkch_display_element (parts[i], box, header_level+1, references, labels);
     }
     // Parts disguised as views
     if (parts_as_views) {
         for (var i = 0; i < parts_as_views.length; i++)
-            bkch_display_element (parts_as_views[i], box, header_level+1);
+            bkch_display_element (parts_as_views[i], box, header_level+1, references, labels);
     }
+}
+
+function bkch_backpatch_references (references, labels)
+{
+    for (var i = 0; i < references.length; i++) {
+        var reference_element = references[i];
+        var bkch_id = reference_element.getAttribute ('bkch-reference');
+        try {
+            var label = labels[bkch_id];
+        }
+        catch (e) {
+            label = null;
+        }
+        if (label) {
+            reference_element.setAttribute ('value', '*'+label);
+            reference_element.setAttribute ('class', 'bkch-reference');
+        }
+    }
+}
+
+function bkch_follow_reference (element)
+{
+    var reference = element.getAttribute ('bkch-reference');
+    var document = element.ownerDocument;
+    var target = document.getElementById (reference);
+    bkch_focus (target);
 }

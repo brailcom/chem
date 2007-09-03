@@ -49,6 +49,16 @@ function bkch_run_timer (callback)
     timer.initWithCallback (callback_object, 100, timer.TYPE_REPEATING_SLACK);
 }
 
+// Miscellaneous
+
+function bkch_focus (element)
+{
+    element.focus ();
+    // Now we have to move the caret as well:
+    var dispatcher = element.ownerDocument.commandDispatcher;
+    dispatcher.advanceFocus ();
+}
+
 // Preference handling
 
 var bkch_preferences = {
