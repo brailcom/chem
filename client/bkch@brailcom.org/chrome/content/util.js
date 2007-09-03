@@ -53,10 +53,11 @@ function bkch_run_timer (callback)
 
 function bkch_focus (element)
 {
+    // The following seems to move both focus and the caret position in an
+    // acceptable way
+    var dispatcher = document.commandDispatcher;
     element.focus ();
-    // Now we have to move the caret as well:
-    var dispatcher = element.ownerDocument.commandDispatcher;
-    dispatcher.advanceFocus ();
+    dispatcher.advanceFocusIntoSubtree (element);
 }
 
 // Preference handling
