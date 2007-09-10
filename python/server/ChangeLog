@@ -1,8 +1,20 @@
+2007-09-10   Beda Kosata <kosatab@vscht.cz>
+	
+	* object_types.py: add text_dump() method to object_types that gives
+	either plain or recursive text dump of objects data
+
+	* chem_reader.py: atom objects are now PartMultiView(), not ValuePartMultiView()
+	- the Value was redundant, it is one of the views. View priorities should provide
+	a similar functionality in the future.
+	
+	
 2007-09-03   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: add support for reading summary formulas (Na2SO4 etc.)
 	                  (this does not provide structure of the compound - just a
-	                   set of disconnected atoms)
+	                   set of disconnected atoms).
+	Add known_formats method that returns a list of all known formats.
+	
 	
 2007-07-30   Beda Kosata <kosatab@vscht.cz>
 

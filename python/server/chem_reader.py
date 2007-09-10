@@ -25,35 +25,16 @@ class ChemReader:
                               3: 'REL_TRIPLE_BOND',
                               4: 'REL_AROMATIC_BOND'}
 
-    # reader methods for different formats
-    @classmethod
-    def _read_smiles(self, text):
-        mol = oasa.smiles.text_to_mol(text)
-        return mol
-
-    @classmethod
-    def _read_molfile(self, text):
-        mol = oasa.molfile.text_to_mol(text)
-        return mol
-
-    @classmethod
-    def _read_summary_formula(self, text):
-        sum_dict = oasa.periodic_table.formula_dict(text)
-        mol = oasa.molecule()
-        for (symbol,count) in sum_dict.iteritems():
-            for i in range(count):
-                a = oasa.atom(symbol)
-                a.valency = 0
-                mol.add_vertex(a)
-        return mol
-    #// reader methods for different formats
-
     # known formats
     formats = { "SMILES": "_read_smiles",
                 "Molfile": "_read_molfile",
                 "summary": "_read_summary_formula",
                 }
 
+    @classmethod
+    def known_formats(self):
+        """returns a list of all currently supported formats."""
+        return self.formats.keys()
 
     @classmethod
     def process_string(self, text, format="SMILES"):
@@ -61,7 +42,7 @@ class ChemReader:
         the internal representation;
         At present it is only a proxy to process_molecule_string as there is no support
         for reactions yet. After this support is added, it will hopefully be able to
-        guess the right kind of data a pass it to the corresponding method."""
+        guess the right kind of data and pass it to the corresponding method."""
         return self.process_molecule_string(text, format=format)
 
     @classmethod
@@ -91,7 +72,7 @@ class ChemReader:
         mol_data.add_view(mol_data_atoms)
         _atom_to_a_data = {}
         for atom in mol.atoms:
-            a_data = ValuePartMultiView(id2t("ATOM"), atom.symbol)
+            a_data = PartMultiView(id2t("ATOM"))
             for key in ('ATOM_SYMBOL','NAME_CZ','VAL_ELECTRONS','DESC','EN','NAME_EN','NAME_LAT','OX_NUMBERS','PROTON_NUMBER','ATOM_WEIGHT'):
                 if key in symbol2properties[atom.symbol]:
                     value = symbol2properties[atom.symbol][key]
@@ -105,4 +86,31 @@ class ChemReader:
             for e,n in atom.get_neighbor_edge_pairs():
                 a_data.add_neighbor(Relation(id2t(self.bond_order_to_relation[e.order]), _atom_to_a_data[n]))
         return mol_data
+
+
+    ## ---------- private methods ----------
         
+    # reader methods for different formats
+    @classmethod
+    def _read_smiles(self, text):
+        mol = oasa.smiles.text_to_mol(text)
+        return mol
+
+    @classmethod
+    def _read_molfile(self, text):
+        mol = oasa.molfile.text_to_mol(text)
+        return mol
+
+    @classmethod
+    def _read_summary_formula(self, text):
+        sum_dict = oasa.periodic_table.formula_dict(text)
+        mol = oasa.molecule()
+        for (symbol,count) in sum_dict.iteritems():
+            for i in range(count):
+                a = oasa.atom(symbol)
+                a.valency = 0
+                mol.add_vertex(a)
+        return mol
+    #// reader methods for different formats
+
+    #// ---------- private methods ----------

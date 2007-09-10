@@ -50,6 +50,8 @@ class Data(object):
     def __str__(self):
         return "%s: type_id='%s', description='%s'" % (self.__class__.__name__, self.data_type().id(), self.data_type().description())
 
+    def text_dump(self, recursive=False, _level=0, _top_level=True):
+        return ""
 
 
 class MultiView(Data):
@@ -69,6 +71,19 @@ class MultiView(Data):
         """adds a new view to the object"""
         self._views.append(o)
 
+    def text_dump(self, recursive=False, _level=0, _top_level=True):
+        ret = []
+        parent = super(MultiView, self).text_dump(recursive=recursive,_level=_level,_top_level=False)
+        if _top_level:
+            ret.append(_level*" "+str(self)+", id=%s" % self.id())
+        if parent:
+            ret.append(parent)
+        if recursive:
+            ret.append(_level*" "+" Views:")
+            for view in self.views():
+                ret.append(view.text_dump(recursive=recursive, _level=_level+2))
+        return "\n".join(ret)
+
 
 class Part (Data):
     """Part of some larger entity (see Complex). It provides links
@@ -79,16 +94,28 @@ class Part (Data):
         super(Part, self).__init__(data_type)
         self._neighbors = []
 
-
     def add_neighbor(self, rel):
         """rel is the relation, if not given a default Relation is created"""
         assert isinstance(rel, Relation)
         self._neighbors.append(rel)
 
-
     def neighbors(self):
         """returns all relations of this object."""
         return self._neighbors
+
+    def text_dump(self, recursive=False, _level=0, _top_level=True):
+        ret = []
+        parent = super(Part, self).text_dump(recursive=recursive,_level=_level,_top_level=False)
+        if _top_level:
+            ret.append(_level*" "+str(self)+", id=%s" % self.id())
+        if parent:
+            ret.append(parent)
+        if recursive:
+            ret.append(_level*" "+" Neighbors:")
+            for n in self.neighbors():
+                ret.append(n.text_dump(recursive=False,_level=_level+2))
+                ret.append(n.target().text_dump(recursive=False,_level=_level+3))
+        return "\n".join(ret)
     
 
 ## ------------------------------ Views ------------------------------
@@ -105,6 +132,16 @@ class Value(Data):
 
     def __str__(self):
         return "%s: type_id='%s', description='%s', value=%s" % (self.__class__.__name__, self.data_type().id(), self.data_type().description(), self.value())
+
+    def text_dump(self, recursive=False, _level=0, _top_level=True):
+        ret = []
+        parent = super(Value, self).text_dump(recursive=recursive,_level=_level,_top_level=False)
+        if parent:
+            ret.append(parent)
+        if _top_level:
+            ret.append(_level*" "+str(self)+", id=%s" % self.id())
+        return "\n".join(ret)
+
 
 
 class Complex (Data):
@@ -126,6 +163,19 @@ class Complex (Data):
         """returns a list of parts - as relations"""
         return self._parts
 
+    def text_dump(self, recursive=False, _level=0, _top_level=True):
+        ret = []
+        parent = super(Complex, self).text_dump(recursive=recursive,_level=_level,_top_level=False)
+        if _top_level:
+            ret.append(_level*" "+str(self)+", id=%s" % self.id())
+        if parent:
+            ret.append(parent)
+        if recursive:
+            ret.append(_level*" "+" Parts:")
+            for p in self.parts():
+                ret.append(p.text_dump(recursive=recursive,_level=_level+2))
+        return "\n".join(ret)
+
 
 ### -------------------- relation types --------------------
 
@@ -142,6 +192,17 @@ class Relation (Data):
 
     def target(self):
         return self._target
+
+    def text_dump(self, recursive=False, _level=0, _top_level=True):
+        ret = []
+        parent = super(Relation, self).text_dump(recursive=recursive,_level=_level,_top_level=False)
+        if _top_level:
+            ret.append(_level*" "+str(self)+", id=%s" % self.id())
+        if parent:
+            ret.append(parent)
+        if recursive:
+            ret.append(self.target().text_dump(recursive=recursive,_level=_level+1))
+        return "\n".join(ret)
 
 
 ### derived classes, they have to be here explicitly because Pyro can't handle them
