@@ -17,7 +17,9 @@
 
 
 import codecs
+import grp
 import os
+import pwd
 import urllib
 import xml.dom.minidom
 
@@ -155,7 +157,9 @@ class SmilesWebResource(twisted.web.resource.Resource):
 ### Application setup
 
 def make_service(config):
-    application = twisted.application.service.Application('chem') #, uid=1, gid=1)
+    uid = pwd.getpwnam(config['user']).pw_uid
+    gid = grp.getgrnam(config['group']).gr_gid
+    application = twisted.application.service.Application('chem', uid=uid, gid=gid)
     service_collection = twisted.application.service.IServiceCollection(application)
     tcp_server = twisted.application.internet.TCPServer(config['port'], twisted.web.server.Site(WebTree(ChemInterface())))
     tcp_server.setServiceParent(service_collection)
