@@ -18,18 +18,13 @@
 
 import codecs
 import grp
-import os
 import pwd
-import urllib
 import xml.dom.minidom
 
 import twisted.application
 import twisted.internet
 import twisted.web.resource
 import twisted.web.server
-import zope.interface
-
-import oasa
 
 from chem_server import ChemServer
 from object_types import *
