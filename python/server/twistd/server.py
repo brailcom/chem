@@ -21,7 +21,8 @@ import grp
 import pwd
 import xml.dom.minidom
 
-import twisted.application
+import twisted.application.internet
+import twisted.application.service
 import twisted.internet
 import twisted.web.resource
 import twisted.web.server
