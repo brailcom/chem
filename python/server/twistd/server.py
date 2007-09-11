@@ -26,7 +26,7 @@ import twisted.internet
 import twisted.web.resource
 import twisted.web.server
 
-from chem.server.chem_server import ChemServer
+from chem.server.session import Session
 from chem.server.object_types import *
 
 ### Chemical server communication
@@ -36,15 +36,11 @@ class ChemInterface(object):
 
     def __init__(self, *args, **kwargs):
         super(ChemInterface, self).__init__(self, *args, **kwargs)
-        self._server = ChemServer()
+        self._session = Session(1)
 
     def _retrieve_molecule_data(self, smiles):
-        server = self._server
-        session = server.connect()
-        try:
-            data = session.process_string(smiles, format="SMILES")
-        finally:
-            server.disconnect(session.number())
+        session = self._session
+        data = session.process_string(smiles, format="SMILES")
         return data
 
     def _chem_to_dom(self, data):
