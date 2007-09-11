@@ -1,6 +1,6 @@
 import twisted.python
 
-import server
+import chem.server
 
 class Options(twisted.python.usage.Options):
 
@@ -11,4 +11,4 @@ class Options(twisted.python.usage.Options):
         ]
 
 def makeService(config):
-    return server.make_service(config)
+    return chem.server.twistd.server.make_service(config)

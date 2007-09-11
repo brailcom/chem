@@ -26,8 +26,8 @@ import twisted.internet
 import twisted.web.resource
 import twisted.web.server
 
-from chem_server import ChemServer
-from object_types import *
+from chem.server.chem_server import ChemServer
+from chem.server.object_types import *
 
 ### Chemical server communication
 
