@@ -1,0 +1,2 @@
+# -*-python-*-
+register('chem', 'twistd.tap', description="Build a chem server tap", type='tap', tapname='chem')
