@@ -67,7 +67,7 @@ var bkch_preferences = {
     _preferences: false,
 
     _default_values: {
-        'server.host': 'localhost', 'server.port': 8000,
+        'server.host': 'www.brailcom.org', 'server.port': 8000,
         'display.preferred_views': 'ATOM_SYMBOL;NAME',
     },
     
