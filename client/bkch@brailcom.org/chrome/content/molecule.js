@@ -47,6 +47,74 @@ function bkch_display_molecule (frame, smiles)
 
 function bkch_display_element (element, box, header_level, references, labels)
 {
+    // Utility functions for displaying
+    var document = box.ownerDocument;
+    function make_description (text, style, use_value)
+    {
+        var description = document.createElement ('description');
+        if (! text)
+            null;
+        else if (use_value)
+            description.setAttribute ('value', text);
+        else
+            description.appendChild (document.createCDATASection (text));
+        if (style)
+            description.setAttribute ('class', style);
+        return description;
+    }
+    function make_section (caption, level, header_id)
+    {
+        var box = document.createElement ('vbox');
+        var header = make_description (caption, 'header');
+        header.setAttribute ('style', '-moz-user-focus: normal;');
+        if (level)
+            header.setAttribute ('level', level);
+        if (header_id)
+            header.setAttribute ('id', header_id);
+        box.appendChild (header);
+        return box;
+    }
+    function make_group (caption)
+    {
+        var box = document.createElement ('groupbox');
+        var header = document.createElement ('caption');
+        header.setAttribute ('label', caption);
+        box.appendChild (header);
+        return box;
+    }
+    function add_element (element, box)
+    {
+        box.appendChild (element);
+        return element;
+    }
+    function element_text (element) {
+        var text = element.childNodes[0].nodeValue;
+        for (var i = 0; i < text.length; i++) {
+            ch = text.charAt (i);
+            if (ch != ' ' && ch != '\n')
+                break;
+        }
+        if (i > 0)
+            text = text.substring (i);
+        return text;
+        for (var i = text.length; i > 0; i--) {
+            ch = text.charAt (i-1);
+            if (ch != ' ' && ch != '\n')
+                break;
+        }
+        if (i < text.length)
+            text = text.substring (0, i);
+        return text;
+    }
+    function element_value (element)
+    {
+        var children = element.childNodes;
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].nodeName == 'value')
+                return element_text (children[i]);
+        }
+        return null;
+    }
     // Get node's contents
     var value, neighbors, parts;
     var views = [];
@@ -54,7 +122,8 @@ function bkch_display_element (element, box, header_level, references, labels)
     for (var index = 0; index < element.childNodes.length; index++) {
         var child = element.childNodes[index];
         if (child.nodeName == 'value')
-            value = child.childNodes[0].nodeValue;
+            value = element_text (child);
+            //value = child.childNodes[0].nodeValue;
         else if (child.nodeName == 'views') {
             for (var i = 0; i < child.childNodes.length; i++) {
                 var c = child.childNodes[i];
@@ -92,53 +161,6 @@ function bkch_display_element (element, box, header_level, references, labels)
     if (value == undefined && has_no_subparts)
         return;
     var label = element.getAttribute ('description');
-    // Utility functions for displaying
-    var document = box.ownerDocument;
-    function make_description (text, style, use_value)
-    {
-        var description = document.createElement ('description');
-        if (! text)
-            null;
-        else if (use_value)
-            description.setAttribute ('value', text);
-        else
-            description.appendChild (document.createCDATASection (text));
-        if (style)
-            description.setAttribute ('class', style);
-        return description;
-    }
-    function make_section (caption, level)
-    {
-        var box = document.createElement ('vbox');
-        var header = make_description (caption, 'header');
-        header.setAttribute ('style', '-moz-user-focus: normal;')
-        if (level)
-            header.setAttribute ('level', level);
-        box.appendChild (header);
-        return box;
-    }
-    function make_group (caption)
-    {
-        var box = document.createElement ('groupbox');
-        var header = document.createElement ('caption');
-        header.setAttribute ('label', caption);
-        box.appendChild (header);
-        return box;
-    }
-    function add_element (element, box)
-    {
-        box.appendChild (element);
-        return element;
-    }
-    function element_value (element)
-    {
-        var children = element.childNodes;
-        for (var i = 0; i < children.length; i++) {
-            if (children[i].nodeName == 'value')
-                return children[i].childNodes[0].nodeValue;
-        }
-        return null;
-    }
     // Show label or a property pair
     if (has_no_subparts) {
         if (value != undefined)
@@ -168,10 +190,8 @@ function bkch_display_element (element, box, header_level, references, labels)
             }
         }
     }
-    var displayed_element = add_element (make_section (label, header_level), box);
     var bkch_id = element.getAttribute ('id');
-    displayed_element.setAttribute ('bkch-id', bkch_id);
-    displayed_element.setAttribute ('id', bkch_id);
+    var displayed_element = add_element (make_section (label, header_level, bkch_id), box);
     labels[bkch_id] = label;
     // Views
     if (views && views.length > 0) {
