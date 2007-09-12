@@ -1,3 +1,17 @@
-<!ENTITY main.button.display "Zobraz">
-<!ENTITY main.text.intro "Stiskněte tlačítko dole. Nebo můžete navštívit ">
-<!ENTITY main.text.brailcom-site "webové stránky Brailcomu">
+<!ENTITY main.text.intro "
+Toto je bkchem, zpřístupněný nástroj pro studium chemie vytvořený společností
+<html:a href='http://www.brailcom.org'>Brailcom</html:a> a dalšími.
+K dispozici jsou následující funkce.
+">
+
+<!ENTITY main.caption.molecule "Prohlížeč molekul">
+<!ENTITY main.caption.periodic "Periodická tabulka prvků">
+<!ENTITY main.caption.preferences "Nastavení">
+
+<!ENTITY main.button.molecule "Prozkoumat molekulu">
+<!ENTITY main.button.periodic "Periodická tabulka prvků">
+<!ENTITY main.button.preferences "Změny nastavení">
+
+<!ENTITY main.label.molecule "Ve vstupním políčku zapište molekulu ve formátu SMILES a stiskněte následující tlačítko pro prozkoumání molekuly.">
+<!ENTITY main.label.periodic "Stiskem následujícího tlačítka si můžete prohlížet periodickou tabulku prvků.">
+<!ENTITY main.label.preferences "Pro změnu nastavení stiskněte následující tlačítko.">
