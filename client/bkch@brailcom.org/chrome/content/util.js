@@ -29,24 +29,69 @@ function bkch_remove_children (node)
 
 // Page switching
 
-function bkch_switch_page (uri)
-{
-    var frame = document.getElementById ("bkch-frame");
-    frame.setAttribute ('src', uri);
-    return frame;
-}
-
-function bkch_run_timer (callback)
-{
-    var timer = Components.classes['@mozilla.org/timer;1'].createInstance (Components.interfaces.nsITimer);
-    var callback_object =
+var BkchPage = {
+    frame: null,
+    display_timer_interval: 100,
+    get document() { return this.frame.contentDocument; },
+    // Public methods
+    find_element: function (element_id)
     {
-        notify: function (timer) {
-            if (callback ())
-                timer.cancel ()
+        return this.frame.contentDocument.getElementById (element_id);
+    },
+    display: function (after_function)
+    {
+        this.frame = document.getElementById ("bkch-frame");
+        this.frame.setAttribute ('src', this._uri);
+        this._after_display_function = after_function;
+        if (this._primary_element_id || after_function)
+            // The frame elements often don't appear immediately, so we have to use
+            // a timer to wait until they get available
+            this.run_timer (this._display_callback);
+    },
+    run_timer: function (callback) 
+    {
+        var timer = Components.classes['@mozilla.org/timer;1'].createInstance (Components.interfaces.nsITimer);
+        var page = this;
+        var callback_object =
+        {
+            notify: function (timer) {
+                if (callback (page))
+                    timer.cancel ();
+            }
         }
-    }
-    timer.initWithCallback (callback_object, 100, timer.TYPE_REPEATING_SLACK);
+        timer.initWithCallback (callback_object, this.display_timer_interval, timer.TYPE_REPEATING_SLACK);    
+    },
+    // Private methods
+    _display_callback: function (page)
+    {
+        // Strangely enough, `this' is not set correctly when called from a timer.
+        // So we have to provide the `page' argument explicitly.
+        var primary_id = page._primary_element_id;
+        if (primary_id) {
+            var primary_element = page.find_element (primary_id);
+            if (! primary_element)
+                return false;
+        }
+        if (primary_element)
+            bkch_focus (primary_element);
+        if (page._after_display_function)
+            page._after_display_function ();
+        return true;
+    },
+};
+    
+function bkch_page (uri, primary_element_id)
+{
+    this._uri = uri;
+    this._primary_element_id = (primary_element_id == undefined ? 'bkch-primary' : primary_element_id);
+}
+bkch_page.prototype = BkchPage;
+
+function bkch_switch_page (uri, primary_element_id, after_function)
+{
+    var page = new bkch_page (uri, primary_element_id);
+    page.display (after_function);
+    return page;
 }
 
 // Miscellaneous

@@ -1,23 +1,16 @@
 function bkch_molecule ()
 {
-    bkch_switch_page ("chrome://bkch/content/molecule.xul");
-    bkch_run_timer (function () { return bkch_update_molecule (frame, smiles); });
-    var frame = document.getElementById ('bkch-frame');
     var smiles = document.getElementById ('molecule-textbox').value;
+    bkch_switch_page ('chrome://bkch/content/molecule.xul', 'molecule-display-box', function () { bkch_update_molecule (this, smiles); });
 }
 
-function bkch_update_molecule (frame, smiles)
-{
-    var document = frame.contentDocument;
-    if (! document.getElementById ('molecule-display-box'))
-        return false;
-    bkch_display_molecule (frame, smiles);
-    var focus_element = document.getElementsByTagName ('description')[0];
-    focus_element.focus ();
-    return true;
+function bkch_update_molecule (page, smiles)
+{    
+    bkch_display_molecule (page, smiles);
+    page.document.getElementsByTagName ('description')[0].focus ();
 }
-    
-function bkch_display_molecule (frame, smiles)
+
+function bkch_display_molecule (page, smiles)
 {
     // Fetch data
     netscape.security.PrivilegeManager.enablePrivilege ("UniversalXPConnect");
@@ -32,7 +25,7 @@ function bkch_display_molecule (frame, smiles)
         return false;
     }
     // Remove old contents
-    var top_box = frame.contentDocument.getElementById ('molecule-display-box');
+    var top_box = page.find_element ('molecule-display-box');
     bkch_remove_children (top_box);
     // Display data
     var element = doc.documentElement;

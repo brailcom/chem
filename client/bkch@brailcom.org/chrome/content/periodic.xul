@@ -12,5 +12,5 @@
   <script src="util.js"/>
   <script src="periodic.js"/>
 
-  <description style="-moz-user-focus: normal;">&periodic.not-implemented;</description>
+  <description id="bkch-primary" style="-moz-user-focus: normal;">&periodic.not-implemented;</description>
 </window>
