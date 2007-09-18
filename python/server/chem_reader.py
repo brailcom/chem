@@ -73,7 +73,7 @@ class ChemReader:
         _atom_to_a_data = {}
         for atom in mol.atoms:
             a_data = PartMultiView(id2t("ATOM"))
-            for key in ('ATOM_SYMBOL','NAME_CZ','VAL_ELECTRONS','DESC','EN','NAME_EN','NAME_LAT','OX_NUMBERS','PROTON_NUMBER','ATOM_WEIGHT'):
+            for key in ('ATOM_SYMBOL','NAME_CZ','VAL_ELECTRONS','DESC','EN','NAME_EN','NAME_LAT','OX_NUMBERS','PROTON_NUMBER','ATOM_WEIGHT','ORBITALS'):
                 if key in symbol2properties[atom.symbol]:
                     value = symbol2properties[atom.symbol][key]
                     if type(value) == type([]):

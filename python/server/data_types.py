@@ -46,7 +46,7 @@ class DataTypeFactory:
                    "NAME_CZ": ("Czech name", "Czech name"),
                    "NAME_EN": ("English name", "English name"),
                    "DESC": ("Description", "Description"),
-                   
+                   "ORBITALS": ("Electron structure", "Electron structure of occupied orbitals"),                   
 
                    "REL_REACTANT": ("Reactant","Reactant of a reaction"),
                    "REL_PRODUCT": ("Product","Product of a reaction"),
