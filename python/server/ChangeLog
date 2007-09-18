@@ -1,3 +1,12 @@
+2007-09-18   Beda Kosata <kosatab@vscht.cz>
+
+	* detail_periodic_table.py: new data - ROW, COLUMN, ORBITALS
+
+	* object_types.py: support for view priorities. Priorities are taken
+	from default_priority of a data_type
+
+	* data_types.py: add default_priority to data_type objects
+
 2007-09-10   Beda Kosata <kosatab@vscht.cz>
 	
 	* object_types.py: add text_dump() method to object_types that gives

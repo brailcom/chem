@@ -34,6 +34,7 @@ class Data(object):
     def __init__(self, data_type):
         super(Data, self).__init__()
         self._data_type = data_type
+        self._priority = data_type.default_priority()
         Data._id_lock.acquire()
         try:
             self._id = Data._id_counter
@@ -47,8 +48,14 @@ class Data(object):
     def data_type(self):
         return self._data_type
 
+    def priority(self):
+        return self._priority
+
+    def change_priority(self, priority):
+        self._priority = priority
+
     def __str__(self):
-        return "%s: type_id='%s', description='%s'" % (self.__class__.__name__, self.data_type().id(), self.data_type().description())
+        return "%s: type_id='%s', description='%s', priority=%d" % (self.__class__.__name__, self.data_type().id(), self.data_type().description(), self.priority())
 
     def text_dump(self, recursive=False, _level=0, _top_level=True):
         return ""
@@ -56,7 +63,7 @@ class Data(object):
 
 class MultiView(Data):
     """MultiView is an object that has multiple views that represent the structure from
-    different points of view. (molecule may be view as a picture, MF, Complex structure
+    different points of view. (molecule may be viewed as a picture, MF, Complex structure
     based on parts, etc.)
     """
 
@@ -65,7 +72,10 @@ class MultiView(Data):
         self._views = []
 
     def views(self):
-        return self._views
+        p2v = [(v.priority(), v) for v in self._views]
+        p2v.sort(reverse=True)
+        vs = [v[1] for v in p2v]
+        return vs
 
     def add_view(self, o):
         """adds a new view to the object"""
