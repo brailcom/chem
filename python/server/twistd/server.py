@@ -201,6 +201,6 @@ def make_service(config):
     gid = grp.getgrnam(config['group']).gr_gid
     application = twisted.application.service.Application('chem', uid=uid, gid=gid)
     service_collection = twisted.application.service.IServiceCollection(application)
-    tcp_server = twisted.application.internet.TCPServer(config['port'], twisted.web.server.Site(WebTree(ChemInterface())))
+    tcp_server = twisted.application.internet.TCPServer(int(config['port']), twisted.web.server.Site(WebTree(ChemInterface())))
     tcp_server.setServiceParent(service_collection)
     return service_collection
