@@ -20,9 +20,13 @@
     <handlers>
       <handler event="keypress" phase="capturing" keycode="VK_RETURN" action="bkch_element_command (event, bkch_element_info)"/>
       <handler event="keypress" phase="capturing" keycode="VK_LEFT" action="bkch_element_command (event, bkch_element_left)"/>
+      <handler event="keypress" phase="capturing" modifier="shift" key="H" action="bkch_element_command (event, bkch_element_left)"/>
       <handler event="keypress" phase="capturing" keycode="VK_RIGHT" action="bkch_element_command (event, bkch_element_right)"/>
+      <handler event="keypress" phase="capturing" modifier="shift" key="L" action="bkch_element_command (event, bkch_element_right)"/>
       <handler event="keypress" phase="capturing" keycode="VK_UP" action="bkch_element_command (event, bkch_element_up)"/>
+      <handler event="keypress" phase="capturing" modifier="shift" key="K" action="bkch_element_command (event, bkch_element_up)"/>
       <handler event="keypress" phase="capturing" keycode="VK_DOWN" action="bkch_element_command (event, bkch_element_down)"/>
+      <handler event="keypress" phase="capturing" modifier="shift" key="J" action="bkch_element_command (event, bkch_element_down)"/>
       <handler event="keypress" phase="capturing" key="e" action="bkch_element_command (event, bkch_element_electrons)"/>
       <handler event="keypress" phase="capturing" key="g" action="bkch_element_command (event, bkch_element_group)"/>
       <handler event="keypress" phase="capturing" key="p" action="bkch_element_command (event, bkch_element_period)"/>
