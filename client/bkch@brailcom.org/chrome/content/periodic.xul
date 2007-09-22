@@ -12,7 +12,12 @@
   <script src="util.js"/>
   <script src="server.js"/>
   <script src="periodic.js"/>
-
+  
+  <keyset>
+    <key id="bkch-periodic-go-table-key" key="T" oncommand="bkch_periodic_go_table();"/>
+    <key id="bkch-periodic-go-extra-table-key" modifiers="shift" key="T" oncommand="bkch_periodic_go_extra_table();"/>
+  </keyset>
+  
   <vbox flex="1" style="overflow: auto;">
     <description id="bkch-primary" class="header" level="1" style="-moz-user-focus: normal;">&periodic.header;</description>
     <vbox>

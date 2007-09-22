@@ -5,6 +5,8 @@ function bkch_periodic_table ()
 
 var bkch_periodic_element_data = null;
 var bkch_periodic_tooltips = null;
+var bkch_periodic_last_element = null;
+var bkch_periodic_last_extra_element = null;
 
 function bkch_periodic_display (page)
 {
@@ -54,7 +56,7 @@ function bkch_periodic_display (page)
     var empty_cell_string = strings.getString ('bkchPeriodicEmptyCell');
     var row_string = strings.getString ('bkchPeriodicRow');
     var column_string = strings.getString ('bkchPeriodicColumn');
-    function render_table (top_node_id, row_min, row_max, col_min, col_max) {
+    function render_table (top_node_id, row_min, row_max, col_min, col_max, focus_variable) {
         var top_node = page.find_element (top_node_id);
         var header_row = bkch_add_element (top_node, 'row');
         bkch_add_element (header_row, 'description');
@@ -68,6 +70,8 @@ function bkch_periodic_display (page)
                 var element = table_row[col];
                 var dom_element_node = bkch_add_element (dom_row_node, (element ? 'element' : 'xelement'),
                                                          {class: 'bkch-element-button',
+                                                          id: 'bkch-element-' + row + '-' + col,
+                                                          onfocus: focus_variable + '=this;',
                                                           bkch_row: row, bkch_column: col});
                 if (element) {
                     var symbol = element['ATOM_SYMBOL'];
@@ -81,8 +85,8 @@ function bkch_periodic_display (page)
             }
         }
     }
-    render_table ('bkch-periodic-table-node', 1, row_max, 1, col_max);
-    render_table ('bkch-periodic-extra-table-node', extra_row_min, extra_row_max, extra_col_min, extra_col_max);
+    render_table ('bkch-periodic-table-node', 1, row_max, 1, col_max, 'bkch_periodic_last_element');
+    render_table ('bkch-periodic-extra-table-node', extra_row_min, extra_row_max, extra_col_min, extra_col_max, 'bkch_periodic_last_extra_element');
     bkch_periodic_update_tooltips (page.document);
     // Update settings
     var tooltips_node = page.find_element ('bkch-tooltip-settings');
@@ -265,4 +269,18 @@ function bkch_element_period (element)
 
 function bkch_element_related (element)
 {
+}
+
+function bkch_periodic_go_table ()
+{
+    if (! bkch_periodic_last_element)
+        bkch_periodic_last_element = document.getElementById ('bkch-periodic-table-node').getElementsByTagName ('element')[0];
+    bkch_focus (bkch_periodic_last_element);
+}
+
+function bkch_periodic_go_extra_table ()
+{
+    if (! bkch_periodic_last_extra_element)
+        bkch_periodic_last_extra_element = document.getElementById ('bkch-periodic-extra-table-node').getElementsByTagName ('element')[0];
+    bkch_focus (bkch_periodic_last_extra_element);
 }
