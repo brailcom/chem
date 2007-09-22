@@ -44,6 +44,7 @@ var BkchPage = {
     frame: null,
     display_timer_interval: 100,
     get document() { return this.frame.contentDocument; },
+    data: {},
     // Public methods
     find_element: function (element_id)
     {
