@@ -27,9 +27,9 @@
 
     <spacer style="height: 3ex;"/>
 
-    <description class="header" level="2">&periodic.label.details;</description>
-    <vbox>
-      <grid>
+    <description class="header" level="2" style="-moz-user-focus: normal;">&periodic.label.details;</description>
+    <vbox id="bkch-element-info" style="-moz-user-focus: normal;">
+      <grid style="-moz-user-focus: normal;">
         <rows id="bkch-element-details"/>
       </grid>
     </vbox>

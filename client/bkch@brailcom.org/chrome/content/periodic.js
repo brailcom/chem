@@ -203,7 +203,7 @@ function bkch_element_info (element)
         bkch_add_element (row, 'description', {value: name})
         bkch_add_element (row, 'description', {value: properties[name]})
     }
-    bkch_focus (top_node);
+    bkch_focus (document.getElementById ('bkch-element-info'));
 }
 
 function bkch_element_move (element, row_increment, col_increment)
