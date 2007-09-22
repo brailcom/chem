@@ -12,6 +12,7 @@
         xmlns:html="http://www.w3.org/1999/xhtml">
 <script src="util.js"/>
 <script src="error.js"/>
+<script src="server.js"/>
 <script src="molecule.js"/>
 <script src="periodic.js"/>
 <script src="preferences.js"/>
