@@ -5,9 +5,11 @@ BkchemComponent.prototype = {
     error_string: null,
     get error_message () { return this.error_string; },
     
-    fetch_xml: function (host, port, smiles) {
+    fetch_xml: function (host, port, function_name, argument) {
         this.error_string = null;
-        var uri = 'http://' + host + ':' + port + '/smiles/' + encodeURIComponent(smiles);
+        var uri = 'http://' + host + ':' + port + '/' + function_name;
+        if (argument)
+            uri = uri + '/' + encodeURIComponent(argument);
         var req  = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance (Components.interfaces.nsIXMLHttpRequest);
         try {
             req.open ('GET', uri, false);

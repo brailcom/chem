@@ -12,6 +12,7 @@
         xmlns:html="http://www.w3.org/1999/xhtml">
   <script src="util.js"/>
   <script src="error.js"/>
+  <script src="server.js"/>
   <script src="molecule.js"/>
   
   <box id="molecule-display-box" orient="vertical" flex="1" style="overflow: auto;">

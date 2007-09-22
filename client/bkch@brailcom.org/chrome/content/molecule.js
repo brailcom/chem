@@ -13,17 +13,9 @@ function bkch_update_molecule (page, smiles)
 function bkch_display_molecule (page, smiles)
 {
     // Fetch data
-    netscape.security.PrivilegeManager.enablePrivilege ("UniversalXPConnect");
-    var bkchem = Components.classes["@brailcom.org/bkch/bkchem;1"].createInstance (Components.interfaces.nsIBkchem);
-    if (! bkchem) {
-        alert ("bkchem component not found!");
-        return false;
-    }
-    var doc = bkchem.fetch_xml (bkch_preferences.char ('server.host'), bkch_preferences.int ('server.port'), smiles);
-    if (doc == null) {
-        alert (bkchem.error_message);
-        return false;
-    }
+    var doc = bkch_call_server ('smiles', smiles);
+    if (doc == null)
+        return;
     // Remove old contents
     var top_box = page.find_element ('molecule-display-box');
     bkch_remove_children (top_box);
