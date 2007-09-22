@@ -1,1 +1,5 @@
-<!ENTITY periodic.not-implemented "Not yet implemented.">
+<!ENTITY periodic.header "Periodic table">
+<!ENTITY periodic.settings.header "Settings">
+<!ENTITY periodic.settings.label.autoread "Automated reading">
+<!ENTITY periodic.settings.autoread "Walk through selected elements automatically">
+<!ENTITY periodic.settings.label.tooltips "Tooltip contents">

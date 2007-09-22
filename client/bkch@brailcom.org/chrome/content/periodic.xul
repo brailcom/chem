@@ -10,7 +10,29 @@
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
   <script src="util.js"/>
+  <script src="server.js"/>
   <script src="periodic.js"/>
 
-  <description id="bkch-primary" style="-moz-user-focus: normal;">&periodic.not-implemented;</description>
+  <vbox flex="1" style="overflow: auto;">
+    <description id="bkch-primary" class="header" level="1" style="-moz-user-focus: normal;">&periodic.header;</description>
+    <vbox>
+      <grid>
+        <rows id="bkch-periodic-table-node"/>
+      </grid>
+      <spacer style="height: 1ex;"/>
+      <grid>
+        <rows id="bkch-periodic-extra-table-node"/>
+      </grid>    
+    </vbox>
+
+    <spacer style="height: 3ex;"/>
+
+    <description class="header" level="2">&periodic.settings.header;</description>
+    <vbox>
+      <groupbox>
+        <caption label="&periodic.settings.label.tooltips;"/>
+        <vbox id="bkch-tooltip-settings"/>
+      </groupbox>
+    </vbox>
+  </vbox>
 </window>

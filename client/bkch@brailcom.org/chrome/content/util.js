@@ -21,6 +21,17 @@ function bkch_filter_element (func, element)
     return children;
 }
 
+function bkch_add_element (parent, tag, attributes)
+{
+    var child = parent.ownerDocument.createElement (tag);
+    if (attributes) {
+        for (name in attributes)
+            child.setAttribute (name, attributes[name]);
+    }
+    parent.appendChild (child);
+    return child;
+}
+
 function bkch_remove_children (node)
 {
     while (node.hasChildNodes ())
