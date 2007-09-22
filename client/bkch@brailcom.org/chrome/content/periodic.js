@@ -1,52 +1,18 @@
 function bkch_periodic_table ()
 {
-    bkch_switch_page ("chrome://bkch/content/periodic.xul", 'bkch-periodic-window', bkch_periodic_display);
+    bkch_switch_page ("chrome://bkch/content/periodic.xul", 'bkch-periodic-window', function () { bkch_periodic_display (this); });
 }
 
-function bkch_periodic_display ()
-{
-    doc = bkch_call_server ('periodic');
-    if (doc == null)
-        return;
-    if (! this.data.element_data) {
-        this.data.tooltips = {'NAME_EN': true};    
-        bkch_update_periodic_data (this, doc);
-    }
-    bkch_periodic_render (this);
-}
+var bkch_periodic_element_data = null;
+var bkch_periodic_tooltips = null;
 
-function bkch_update_periodic_data (page, doc)
+function bkch_periodic_display (page)
 {
-    var data = {};
-    var top_element = doc.documentElement;
-    var elements = top_element.childNodes;
-    for (var i = 0; i < elements.length; i++) {
-        var elt = elements[i];
-        if (elt.nodeName != 'element')
-            // ignore text nodes
-            continue;
-        var symbol = elt.getAttribute ('symbol');
-        var properties = {};
-        var property_elements = elt.childNodes;
-        for (var j = 0; j < property_elements.length; j++) {
-            var p = property_elements[j];
-            if (p.nodeName != 'property')
-                // ignore text nodes
-                continue;
-            properties[p.getAttribute ('name')] = p.getAttribute ('value');
-        }
-        data[symbol] = properties;
-    }
-    page.data.element_data = data;
-}
-
-function bkch_periodic_render (page)
-{
-    var element_data = page.data.element_data;
+    bkch_periodic_update_data ();
+    var element_data = bkch_periodic_element_data;
     // Any problem?
     if (element_data == null)
         return;
-    bkch_periodic_page = page;
     // Prepare data
     var row_max = 0, col_max = 0;
     var extra_row_min = 1000, extra_row_max = 0, extra_col_min = 1000, extra_col_max = 0;
@@ -110,24 +76,67 @@ function bkch_periodic_render (page)
     }
     render_table ('bkch-periodic-table-node', 1, row_max, 1, col_max);
     render_table ('bkch-periodic-extra-table-node', extra_row_min, extra_row_max, extra_col_min, extra_col_max);
-    bkch_periodic_update_tooltips (page);
+    bkch_periodic_update_tooltips (page.document);
     // Update settings
     var tooltips_node = page.find_element ('bkch-tooltip-settings');
-    var tooltips = page.data.tooltips;
+    var tooltips = bkch_periodic_tooltips;
     for (var i = 0; i < property_names_list.length; i++) {
         var name = property_names_list[i];
         var checkbox_node = bkch_add_element (tooltips_node, 'checkbox',
                                               {label: name, checked: tooltips[name], bkch_property_name: name,
-                                               oncommand: 'bkch_periodic_set_tooltip(this)'});
-        checkbox_node.addEventListener ('command', function (event) { bkch_periodic_set_tooltip (page, event.target); }, false);
+                                               oncommand: 'bkch_periodic_set_tooltip(event.target)'});
     }
 }
 
-function bkch_periodic_update_tooltips (page)
+function bkch_periodic_update_data ()
 {
-    var tooltips = page.data.tooltips;
-    var element_data = page.data.element_data;
-    var element_nodes = page.document.getElementsByTagName ('element');
+    if (bkch_periodic_element_data == null)
+        bkch_periodic_update_element_data ();
+    if (bkch_periodic_tooltips == null)
+        bkch_periodic_init_tooltips ();
+}
+
+function bkch_periodic_init_tooltips ()
+{
+    bkch_periodic_tooltips = {'NAME_EN': true};
+}
+
+function bkch_periodic_update_element_data ()
+{
+    var doc = bkch_call_server ('periodic');
+    if (doc == null)
+        return;
+    var data = {};
+    var top_element = doc.documentElement;
+    var elements = top_element.childNodes;
+    for (var i = 0; i < elements.length; i++) {
+        var elt = elements[i];
+        if (elt.nodeName != 'element')
+            // ignore text nodes
+            continue;
+        var symbol = elt.getAttribute ('symbol');
+        var properties = {};
+        var property_elements = elt.childNodes;
+        for (var j = 0; j < property_elements.length; j++) {
+            var p = property_elements[j];
+            if (p.nodeName != 'property')
+                // ignore text nodes
+                continue;
+            properties[p.getAttribute ('name')] = p.getAttribute ('value');
+        }
+        data[symbol] = properties;
+    }
+    bkch_periodic_element_data = data;
+}
+
+function bkch_periodic_update_tooltips (doc_node)
+{
+    if (! doc_node)
+        doc_node = document;
+    bkch_periodic_update_data ();
+    var element_data = bkch_periodic_element_data;
+    var tooltips = bkch_periodic_tooltips;
+    var element_nodes = doc_node.getElementsByTagName ('element');
     for (var i = 0; i < element_nodes.length; i++) {
         var element_node = element_nodes[i];
         var element = element_data[element_node.getAttribute ('bkch-element-symbol')];
@@ -163,12 +172,13 @@ function bkch_periodic_unfilter ()
 
 // Callbacks
 
-function bkch_periodic_set_tooltip (page, element)
+function bkch_periodic_set_tooltip (element)
 {
+    bkch_periodic_update_data ();
     var property_name = element.getAttribute ('bkch_property_name');
     var value = element.checked;
-    page.data.tooltips[property_name] = element.getAttribute('checked');
-    bkch_periodic_update_tooltips (page);
+    bkch_periodic_tooltips[property_name] = element.getAttribute('checked');
+    bkch_periodic_update_tooltips ();
 }
 
 // Commands
@@ -181,7 +191,17 @@ function bkch_element_command (event, command)
 
 function bkch_element_info (element)
 {
-    alert ('info called!');
+    bkch_periodic_update_data ();
+    var symbol = element.getAttribute ('bkch-element-symbol');
+    var top_node = document.getElementById ('bkch-element-details');
+    bkch_remove_children (top_node);
+    var properties = bkch_periodic_element_data[symbol];
+    for (var name in properties) {
+        var row = bkch_add_element (top_node, 'row');
+        bkch_add_element (row, 'description', {value: name})
+        bkch_add_element (row, 'description', {value: properties[name]})
+    }
+    bkch_focus (top_node);
 }
 
 function bkch_element_left (element)

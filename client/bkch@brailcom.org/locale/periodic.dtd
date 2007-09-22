@@ -3,3 +3,4 @@
 <!ENTITY periodic.settings.label.autoread "Automated reading">
 <!ENTITY periodic.settings.autoread "Walk through selected elements automatically">
 <!ENTITY periodic.settings.label.tooltips "Tooltip contents">
+<!ENTITY periodic.label.details "Element details">

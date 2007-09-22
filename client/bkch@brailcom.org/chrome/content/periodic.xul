@@ -22,7 +22,16 @@
       <spacer style="height: 1ex;"/>
       <grid>
         <rows id="bkch-periodic-extra-table-node"/>
-      </grid>    
+      </grid>
+    </vbox>
+
+    <spacer style="height: 3ex;"/>
+
+    <description class="header" level="2">&periodic.label.details;</description>
+    <vbox>
+      <grid>
+        <rows id="bkch-element-details"/>
+      </grid>
     </vbox>
 
     <spacer style="height: 3ex;"/>
