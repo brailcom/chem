@@ -62,7 +62,9 @@ function bkch_periodic_display (page)
             bkch_add_element (dom_row_node, 'description', {class: 'bkch-periodic-header', value: row});
             for (var col = col_min; col <= col_max; col++) {
                 var element = table_row[col];
-                var dom_element_node = bkch_add_element (dom_row_node, (element ? 'element' : 'xelement'), {class: 'bkch-element-button'});
+                var dom_element_node = bkch_add_element (dom_row_node, (element ? 'element' : 'xelement'),
+                                                         {class: 'bkch-element-button',
+                                                          bkch_row: row, bkch_column: col});
                 if (element) {
                     var symbol = element['ATOM_SYMBOL'];
                     dom_element_node.setAttribute ('label', symbol);
@@ -204,24 +206,44 @@ function bkch_element_info (element)
     bkch_focus (top_node);
 }
 
+function bkch_element_move (element, row_increment, col_increment)
+{
+    var row = parseInt (element.getAttribute ('bkch_row')) + row_increment;
+    var col = parseInt (element.getAttribute ('bkch_column')) + col_increment;
+    var table = document.getElementById (col < 100 ? 'bkch-periodic-table-node' : 'bkch-periodic-extra-table-node');
+    function find_child (tag)
+    {
+        var children = table.getElementsByTagName (tag);
+        for (var i = 0; i < children.length; i++) {
+            var candidate = children[i];
+            if (candidate.getAttribute ('bkch_row') == row && candidate.getAttribute ('bkch_column') == col)
+                return candidate;
+        }
+        return null;
+    }
+    var target = find_child ('element') || find_child ('xelement');
+    if (target)
+        bkch_focus (target);
+}
+
 function bkch_element_left (element)
 {
-    alert ('left called!');
+    bkch_element_move (element, 0, -1);
 }
 
 function bkch_element_right (element)
 {
-    alert ('right called!');
+    bkch_element_move (element, 0, 1);
 }
 
 function bkch_element_down (element)
 {
-    alert ('down called!');
+    bkch_element_move (element, 1, 0);
 }
 
 function bkch_element_up (element)
 {
-    alert ('up called!');
+    bkch_element_move (element, -1, 0);
 }
 
 function bkch_element_electrons (element)
