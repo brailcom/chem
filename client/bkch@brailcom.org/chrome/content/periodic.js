@@ -50,6 +50,10 @@ function bkch_periodic_display (page)
         property_names_list.push (p);
     property_names_list.sort ();
     // Render the table
+    var strings = document.getElementById ('bkch-periodic-strings');
+    var empty_cell_string = strings.getString ('bkchPeriodicEmptyCell');
+    var row_string = strings.getString ('bkchPeriodicRow');
+    var column_string = strings.getString ('bkchPeriodicColumn');
     function render_table (top_node_id, row_min, row_max, col_min, col_max) {
         var top_node = page.find_element (top_node_id);
         var header_row = bkch_add_element (top_node, 'row');
@@ -71,7 +75,8 @@ function bkch_periodic_display (page)
                     dom_element_node.setAttribute ('bkch-element-symbol', symbol);
                 }
                 else {
-                    dom_element_node.setAttribute ('tooltiptext', "empty cell");
+                    var tooltip_text = empty_cell_string + ' (' + row_string + ' ' + row + ', ' + column_string + ' ' + col + ')';
+                    dom_element_node.setAttribute ('tooltiptext', tooltip_text);
                 }
             }
         }

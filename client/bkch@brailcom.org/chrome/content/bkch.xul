@@ -17,6 +17,10 @@
 <script src="periodic.js"/>
 <script src="preferences.js"/>
 <script src="bkch.js"/>
+  
+<stringbundleset>
+  <stringbundle id="bkch-periodic-strings" src="chrome://bkch/locale/periodic.properties"/>
+</stringbundleset>
 
 <vbox id="main-box" flex="1">
   <description>&main.text.intro;</description>
