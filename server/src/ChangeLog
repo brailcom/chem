@@ -1,0 +1,64 @@
+2007-09-18   Beda Kosata <kosatab@vscht.cz>
+
+	* detail_periodic_table.py: new data - ROW, COLUMN, ORBITALS
+
+	* object_types.py: support for view priorities. Priorities are taken
+	from default_priority of a data_type
+
+	* data_types.py: add default_priority to data_type objects
+
+2007-09-10   Beda Kosata <kosatab@vscht.cz>
+	
+	* object_types.py: add text_dump() method to object_types that gives
+	either plain or recursive text dump of objects data
+
+	* chem_reader.py: atom objects are now PartMultiView(), not ValuePartMultiView()
+	- the Value was redundant, it is one of the views. View priorities should provide
+	a similar functionality in the future.
+	
+	
+2007-09-03   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: add support for reading summary formulas (Na2SO4 etc.)
+	                  (this does not provide structure of the compound - just a
+	                   set of disconnected atoms).
+	Add known_formats method that returns a list of all known formats.
+	
+	
+2007-07-30   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: add support for reading Molfiles (from strings)
+
+	* session.py: the method process_string now requires an additional argument "format"
+	that specifies the format of the string. In future some kind of format-guessing might
+	be added, but for now we have to be explicit.
+	
+	* gtk_test_client.py: when a command line argument evaluates to an existing file
+	process this file as molfile
+	
+2007-06-29   Beda Kosata <kosatab@vscht.cz>
+
+	* detail_periodic_table.py: simple python script
+	containing information about chemical elements taken from
+	several sources.
+	
+	* chem_reader.py: make use of the information in detail_periodic_table.py
+	
+	
+2007-06-12   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: Work started on non-fake reader.
+	The rest modified to use this reader.
+	Use naming added to OASA where possible. 
+			
+	* gtk_test_client.py: drop some debugging output.
+	Do not run an extra local session on startup for check purposes.
+
+	When additional argument from command-line is given, use it as
+	the input SMILES, otherwise use a default value.
+
+	* error_logger.py: central point for reporting errors and warnings
+	to the user
+
+	* README.setup: added info about InChI program installation
+	
