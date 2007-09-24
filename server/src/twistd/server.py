@@ -29,6 +29,7 @@ import twisted.web.server
 
 from chem.server.session import Session
 from chem.server.object_types import *
+import chem.server.detail_periodic_table
 
 ### Chemical server communication
 
@@ -38,24 +39,35 @@ class ChemInterface(object):
     def __init__(self, *args, **kwargs):
         super(ChemInterface, self).__init__(self, *args, **kwargs)
         self._session = Session(1)
+        self._periodic_table_xml = None
 
+    # DOM utilities
+
+    def _create_dom(self):
+        return xml.dom.minidom.Document()
+    
+    def _add_dom_element(self, dom, node, tag, attributes={}, text=None):
+        element = dom.createElement(tag)
+        for name, value in attributes.items():
+            attribute = dom.createAttribute(name)
+            element.setAttributeNode(attribute)
+            element.setAttribute(name, unicode(value))
+        if text is not None:
+            element.appendChild(dom.createTextNode(unicode(text)))
+        node.appendChild(element)
+        return element
+        
+    # Chemical data processing
+        
     def _retrieve_molecule_data(self, smiles):
         session = self._session
         data = session.process_string(smiles, format="SMILES")
         return data
 
     def _chem_to_dom(self, data):
-        dom = xml.dom.minidom.Document()
-        def add_element(node, tag, attributes={}, text=None):
-            element = dom.createElement(tag)
-            for name, value in attributes.items():
-                attribute = dom.createAttribute(name)
-                element.setAttributeNode(attribute)
-                element.setAttribute(name, unicode(value))
-            if text is not None:
-                element.appendChild(dom.createTextNode(unicode(text)))
-            node.appendChild(element)
-            return element
+        dom = self._create_dom()
+        def add_element(*args, **kwargs):
+            return self._add_dom_element(dom, *args, **kwargs)
         def transform(data, node):
             data_type = data.data_type()
             id = data.id()
@@ -85,7 +97,21 @@ class ChemInterface(object):
         data = self._retrieve_molecule_data(smiles)
         dom = self._chem_to_dom(data)
         return dom
+
+    def _make_periodic_table_dom(self):
+        periodic_table = chem.server.detail_periodic_table.symbol2properties
+        dom = self._create_dom()
+        def add_element(*args, **kwargs):
+            return self._add_dom_element(dom, *args, **kwargs)
+        root = add_element(dom, 'periodic')
+        for symbol, properties in periodic_table.items():
+            element = add_element(root, 'element', attributes={'symbol': symbol})
+            for name, value in properties.items():
+                add_element(element, 'property', attributes={'name': name, 'value': value})
+        return dom
         
+    # Public methods
+
     def molecule_details(self, smiles):
         """Return information about the given molecule as a DOM object.
 
@@ -109,6 +135,15 @@ class ChemInterface(object):
         xml = dom.toprettyxml(' ')
         return xml
 
+    def periodic_table_xml(self):
+        """Return periodic table data as an XML unicode.
+        """
+        if self._periodic_table_xml is None:
+            dom = self._make_periodic_table_dom()
+            xml = dom.toprettyxml(' ')
+            self._periodic_table_xml = xml
+        return self._periodic_table_xml
+
 ### HTTP output interface
 
 class WebTree(twisted.web.resource.Resource):
@@ -118,13 +153,9 @@ class WebTree(twisted.web.resource.Resource):
         twisted.web.resource.Resource.__init__(self)
         self._service = service
         self.putChild('smiles', SmilesWebResource(service))
-    
-class SmilesWebResource(twisted.web.resource.Resource):
-    """SMILES request web handler."""
+        self.putChild('periodic', PeriodicWebResource(service))
 
-    isLeaf = True
-
-    _default_smiles = 'Oc1ccccc1C'
+class XMLWebResource(twisted.web.resource.Resource):
 
     def __init__(self, service):
         twisted.web.resource.Resource.__init__(self)
@@ -135,7 +166,14 @@ class SmilesWebResource(twisted.web.resource.Resource):
         request.setHeader("content-type", 'application/xml')
         request.setHeader("content-length", str(len(data)))
         request.write(data)
-        request.finish()
+        request.finish()    
+
+class SmilesWebResource(XMLWebResource):
+    """SMILES request web handler."""
+
+    isLeaf = True
+
+    _default_smiles = 'Oc1ccccc1C'
 
     def render_GET(self, request):
         if request.postpath:
@@ -146,6 +184,16 @@ class SmilesWebResource(twisted.web.resource.Resource):
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
 
+class PeriodicWebResource(XMLWebResource):
+    """Periodic table data."""
+    
+    isLeaf = True
+        
+    def render_GET(self, request):
+        defer = twisted.internet.defer.succeed(self._service.periodic_table_xml())
+        defer.addCallback(self._cb_render_GET, request)
+        return twisted.web.server.NOT_DONE_YET
+
 ### Application setup
 
 def make_service(config):
@@ -153,6 +201,6 @@ def make_service(config):
     gid = grp.getgrnam(config['group']).gr_gid
     application = twisted.application.service.Application('chem', uid=uid, gid=gid)
     service_collection = twisted.application.service.IServiceCollection(application)
-    tcp_server = twisted.application.internet.TCPServer(config['port'], twisted.web.server.Site(WebTree(ChemInterface())))
+    tcp_server = twisted.application.internet.TCPServer(int(config['port']), twisted.web.server.Site(WebTree(ChemInterface())))
     tcp_server.setServiceParent(service_collection)
     return service_collection
