@@ -84,10 +84,10 @@ var BkchPage = {
             if (! primary_element)
                 return false;
         }
-        if (primary_element)
-            bkch_focus (primary_element);
         if (page._after_display_function)
             page._after_display_function ();
+        if (primary_element)
+            bkch_focus (primary_element);
         return true;
     },
 };
