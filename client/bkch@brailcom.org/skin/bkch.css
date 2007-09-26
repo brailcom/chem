@@ -74,3 +74,8 @@ description[bkch-type="period"]
 {
   font-weight: bold;
 }
+
+description
+{
+  -moz-user-focus: normal;
+}

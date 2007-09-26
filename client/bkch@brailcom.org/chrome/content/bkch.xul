@@ -36,12 +36,12 @@
     </groupbox>
     <groupbox id="periodic-box">
       <caption id="periodic-caption" label="&main.caption.periodic;" accesskey="p"/>
-      <label value="&main.label.periodic;" control="periodic-button"/>
+      <description>&main.label.periodic;</description>
       <button id="periodic-button" label="&main.button.periodic;" oncommand="bkch_periodic_table();"/>
     </groupbox>
     <groupbox id="preferences-box">
       <caption id="preferences-caption" label="&main.caption.preferences;" accesskey="s"/>
-      <label value="&main.label.preferences;" control="preferences-button"/>
+      <description>&main.label.preferences;</description>
       <button id="preferences-button" label="&main.button.preferences;" oncommand="bkch_edit_preferences();"/>
     </groupbox>
   </vbox>
