@@ -20,7 +20,7 @@
   </keyset>
   
   <vbox flex="1" style="overflow: auto;">
-    <description id="bkch-primary" class="header" level="1">&periodic.header;</description>
+    <hbox><description id="bkch-primary" class="header" level="1" value="&periodic.header;"/></hbox>
     <vbox>
       <grid>
         <rows id="bkch-periodic-table-node"/>
@@ -33,21 +33,21 @@
 
     <spacer style="height: 3ex;"/>
 
-    <description class="header" level="2">&periodic.label.details;</description>
-    <vbox id="bkch-element-info" style="-moz-user-focus: normal;">
+    <hbox><description class="header" level="2" value="&periodic.label.details;"/></hbox>
+    <hbox id="bkch-element-info" style="-moz-user-focus: normal;">
       <grid style="-moz-user-focus: normal;">
         <rows id="bkch-element-details"/>
       </grid>
-    </vbox>
+    </hbox>
 
     <spacer style="height: 3ex;"/>
 
-    <description class="header" level="2" id="bkch-periodic-settings">&periodic.settings.header;</description>
-    <vbox>
+    <hbox><description class="header" level="2" id="bkch-periodic-settings" value="&periodic.settings.header;"/></hbox>
+    <hbox>
       <groupbox>
         <caption label="&periodic.settings.label.tooltips;"/>
         <vbox id="bkch-tooltip-settings"/>
       </groupbox>
-    </vbox>
+    </hbox>
   </vbox>
 </window>
