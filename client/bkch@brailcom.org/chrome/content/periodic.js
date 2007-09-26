@@ -58,6 +58,7 @@ function bkch_periodic_display (page)
     var column_string = strings.getString ('bkchPeriodicColumn');
     function render_table (top_node_id, row_min, row_max, col_min, col_max, focus_variable) {
         var top_node = page.find_element (top_node_id);
+        bkch_remove_children (top_node);
         var header_row = bkch_add_element (top_node, 'row');
         bkch_add_element (header_row, 'description');
         for (var col = col_min; col <= col_max; col++)
@@ -90,6 +91,7 @@ function bkch_periodic_display (page)
     bkch_periodic_update_tooltips (page.document);
     // Update settings
     var tooltips_node = page.find_element ('bkch-tooltip-settings');
+    bkch_remove_children (tooltips_node);
     var tooltips = bkch_periodic_tooltips;
     for (var i = 0; i < property_names_list.length; i++) {
         var name = property_names_list[i];
