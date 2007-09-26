@@ -24,6 +24,7 @@
 
 <vbox id="main-box" flex="1">
   <description>&main.text.intro;</description>
+  <description style="white-space: pre;">&main.text.help;</description>
   <spacer style="height: 10px"/>
   <vbox id="function-box">
     <groupbox id="molecule-box">

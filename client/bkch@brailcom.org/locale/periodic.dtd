@@ -4,3 +4,7 @@
 <!ENTITY periodic.settings.autoread "Walk through selected elements automatically">
 <!ENTITY periodic.settings.label.tooltips "Tooltip contents">
 <!ENTITY periodic.label.details "Element details">
+<!ENTITY periodic.help.keys "You can use the following keys to navigate here:
+T: go to the periodic table;
+Shift+T: go to the table of lanthanoids and actinoids;
+S: go to settings">

@@ -21,6 +21,9 @@
   
   <vbox flex="1" style="overflow: auto;">
     <hbox><description id="bkch-primary" class="header" level="1" value="&periodic.header;"/></hbox>
+    <hbox>
+      <description style="white-space: pre;">&periodic.help.keys;</description>
+    </hbox>
     <vbox>
       <grid>
         <rows id="bkch-periodic-table-node"/>
