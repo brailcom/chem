@@ -284,3 +284,8 @@ function bkch_periodic_go_extra_table ()
         bkch_periodic_last_extra_element = document.getElementById ('bkch-periodic-extra-table-node').getElementsByTagName ('element')[0];
     bkch_focus (bkch_periodic_last_extra_element);
 }
+
+function bkch_periodic_go_settings ()
+{
+    bkch_focus (document.getElementById ('bkch-periodic-settings'));
+}

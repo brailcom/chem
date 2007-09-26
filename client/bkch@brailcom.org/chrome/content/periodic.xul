@@ -16,6 +16,7 @@
   <keyset>
     <key id="bkch-periodic-go-table-key" key="T" oncommand="bkch_periodic_go_table();"/>
     <key id="bkch-periodic-go-extra-table-key" modifiers="shift" key="T" oncommand="bkch_periodic_go_extra_table();"/>
+    <key id="bkch-periodic-go-settings" key="S" oncommand="bkch_periodic_go_settings();"/>
   </keyset>
   
   <vbox flex="1" style="overflow: auto;">
@@ -41,7 +42,7 @@
 
     <spacer style="height: 3ex;"/>
 
-    <description class="header" level="2">&periodic.settings.header;</description>
+    <description class="header" level="2" id="bkch-periodic-settings">&periodic.settings.header;</description>
     <vbox>
       <groupbox>
         <caption label="&periodic.settings.label.tooltips;"/>
