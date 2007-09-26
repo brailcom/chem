@@ -20,7 +20,7 @@
   </keyset>
   
   <vbox flex="1" style="overflow: auto;">
-    <description id="bkch-primary" class="header" level="1" style="-moz-user-focus: normal;">&periodic.header;</description>
+    <description id="bkch-primary" class="header" level="1">&periodic.header;</description>
     <vbox>
       <grid>
         <rows id="bkch-periodic-table-node"/>
@@ -33,7 +33,7 @@
 
     <spacer style="height: 3ex;"/>
 
-    <description class="header" level="2" style="-moz-user-focus: normal;">&periodic.label.details;</description>
+    <description class="header" level="2">&periodic.label.details;</description>
     <vbox id="bkch-element-info" style="-moz-user-focus: normal;">
       <grid style="-moz-user-focus: normal;">
         <rows id="bkch-element-details"/>
