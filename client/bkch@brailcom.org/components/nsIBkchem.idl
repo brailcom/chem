@@ -1,7 +1,0 @@
-#include "nsISupports.idl"
-#include "nsIDOMDocument.idl"
-[scriptable, uuid(63e044d0-c564-4867-9a05-612aba62d076)]
-interface nsIBkchem : nsISupports {
-  attribute string error_message;
-  nsIDOMDocument fetch_xml (in string host, in long port, in string function_name, in string argument);
-};

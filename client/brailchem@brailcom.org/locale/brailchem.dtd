@@ -1,0 +1,21 @@
+<!ENTITY main.text.intro "
+This is Brailchem, an accessible chemistry studying tool brought to you by
+<html:a href='http://www.brailcom.org'>Brailcom</html:a> and others.
+You can use the functions provided below.
+">
+<!ENTITY main.text.help "Available access keys (invoked by pressing Alt+Shift+key on Unix systems):
+M: molecule browser;
+P: periodic table;
+S: settings">
+
+<!ENTITY main.caption.molecule "Molecule browser">
+<!ENTITY main.caption.periodic "Periodic table">
+<!ENTITY main.caption.preferences "Settings">
+
+<!ENTITY main.button.molecule "Inspect molecule">
+<!ENTITY main.button.periodic "Periodic table">
+<!ENTITY main.button.preferences "Edit preferences">
+
+<!ENTITY main.label.molecule "Write a molecule in the SMILES notation to the input box and press the following button to inspect the molecule.">
+<!ENTITY main.label.periodic "You can view periodic table of atoms by pressing the button below.">
+<!ENTITY main.label.preferences "Press the button below to edit Brailchem preferences.">

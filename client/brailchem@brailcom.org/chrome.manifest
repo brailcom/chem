@@ -1,0 +1,5 @@
+overlay	chrome://browser/content/browser.xul chrome://brailchem/content/firefox-overlay.xul
+content brailchem chrome/content/
+skin brailchem default skin/
+locale brailchem en-US locale/
+locale brailchem cs locale/cs/

@@ -1,0 +1,66 @@
+description.header[level="1"]
+{
+  font-size: 249%;
+}
+description.header[level="2"]
+{
+  font-size: 208%;
+}
+description.header[level="3"]
+{
+  font-size: 173%;
+}
+description.header[level="4"]
+{
+  font-size: 144%;
+}
+description.header[level="5"]
+{
+  font-size: 120%;
+}
+
+.brailchem-reference
+{
+  color: blue;
+  -moz-user-focus: normal;
+  -moz-binding: url('chrome://brailchem/content/brailchem.xml#reference');
+}
+
+.brailchem-element-button
+{
+  -moz-binding: url('chrome://brailchem/content/brailchem.xml#element-button');
+}
+.brailchem-element-button button
+{
+  min-width: 0px;
+  width: 4em;
+  -moz-box-flex: 1;
+}
+
+.brailchem-periodic-header
+{
+  font-weight: bold;
+  text-align: center;
+}
+
+element[brailchem-emphasized="true"]
+{
+  font-weight: bold;
+  color: red;
+}
+
+description[brailchem-type="group"]
+{
+  font-weight: bold;
+  text-align: center;
+}
+
+description[brailchem-type="period"]
+{
+  font-weight: bold;
+}
+
+description
+{
+  -moz-user-focus: normal;
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://brailchem/skin/brailchem.css" type="text/css"?>
+<!DOCTYPE window [
+          <!ENTITY % brailchemDTD SYSTEM "chrome://brailchem/locale/brailchem.dtd">
+          %brailchemDTD;
+          ]>
+<window id="brailchem-window"
+        title="Brailchem main application window"
+        orient="vertical"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml">
+<script src="util.js"/>
+<script src="error.js"/>
+<script src="server.js"/>
+<script src="molecule.js"/>
+<script src="periodic.js"/>
+<script src="preferences.js"/>
+<script src="brailchem.js"/>
+  
+<stringbundleset>
+  <stringbundle id="brailchem-periodic-strings" src="chrome://brailchem/locale/periodic.properties"/>
+</stringbundleset>
+
+<vbox id="main-box" flex="1">
+  <description>&main.text.intro;</description>
+  <description style="white-space: pre;">&main.text.help;</description>
+  <spacer style="height: 10px"/>
+  <vbox id="function-box">
+    <groupbox id="molecule-box">
+      <caption id="molecule-caption" label="&main.caption.molecule;"/>
+      <label value="&main.label.molecule;" control="molecule-textbox" accesskey="M"/>
+      <hbox id="molecule-input-box">
+        <textbox id="molecule-textbox" value="Oc1ccccc1C"/>
+        <button id="molecule-button" label="&main.button.molecule;" oncommand="brailchem_molecule();"/>
+      </hbox>
+    </groupbox>
+    <groupbox id="periodic-box">
+      <caption id="periodic-caption" label="&main.caption.periodic;"/>
+      <description>&main.label.periodic;</description>
+      <button id="periodic-button" label="&main.button.periodic;" accesskey="P" oncommand="brailchem_periodic_table();"/>
+    </groupbox>
+    <groupbox id="preferences-box">
+      <caption id="preferences-caption" label="&main.caption.preferences;"/>
+      <description>&main.label.preferences;</description>
+      <button id="preferences-button" label="&main.button.preferences;" accesskey="S" oncommand="brailchem_edit_preferences();"/>
+    </groupbox>
+  </vbox>
+  <separator class="groove"/>
+  <iframe id="brailchem-frame" src="chrome://brailchem/content/empty.xul" type="content" flex="1"/>
+</vbox>
+
+</window>

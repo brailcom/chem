@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<bindings xmlns="http://www.mozilla.org/xbl"
+          xmlns:xbl="http://www.mozilla.org/xbl"
+          xmlns:xul="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <binding id="reference">
+    <content>
+      <xul:description xbl:inherits="value"/>
+    </content>
+    <handlers>
+      <handler event="keypress" key="f" action="brailchem_follow_reference(this)"/>
+      <handler event="keypress" keycode="VK_RETURN" action="brailchem_follow_reference(this)"/>
+      <handler event="click" action="brailchem_follow_reference(this)"/>
+    </handlers>
+  </binding>
+
+  <binding id="element-button">
+    <content>
+      <xul:button xbl:inherits="label,disabled,flex"/>
+    </content>
+    <handlers>
+      <handler event="keypress" phase="capturing" keycode="VK_RETURN" action="brailchem_element_command (event, brailchem_element_info)"/>
+      <handler event="keypress" phase="capturing" keycode="VK_LEFT" action="brailchem_element_command (event, brailchem_element_left)"/>
+      <handler event="keypress" phase="capturing" modifier="shift" key="H" action="brailchem_element_command (event, brailchem_element_left)"/>
+      <handler event="keypress" phase="capturing" keycode="VK_RIGHT" action="brailchem_element_command (event, brailchem_element_right)"/>
+      <handler event="keypress" phase="capturing" modifier="shift" key="L" action="brailchem_element_command (event, brailchem_element_right)"/>
+      <handler event="keypress" phase="capturing" keycode="VK_UP" action="brailchem_element_command (event, brailchem_element_up)"/>
+      <handler event="keypress" phase="capturing" modifier="shift" key="K" action="brailchem_element_command (event, brailchem_element_up)"/>
+      <handler event="keypress" phase="capturing" keycode="VK_DOWN" action="brailchem_element_command (event, brailchem_element_down)"/>
+      <handler event="keypress" phase="capturing" modifier="shift" key="J" action="brailchem_element_command (event, brailchem_element_down)"/>
+      <handler event="keypress" phase="capturing" key="e" action="brailchem_element_command (event, brailchem_element_electrons)"/>
+      <handler event="keypress" phase="capturing" key="g" action="brailchem_element_command (event, brailchem_element_group)"/>
+      <handler event="keypress" phase="capturing" key="p" action="brailchem_element_command (event, brailchem_element_period)"/>
+      <handler event="keypress" phase="capturing" key="r" action="brailchem_element_command (event, brailchem_element_related)"/>
+      <handler event="click" action="brailchem_element_info (this)"/>
+    </handlers>
+  </binding>
+</bindings>

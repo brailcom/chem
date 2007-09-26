@@ -1,5 +1,0 @@
-overlay	chrome://browser/content/browser.xul chrome://bkch/content/firefox-overlay.xul
-content bkch chrome/content/
-skin bkch default skin/
-locale bkch en-US locale/
-locale bkch cs locale/cs/

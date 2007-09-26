@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE overlay SYSTEM "chrome://brailchem/locale/brailchem-overlay.dtd" >
+
+<overlay id="brailchem-menu" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+<script src="chrome://brailchem/content/brailchem.js"/>
+
+<menupopup id="menu_ToolsPopup">
+  <menuitem id="brailchem-menu-item" oncommand="brailchem_start()" 
+            insertafter="javascriptConsole,devToolsSeparator"
+            label="&brailchem.menu.label;" accesskey="&brailchem.menu.accesskey;"/>
+</menupopup>
+
+</overlay>

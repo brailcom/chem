@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://brailchem/skin/brailchem.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://brailchem/locale/periodic.dtd">
+
+<window id="brailchem-periodic-window"
+        title="Brailchem periodic table window"
+        orient="vertical"
+        style="-moz-user-focus: normal;"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml">
+  <script src="util.js"/>
+  <script src="server.js"/>
+  <script src="periodic.js"/>
+  
+  <keyset>
+    <key id="brailchem-periodic-go-table-key" key="T" oncommand="brailchem_periodic_go_table();"/>
+    <key id="brailchem-periodic-go-extra-table-key" modifiers="shift" key="T" oncommand="brailchem_periodic_go_extra_table();"/>
+    <key id="brailchem-periodic-go-settings" key="S" oncommand="brailchem_periodic_go_settings();"/>
+  </keyset>
+  
+  <vbox flex="1" style="overflow: auto;">
+    <hbox><description id="brailchem-primary" class="header" level="1" value="&periodic.header;"/></hbox>
+    <hbox>
+      <description style="white-space: pre;">&periodic.help.keys;</description>
+    </hbox>
+    <vbox>
+      <grid>
+        <rows id="brailchem-periodic-table-node"/>
+      </grid>
+      <spacer style="height: 1ex;"/>
+      <grid>
+        <rows id="brailchem-periodic-extra-table-node"/>
+      </grid>
+    </vbox>
+
+    <spacer style="height: 3ex;"/>
+
+    <hbox><description class="header" level="2" value="&periodic.label.details;"/></hbox>
+    <hbox id="brailchem-element-info" style="-moz-user-focus: normal;">
+      <grid style="-moz-user-focus: normal;">
+        <rows id="brailchem-element-details"/>
+      </grid>
+    </hbox>
+
+    <spacer style="height: 3ex;"/>
+
+    <hbox><description class="header" level="2" id="brailchem-periodic-settings" value="&periodic.settings.header;"/></hbox>
+    <hbox>
+      <groupbox>
+        <caption label="&periodic.settings.label.tooltips;"/>
+        <vbox id="brailchem-tooltip-settings"/>
+      </groupbox>
+    </hbox>
+  </vbox>
+</window>
