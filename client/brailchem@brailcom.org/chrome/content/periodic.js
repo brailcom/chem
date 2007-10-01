@@ -209,10 +209,14 @@ function brailchem_element_info (element)
     var top_node = document.getElementById ('brailchem-element-details');
     brailchem_remove_children (top_node);
     var properties = brailchem_periodic_element_data[symbol];
+    var i = 1;
     for (var name in properties) {
         var row = brailchem_add_element (top_node, 'row');
-        brailchem_add_element (row, 'description', {value: name})
-        brailchem_add_element (row, 'description', {value: properties[name]})
+        brailchem_add_element (row, 'brailchem-element-info-label',
+                               {value: name, class: 'brailchem-element-info-item', brailchem_number: i});
+        brailchem_add_element (row, 'brailchem-element-info-value',
+                               {value: properties[name], class: 'brailchem-element-info-item', brailchem_number: i});
+        i++;
     }
     brailchem_focus (document.getElementById ('brailchem-element-info'));
 }
@@ -255,6 +259,28 @@ function brailchem_element_down (element)
 function brailchem_element_up (element)
 {
     brailchem_element_move (element, -1, 0);
+}
+
+function brailchem_element_info_move (element, step)
+{
+    var wanted_number = parseInt (element.getAttribute ('brailchem_number')) + step;
+    var target = null;
+    var candidates = document.getElementsByTagName ('brailchem-element-info-label');
+    for (var i = 0; target == null && i < candidates.length; i++)
+        if (candidates[i].getAttribute ('brailchem_number') == wanted_number)
+            target = candidates[i];
+    if (target)
+        brailchem_focus (target);
+}
+
+function brailchem_element_info_up (element)
+{
+    brailchem_element_info_move (element, -1);
+}
+
+function brailchem_element_info_down (element)
+{
+    brailchem_element_info_move (element, 1);
 }
 
 function brailchem_element_electrons (element)
