@@ -36,9 +36,12 @@
 
     <spacer style="height: 3ex;"/>
 
-    <hbox><description class="header" level="2" value="&periodic.label.details;"/></hbox>
-    <hbox id="brailchem-element-info" style="-moz-user-focus: normal;">
-      <grid style="-moz-user-focus: normal;">
+    <hbox id="brailchem-element-info">
+      <description class="header" level="2" style="-moz-user-focus: normal;"
+                   value="&periodic.label.details;"/>
+    </hbox>
+    <hbox>
+      <grid>
         <rows id="brailchem-element-details"/>
       </grid>
     </hbox>
