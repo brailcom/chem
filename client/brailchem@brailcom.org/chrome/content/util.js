@@ -21,12 +21,15 @@ function brailchem_filter_element (func, element)
     return children;
 }
 
-function brailchem_add_element (parent, tag, attributes)
+function brailchem_add_element (parent, tag, attributes, text)
 {
     var child = parent.ownerDocument.createElement (tag);
     if (attributes) {
         for (name in attributes)
             child.setAttribute (name, attributes[name]);
+    }
+    if (text != undefined) {
+        child.appendChild (document.createCDATASection (text))
     }
     parent.appendChild (child);
     return child;
