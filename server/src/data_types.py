@@ -24,6 +24,7 @@ class DataType:
         return self._default_priority
 
 
+
 class DataTypeFactory:
     """singleton used to conveniently create DataType instances"""
 
@@ -33,7 +34,7 @@ class DataTypeFactory:
                    'SMILES': ('SMILES', 'Molecule encoded in SMILES format', 8),
                    'FRAGMENT': ('Fragment', 'Molecular fragment', 0),
                    "REACTION": ("Reaction", "Chemical reaction", 0),
-                   "REACTION COMPONENTS": ("Reaction components", "Components of a chemical reaction", 0),
+                   "REACTION_COMPONENTS": ("Reaction components", "Components of a chemical reaction", 0),
                    "MOLECULE": ("Molecule","Molecule", 0),
                    "FRAGMENTS": ("Fragments", "Molecular fragments", 0),
                    "ATOMS": ("Atoms", "Atoms", 0),
@@ -46,9 +47,8 @@ class DataTypeFactory:
                    "VAL_ELECTRONS": ("Valence electrons", "Number of valence electrons", 6),
                    "PROTON_NUMBER": ("Proton number", "Proton number", 10),
                    "OX_NUMBERS": ("Oxidation numbers", "Possible oxidation numbers for an atom", 8),
-                   "NAME_LAT": ("Latin name", "Latin name", 0),
-                   "NAME_CZ": ("Czech name", "Czech name", 12),
-                   "NAME_EN": ("English name", "English name", 15),
+                   "ELEMENT_NAME": ("Element name", "Element name", 15),
+                   "LATIN_ELEMENT_NAME": ("Latin element name", "Latin element name", 1),
                    "DESC": ("Description", "Description", 0),
                    "ORBITALS": ("Electron structure", "Electron structure of occupied orbitals", 0),                   
 

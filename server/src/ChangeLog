@@ -1,3 +1,13 @@
+2007-10-02   Beda Kosata <kosatab@vscht.cz>
+
+	* object_types.py: new object_type LanguageDependentValue was introduced
+
+	* chem_reader.py: makes use of LanguageDependentValue for element name and description
+
+	* data_type.py: obsolete data_types NAME_CZ and NAME_EN were removed. New ELEMENT_NAME
+	was introduced and NAME_LAT was renamed to LATIN_ELEMENT_NAME
+
+
 2007-09-18   Beda Kosata <kosatab@vscht.cz>
 
 	* detail_periodic_table.py: new data - ROW, COLUMN, ORBITALS

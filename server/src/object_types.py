@@ -154,6 +154,57 @@ class Value(Data):
 
 
 
+class LanguageDependentValue(Data):
+    """Stores localized values for one data_type"""
+
+    # the language codes are taken from the ISO-639-1 standard (published as part of the ISO-639-2 documentation
+    # http://www.loc.gov/standards/iso639-2/ISO-639-2_values_8bits-utf-8.txt
+    allowed_language_codes = ["aa","ab","af","ak","sq","am","ar","an","hy","as","av","ae","ay","az","ba","bm","eu","be","bn","bh","bi","bs","br","bg","my","ca","ch","ce","zh","cu","cv","kw","co","cr","cs","da","dv","nl","dz","en","eo","et","ee","fo","fj","fi","fr","fy","ff","ka","de","gd","ga","gl","gv","el","gn","gu","ht","ha","he","hz","hi","ho","hu","ig","is","io","ii","iu","ie","ia","id","ik","it","jv","ja","kl","kn","ks","kr","kk","km","ki","rw","ky","kv","kg","ko","kj","ku","lo","la","lv","li","ln","lt","lb","lu","lg","mk","mh","ml","mi","mr","ms","mg","mt","mo","mn","na","nv","nr","nd","ng","ne","nn","nb","no","ny","oc","oj","or","om","os","pa","fa","pi","pl","pt","ps","qu","rm","ro","rn","ru","sg","sa","sr","hr","si","sk","sl","se","sm","sn","sd","so","st","es","sc","ss","su","sw","sv","ty","ta","tt","te","tg","tl","th","bo","ti","to","tn","ts","tk","tr","tw","ug","uk","ur","uz","ve","vi","vo","cy","wa","wo","xh","yi","yo","za","zu"]
+
+    def __init__(self, data_type, value):
+        super(LanguageDependentValue, self).__init__(data_type)
+        if not type(value) == type({}):
+            raise ValueError( "The value of a LanguageDependentValue must be a dictinary mapping from language to value")
+        self._check_languages(value)
+        self._value = value
+
+    def value(self, lang="en"):
+        # return the requested value
+        if lang in self._value:
+            return (lang, self._value[lang])
+        # return english version if localized version is not available
+        if "en" in self._value:
+            return ("en", self._value['en'])
+        # if only one mutation is available, return it
+        if len(self._value) == 1:
+            lang, val = self._value.items()[0]
+            return lang, val
+        # if all above has failed, return (None, None)
+        return (None, None)
+
+    def available_languages(self):
+        return self._value.keys()
+
+    def _check_languages(self, dict):
+        """checks if a dictionary contains only allowed language codes"""
+        for lang, val in dict.iteritems():
+            if lang not in self.allowed_language_codes:
+                raise ValueError("Invalid language code %s" % lang)
+
+    def __str__(self):
+        return "%s: type_id='%s', description='%s', value=%s" % (self.__class__.__name__, self.data_type().id(), self.data_type().description(), self._value)
+
+    def text_dump(self, recursive=False, _level=0, _top_level=True):
+        ret = []
+        parent = super(LanguageDependentValue, self).text_dump(recursive=recursive,_level=_level,_top_level=False)
+        if parent:
+            ret.append(parent)
+        if _top_level:
+            ret.append(_level*" "+str(self)+", id=%s" % self.id())
+        return "\n".join(ret)
+
+
+
 class Complex (Data):
     """Complex is a structure that consists of smaller parts (see Part).
     It provides links to the parts.
@@ -220,4 +271,4 @@ class Relation (Data):
 
 PartMultiView = CombiningMeta.create_composite("PartMultiView", (Part, MultiView))
 ValuePart = CombiningMeta.create_composite("ValuePart", (Value, Part))
-ValuePartMultiView = CombiningMeta.create_composite("ValuePartMultiView", (Value, Part, MultiView))
+#LanguageDependentValuePart = CombiningMeta.create_composite("LanguageDependentValuePart", (LanguageDependentValue, Part))

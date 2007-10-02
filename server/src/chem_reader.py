@@ -1,5 +1,5 @@
 import Pyro.core
-from object_types import Value, Part, Complex, MultiView, Relation, PartMultiView, ValuePart, ValuePartMultiView
+from object_types import Value, Part, Complex, MultiView, Relation, PartMultiView, ValuePart, LanguageDependentValue
 from data_types import DataTypeFactory, DataType
 import oasa
 import os, sys
@@ -73,12 +73,22 @@ class ChemReader:
         _atom_to_a_data = {}
         for atom in mol.atoms:
             a_data = PartMultiView(id2t("ATOM"))
-            for key in ('ATOM_SYMBOL','NAME_CZ','VAL_ELECTRONS','DESC','EN','NAME_EN','NAME_LAT','OX_NUMBERS','PROTON_NUMBER','ATOM_WEIGHT','ORBITALS'):
+            # element names in diffent languages
+            langs = {'en':symbol2properties[atom.symbol]['NAME_EN'],
+                     'cs':symbol2properties[atom.symbol]['NAME_CZ']}
+            a_data.add_view(LanguageDependentValue(id2t("ELEMENT_NAME"), langs))
+            # description is also langugage dependent
+            a_data.add_view(LanguageDependentValue(id2t("DESC"), {'cs':symbol2properties[atom.symbol]['DESC']}))
+            # other atom data
+            for key in ('ATOM_SYMBOL','VAL_ELECTRONS','EN','NAME_LAT','OX_NUMBERS','PROTON_NUMBER','ATOM_WEIGHT','ORBITALS'):
                 if key in symbol2properties[atom.symbol]:
                     value = symbol2properties[atom.symbol][key]
                     if type(value) == type([]):
                         value = ",".join(map(str, value))
-                    a_data.add_view(Value(id2t(key), value))
+                    if key == "NAME_LAT":
+                        a_data.add_view(Value(id2t("LATIN_ELEMENT_NAME"), value)) # this changed name
+                    else:
+                        a_data.add_view(Value(id2t(key), value))
             _atom_to_a_data[atom] = a_data
             mol_data_atoms.add_part(Relation(id2t('REL_COMPOSED_FROM'), a_data))
         for atom in mol.atoms:
