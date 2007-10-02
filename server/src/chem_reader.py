@@ -63,7 +63,7 @@ class ChemReader:
             ErrorLogger.warning("InChI program not properly installed, InChI and name generation won't work. Read README.setup for more info.")
         else:
             if name:
-                mol_data.add_view(Value(id2t("NAME"), name['name']))
+                mol_data.add_view(LanguageDependentValue(id2t("NAME"), {'en':name['name']}))
         mol_data.add_view(Value(id2t("MW"), mol.weight))
         mol_data.add_view(Value(id2t("SUM"), str(mol.get_formula_dict())))
         mol_data_frags = Complex(id2t("FRAGMENTS"))
