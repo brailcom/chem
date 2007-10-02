@@ -27,15 +27,15 @@ import twisted.internet
 import twisted.web.resource
 import twisted.web.server
 
-from chem.server.session import Session
-from chem.server.object_types import *
-import chem.server.data_types
-import chem.server.detail_periodic_table
+from brailchem.session import Session
+from brailchem.object_types import *
+import brailchem.data_types
+import brailchem.detail_periodic_table
 
 ### Chemical server communication
 
 class ChemInterface(object):
-    """Chem server interface."""
+    """Brailchem server interface."""
 
     def __init__(self, *args, **kwargs):
         super(ChemInterface, self).__init__(self, *args, **kwargs)
@@ -100,17 +100,17 @@ class ChemInterface(object):
         return dom
 
     def _make_periodic_table_dom(self):
-        periodic_table = chem.server.detail_periodic_table.symbol2properties
-        info_provider = chem.server.data_types.DataTypeFactory()
+        periodic_table = brailchem.detail_periodic_table.symbol2properties
+        info_provider = brailchem.data_types.DataTypeFactory()
         dom = self._create_dom()
         def add_element(*args, **kwargs):
             return self._add_dom_element(dom, *args, **kwargs)
         root = add_element(dom, 'periodic')
         for symbol, properties in periodic_table.items():
             element = add_element(root, 'element', attributes={'symbol': symbol})
-            property_labels = [info_provider.data_type_from_id(name) or chem.server.data_types.DataType(name, name)
+            property_labels = [info_provider.data_type_from_id(name) or brailchem.data_types.DataType(name, name)
                                for name in properties.keys()]
-            property_labels.sort(key=chem.server.data_types.DataType.default_priority, reverse=True)
+            property_labels.sort(key=brailchem.data_types.DataType.default_priority, reverse=True)
             for info in property_labels:
                 name = info.id()
                 value = properties[name]
@@ -210,7 +210,7 @@ class PeriodicWebResource(XMLWebResource):
 def make_service(config):
     uid = pwd.getpwnam(config['user']).pw_uid
     gid = grp.getgrnam(config['group']).gr_gid
-    application = twisted.application.service.Application('chem', uid=uid, gid=gid)
+    application = twisted.application.service.Application('brailchem', uid=uid, gid=gid)
     service_collection = twisted.application.service.IServiceCollection(application)
     tcp_server = twisted.application.internet.TCPServer(int(config['port']), twisted.web.server.Site(WebTree(ChemInterface())))
     tcp_server.setServiceParent(service_collection)

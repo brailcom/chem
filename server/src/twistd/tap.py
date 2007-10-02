@@ -17,7 +17,7 @@
 
 import twisted.python
 
-import chem.server
+import brailchem
 
 class Options(twisted.python.usage.Options):
 
@@ -28,4 +28,4 @@ class Options(twisted.python.usage.Options):
         ]
 
 def makeService(config):
-    return chem.server.twistd.server.make_service(config)
+    return brailchem.twistd.server.make_service(config)

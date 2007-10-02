@@ -17,4 +17,4 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-register('chem', 'chem.server.twistd.tap', description="Build a chem server tap", type='tap', tapname='chem')
+register('brailchem', 'brailchem.twistd.tap', description="Build a Brailchem server tap", type='tap', tapname='brailchem')
