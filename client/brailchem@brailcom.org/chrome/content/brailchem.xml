@@ -34,14 +34,4 @@
       <handler event="click" action="brailchem_element_info (this)"/>
     </handlers>
   </binding>
-  
-  <binding id="element-info-item">
-    <content>
-      <xul:description xbl:inherits="value"/>
-    </content>
-    <handlers>
-      <handler event="keypress" phase="capturing" keycode="VK_UP" action="brailchem_element_info_up(event.target)"/>
-      <handler event="keypress" phase="capturing" keycode="VK_DOWN" action="brailchem_element_info_down(event.target)"/>
-    </handlers>
-  </binding>
 </bindings>

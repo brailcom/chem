@@ -55,11 +55,6 @@ description.header[level="5"]
   -moz-box-flex: 1;
 }
 
-.brailchem-element-info-item
-{
-  -moz-binding: url('chrome://brailchem/content/brailchem.xml#element-info-item');
-}
-
 .brailchem-periodic-header
 {
   font-weight: bold;
