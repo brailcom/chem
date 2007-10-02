@@ -112,6 +112,7 @@ function brailchem_periodic_display (page)
     var tooltips_node = page.find_element ('brailchem-tooltip-settings');
     brailchem_remove_children (tooltips_node);
     var tooltips = brailchem_periodic_tooltips;
+    properties_as_list.sort (function (x0, y0) { var x = x0.label, y = y0.label; return (x==y ? 0 : (x<y ? -1 : 1)); });
     for (var i = 0; i < properties_as_list.length; i++) {
         var item = properties_as_list[i];
         var name = item.name;
