@@ -40,8 +40,8 @@ function brailchem_periodic_display (page)
     var property_names = {};
     for (var symbol in element_data) {
         var properties = element_data[symbol];
-        var row = parseInt (properties['ROW']);
-        var col = parseInt (properties['COLUMN']);
+        var row = parseInt (properties['ROW'].value);
+        var col = parseInt (properties['COLUMN'].value);
         if (col < 100) {
             if (row > row_max)
                 row_max = row;
@@ -63,12 +63,13 @@ function brailchem_periodic_display (page)
             table_row = table[row] = [];
         table_row[col] = properties;
         for (var p in properties)
-            property_names[p] = true;
+            property_names[properties[p].name] = true;
     }
-    var property_names_list = [];
+    var properties_as_list = [];
     for (var p in property_names)
-        property_names_list.push (p);
-    property_names_list.sort ();
+        if (properties[p])
+            properties_as_list.push (properties[p]);    
+    properties_as_list.sort (function (x0, y0) { var x = x0.name, y = y0.name; return (x==y ? 0 : (x<y ? -1 : 1)); });
     // Render the table
     var strings = document.getElementById ('brailchem-periodic-strings');
     var empty_cell_string = strings.getString ('brailchemPeriodicEmptyCell');
@@ -93,7 +94,7 @@ function brailchem_periodic_display (page)
                                                           onfocus: focus_variable + '=this;',
                                                           brailchem_row: row, brailchem_column: col});
                 if (element) {
-                    var symbol = element['ATOM_SYMBOL'];
+                    var symbol = element['ATOM_SYMBOL'].value;
                     dom_element_node.setAttribute ('label', symbol);
                     dom_element_node.setAttribute ('brailchem-element-symbol', symbol);
                 }
@@ -111,11 +112,12 @@ function brailchem_periodic_display (page)
     var tooltips_node = page.find_element ('brailchem-tooltip-settings');
     brailchem_remove_children (tooltips_node);
     var tooltips = brailchem_periodic_tooltips;
-    for (var i = 0; i < property_names_list.length; i++) {
-        var name = property_names_list[i];
+    for (var i = 0; i < properties_as_list.length; i++) {
+        var item = properties_as_list[i];
+        var name = item.name;
         var checkbox_node = brailchem_add_element (tooltips_node, 'checkbox',
-                                              {label: name, checked: tooltips[name], brailchem_property_name: name,
-                                               oncommand: 'brailchem_periodic_set_tooltip(event.target)'});
+                                                   {label: item.label, checked: tooltips[name], brailchem_property_name: name,
+                                                    oncommand: 'brailchem_periodic_set_tooltip(event.target)'});
     }
 }
 
@@ -153,7 +155,8 @@ function brailchem_periodic_update_element_data ()
             if (p.nodeName != 'property')
                 // ignore text nodes
                 continue;
-            properties[p.getAttribute ('name')] = p.getAttribute ('value');
+            var name = p.getAttribute ('name');
+            properties[name] = {name: name, label: p.getAttribute ('label'), value: p.getAttribute ('value')};
         }
         data[symbol] = properties;
     }
@@ -174,7 +177,7 @@ function brailchem_periodic_update_tooltips (doc_node)
         var tooltip = '';
         for (var j in tooltips)
             if (tooltips[j])
-                tooltip = tooltip + j + ': ' + element[j] + '\n';
+                tooltip = tooltip + element[j].label + ': ' + element[j].value + '\n';
         element_node.setAttribute ('tooltiptext', tooltip);
     }
 }
@@ -229,8 +232,9 @@ function brailchem_element_info (element)
     var properties = brailchem_periodic_element_data[symbol];
     for (var name in properties) {
         var row = brailchem_add_element (top_node, 'row');
-        brailchem_add_element (row, 'description', {value: name})
-        brailchem_add_element (row, 'description', {value: properties[name]})
+        var info = properties[name];
+        brailchem_add_element (row, 'description', {value: info.label})
+        brailchem_add_element (row, 'description', {value: info.value})
     }
     brailchem_focus (document.getElementById ('brailchem-element-info'));
 }

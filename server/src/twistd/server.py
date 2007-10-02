@@ -29,6 +29,7 @@ import twisted.web.server
 
 from chem.server.session import Session
 from chem.server.object_types import *
+import chem.server.data_types
 import chem.server.detail_periodic_table
 
 ### Chemical server communication
@@ -100,14 +101,24 @@ class ChemInterface(object):
 
     def _make_periodic_table_dom(self):
         periodic_table = chem.server.detail_periodic_table.symbol2properties
+        info_provider = chem.server.data_types.DataTypeFactory()
         dom = self._create_dom()
         def add_element(*args, **kwargs):
             return self._add_dom_element(dom, *args, **kwargs)
         root = add_element(dom, 'periodic')
         for symbol, properties in periodic_table.items():
             element = add_element(root, 'element', attributes={'symbol': symbol})
-            for name, value in properties.items():
-                add_element(element, 'property', attributes={'name': name, 'value': value})
+            property_labels = [info_provider.data_type_from_id(name) or chem.server.data_types.DataType(name, name)
+                               for name in properties.keys()]
+            property_labels.sort(key=chem.server.data_types.DataType.default_priority, reverse=True)
+            for info in property_labels:
+                name = info.id()
+                value = properties[name]
+                attributes = {'name': name,
+                              'value': value,
+                              'label': info and info.description() or name,
+                              }
+                add_element(element, 'property', attributes=attributes)
         return dom
         
     # Public methods
