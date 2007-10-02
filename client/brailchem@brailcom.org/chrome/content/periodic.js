@@ -233,8 +233,8 @@ function brailchem_element_info (element)
     for (var name in properties) {
         var row = brailchem_add_element (top_node, 'row');
         var info = properties[name];
-        brailchem_add_element (row, 'description', {value: info.label})
-        brailchem_add_element (row, 'description', {value: info.value})
+        brailchem_add_element (row, 'description', {value: info.label});
+        brailchem_add_element (row, 'description', {}, info.value);
     }
     brailchem_focus (document.getElementById ('brailchem-element-info'));
 }
