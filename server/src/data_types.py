@@ -2,7 +2,7 @@
 class DataType:
     """represents a data type"""
 
-    def __init__(self, id, description, long_description=None, default_priority=0):
+    def __init__(self, id, description, long_description=None, default_priority=1):
         self._id = id
         self._description = description
         if not long_description:
@@ -28,40 +28,44 @@ class DataType:
 class DataTypeFactory:
     """singleton used to conveniently create DataType instances"""
 
-    _data_types = {'MW': ('Molecular weight','Molecular weight', 0),
+    _data_types = {"NAME": ("Name", "Molecule name", 20),
                    'MF': ('Molecular formula','Molecular formula', 15),
                    'SUM': ("Summary formula", "Summary formula", 10),
                    'SMILES': ('SMILES', 'Molecule encoded in SMILES format', 8),
-                   'FRAGMENT': ('Fragment', 'Molecular fragment', 0),
-                   "REACTION": ("Reaction", "Chemical reaction", 0),
-                   "REACTION_COMPONENTS": ("Reaction components", "Components of a chemical reaction", 0),
-                   "MOLECULE": ("Molecule","Molecule", 0),
-                   "FRAGMENTS": ("Fragments", "Molecular fragments", 0),
-                   "ATOMS": ("Atoms", "Atoms", 0),
-                   "ATOM": ("Atom", "Atom", 0),
-                   "NAME": ("Name", "Molecule name", 20),
+                   'MW': ('Molecular weight','Molecular weight', 5),
+                   "FRAGMENTS": ("Fragments", "Molecular fragments", 4),
+                   "ATOMS": ("Atoms", "Atoms", 3),
+
+                   "ATOM": ("Atom", "Atom", 1),
+                   'FRAGMENT': ('Fragment', 'Molecular fragment', 1),
+                   "REACTION": ("Reaction", "Chemical reaction", 1),
+                   "REACTION_COMPONENTS": ("Reaction components", "Components of a chemical reaction", 1),
+                   "MOLECULE": ("Molecule","Molecule", 1),
 
                    "ATOM_SYMBOL": ("Symbol", "Atom symbol", 20),
-                   "EN": ("Electronegativity", "Electronegativity", 0),
-                   "ATOM_WEIGHT": ("Atomic weight", "Atomic weight", 0),
-                   "VAL_ELECTRONS": ("Valence electrons", "Number of valence electrons", 6),
-                   "PROTON_NUMBER": ("Proton number", "Proton number", 10),
-                   "OX_NUMBERS": ("Oxidation numbers", "Possible oxidation numbers for an atom", 8),
-                   "ELEMENT_NAME": ("Element name", "Element name", 15),
-                   "LATIN_ELEMENT_NAME": ("Latin element name", "Latin element name", 1),
-                   "DESC": ("Description", "Description", 0),
-                   "ORBITALS": ("Electron structure", "Electron structure of occupied orbitals", 0),                   
-
-                   "REL_REACTANT": ("Reactant","Reactant of a reaction", 0),
-                   "REL_PRODUCT": ("Product","Product of a reaction", 0),
-                   "REL_SINGLE_BOND": ("Single bond", "Single bond", 0),
-                   "REL_DOUBLE_BOND": ("Double bond", "Double bond", 0),
-                   "REL_TRIPLE_BOND": ("Triple bond", "Triple bond", 0),
-                   "REL_AROMATIC_BOND": ("Aromatic bond", "Aromatic bond", 0),
-                   "REL_COMPOSED_FROM": ("Composed from", "Composed from", 0),
-                   "REL_REACTS_WITH": ("Reacts with", "Reacts with", 0),
-                   "REL_PRODUCES": ("Produces", "Produces", 0),
-                   "REL_PRODUCED_FROM": ("Produced from", "Produced from", 0),
+                   "ELEMENT_NAME": ("Element name", "Element name", 19),
+                   "PROTON_NUMBER": ("Proton number", "Proton number", 18),
+                   "PERIODIC_TABLE_COLUMN": ("Column", "Periodic table column", 17),
+                   "PERIODIC_TABLE_ROW": ("Row", "Periodic table row", 16),
+                   "ELEMENT_GROUP": ("Element group", "Element group", 15),
+                   "VAL_ELECTRONS": ("Valence electrons", "Number of valence electrons", 14),
+                   "OX_NUMBERS": ("Oxidation numbers", "Possible oxidation numbers for an atom", 12),
+                   "ORBITALS": ("Electron structure", "Electron structure of occupied orbitals", 10),                   
+                   "ATOM_WEIGHT": ("Atomic weight", "Atomic weight", 8),
+                   "EN": ("Electronegativity", "Electronegativity", 6),
+                   "LATIN_ELEMENT_NAME": ("Latin element name", "Latin element name", 4),
+                   "DESC": ("Description", "Description", 2),
+                   
+                   "REL_REACTANT": ("Reactant","Reactant of a reaction", 1),
+                   "REL_PRODUCT": ("Product","Product of a reaction", 1),
+                   "REL_SINGLE_BOND": ("Single bond", "Single bond", 1),
+                   "REL_DOUBLE_BOND": ("Double bond", "Double bond", 1),
+                   "REL_TRIPLE_BOND": ("Triple bond", "Triple bond", 1),
+                   "REL_AROMATIC_BOND": ("Aromatic bond", "Aromatic bond", 1),
+                   "REL_COMPOSED_FROM": ("Composed from", "Composed from", 1),
+                   "REL_REACTS_WITH": ("Reacts with", "Reacts with", 1),
+                   "REL_PRODUCES": ("Produces", "Produces", 1),
+                   "REL_PRODUCED_FROM": ("Produced from", "Produced from", 1),
                    }
 
     @classmethod

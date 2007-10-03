@@ -1,3 +1,10 @@
+2007-10-03   Beda Kosata <kosatab@vscht.cz>
+
+	* data_types.py: reorganization of data_type priorities
+
+	* chem_reader.py: read all data from detail_periodic_table, including ROW, COLUMN and group
+	
+
 2007-10-02   Beda Kosata <kosatab@vscht.cz>
 
 	* object_types.py: new object_type LanguageDependentValue was introduced

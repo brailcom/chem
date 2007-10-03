@@ -31,6 +31,18 @@ class ChemReader:
                 "summary": "_read_summary_formula",
                 }
 
+    table_key_to_data_type = {'ATOM_SYMBOL':'ATOM_SYMBOL',
+                              'VAL_ELECTRONS':'VAL_ELECTRONS',
+                              'EN':'EN',
+                              'NAME_LAT':'LATIN_ELEMENT_NAME',
+                              'OX_NUMBERS':'OX_NUMBERS',
+                              'PROTON_NUMBER':'PROTON_NUMBER',
+                              'ATOM_WEIGHT':'ATOM_WEIGHT',
+                              'ORBITALS':'ORBITALS',
+                              'ROW':'PERIODIC_TABLE_ROW',
+                              'COLUMN':'PERIODIC_TABLE_COLUMN',
+                              'group':'ELEMENT_GROUP'}
+
     @classmethod
     def known_formats(self):
         """returns a list of all currently supported formats."""
@@ -80,15 +92,13 @@ class ChemReader:
             # description is also langugage dependent
             a_data.add_view(LanguageDependentValue(id2t("DESC"), {'cs':symbol2properties[atom.symbol]['DESC']}))
             # other atom data
-            for key in ('ATOM_SYMBOL','VAL_ELECTRONS','EN','NAME_LAT','OX_NUMBERS','PROTON_NUMBER','ATOM_WEIGHT','ORBITALS'):
+            for key,dtype in self.table_key_to_data_type.iteritems():
                 if key in symbol2properties[atom.symbol]:
                     value = symbol2properties[atom.symbol][key]
                     if type(value) == type([]):
                         value = ",".join(map(str, value))
-                    if key == "NAME_LAT":
-                        a_data.add_view(Value(id2t("LATIN_ELEMENT_NAME"), value)) # this changed name
                     else:
-                        a_data.add_view(Value(id2t(key), value))
+                        a_data.add_view(Value(id2t(dtype), value))
             _atom_to_a_data[atom] = a_data
             mol_data_atoms.add_part(Relation(id2t('REL_COMPOSED_FROM'), a_data))
         for atom in mol.atoms:
