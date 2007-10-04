@@ -89,7 +89,8 @@ class ChemReader:
             # element names in diffent languages
             a_data.add_view(LanguageDependentValue(id2t("ELEMENT_NAME"), symbol2properties[atom.symbol]['NAMES']))
             # description is also langugage dependent
-            a_data.add_view(LanguageDependentValue(id2t("DESC"), {'cs':symbol2properties[atom.symbol]['DESC']}))
+            if symbol2properties[atom.symbol]['DESC']:
+                a_data.add_view(LanguageDependentValue(id2t("DESC"), {'cs':symbol2properties[atom.symbol]['DESC']}))
             # other atom data
             for key,dtype in self.table_key_to_data_type.iteritems():
                 if key in symbol2properties[atom.symbol]:
