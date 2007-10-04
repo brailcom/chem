@@ -1,3 +1,11 @@
+2007-10-04   Beda Kosata <kosatab@vscht.cz>
+
+	* detail_periodic_table.py: rework the language dependent element names - they are now given as
+	a dictionary lang_code -> name
+
+	* chem_reader.py: make use of the new detail_periodic_table
+	
+
 2007-10-03   Beda Kosata <kosatab@vscht.cz>
 
 	* data_types.py: reorganization of data_type priorities

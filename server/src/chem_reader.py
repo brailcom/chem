@@ -41,7 +41,8 @@ class ChemReader:
                               'ORBITALS':'ORBITALS',
                               'ROW':'PERIODIC_TABLE_ROW',
                               'COLUMN':'PERIODIC_TABLE_COLUMN',
-                              'group':'ELEMENT_GROUP'}
+                              'group':'ELEMENT_GROUP',
+                              }
 
     @classmethod
     def known_formats(self):
@@ -86,9 +87,7 @@ class ChemReader:
         for atom in mol.atoms:
             a_data = PartMultiView(id2t("ATOM"))
             # element names in diffent languages
-            langs = {'en':symbol2properties[atom.symbol]['NAME_EN'],
-                     'cs':symbol2properties[atom.symbol]['NAME_CZ']}
-            a_data.add_view(LanguageDependentValue(id2t("ELEMENT_NAME"), langs))
+            a_data.add_view(LanguageDependentValue(id2t("ELEMENT_NAME"), symbol2properties[atom.symbol]['NAMES']))
             # description is also langugage dependent
             a_data.add_view(LanguageDependentValue(id2t("DESC"), {'cs':symbol2properties[atom.symbol]['DESC']}))
             # other atom data
