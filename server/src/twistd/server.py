@@ -29,6 +29,7 @@ import twisted.web.server
 
 from brailchem.session import Session
 from brailchem.object_types import *
+import brailchem.chem_reader
 import brailchem.data_types
 import brailchem.detail_periodic_table
 
@@ -108,14 +109,21 @@ class ChemInterface(object):
         root = add_element(dom, 'periodic')
         for symbol, properties in periodic_table.items():
             element = add_element(root, 'element', attributes={'symbol': symbol})
-            property_labels = [info_provider.data_type_from_id(name) or brailchem.data_types.DataType(name, name)
-                               for name in properties.keys()]
-            property_labels.sort(key=brailchem.data_types.DataType.default_priority, reverse=True)
-            for info in property_labels:
+            property_ids = [brailchem.chem_reader.ChemReader.table_key_to_data_type.get(name, name) for name in properties.keys()]
+            property_labels = [(id, (info_provider.data_type_from_id(name) or brailchem.data_types.DataType(name, name)),)
+                               for id, name in zip (properties.keys(), property_ids)]
+            def keyfunction(x):
+                return brailchem.data_types.DataType.default_priority(x[1])
+            property_labels.sort(key=keyfunction, reverse=True)
+            for property_key, info in property_labels:
                 name = info.id()
-                value = properties[name]
+                value = properties[property_key]
+                if isinstance(value, dict):
+                    translated_value = value['en'] or value['cs'] or ''
+                else:
+                    translated_value = value
                 attributes = {'name': name,
-                              'value': value,
+                              'value': translated_value,
                               'label': info and info.description() or name,
                               }
                 add_element(element, 'property', attributes=attributes)

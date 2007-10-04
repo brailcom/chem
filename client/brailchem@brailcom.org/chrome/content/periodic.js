@@ -40,8 +40,8 @@ function brailchem_periodic_display (page)
     var property_names = {};
     for (var symbol in element_data) {
         var properties = element_data[symbol];
-        var row = parseInt (properties['ROW'].value);
-        var col = parseInt (properties['COLUMN'].value);
+        var row = parseInt (properties['PERIODIC_TABLE_ROW'].value);
+        var col = parseInt (properties['PERIODIC_TABLE_COLUMN'].value);
         if (col < 100) {
             if (row > row_max)
                 row_max = row;
@@ -132,7 +132,7 @@ function brailchem_periodic_update_data ()
 
 function brailchem_periodic_init_tooltips ()
 {
-    brailchem_periodic_tooltips = {'NAME_EN': true};
+    brailchem_periodic_tooltips = {'ELEMENT_NAME': true};
 }
 
 function brailchem_periodic_update_element_data ()
