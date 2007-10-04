@@ -42,6 +42,7 @@ class ChemReader:
                               'ROW':'PERIODIC_TABLE_ROW',
                               'COLUMN':'PERIODIC_TABLE_COLUMN',
                               'group':'ELEMENT_GROUP',
+                              'NAMES':'ELEMENT_NAME',
                               }
 
     @classmethod
