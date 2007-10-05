@@ -245,17 +245,53 @@ function brailchem_element_move (element, row_increment, col_increment)
     var row = parseInt (element.getAttribute ('brailchem_row')) + row_increment;
     var col = parseInt (element.getAttribute ('brailchem_column')) + col_increment;
     var table = document.getElementById (col < 100 ? 'brailchem-periodic-table-node' : 'brailchem-periodic-extra-table-node');
-    function find_child (tag)
+    var elements = [];
+    function add_nodelist (nodelist)
     {
-        var children = table.getElementsByTagName (tag);
-        for (var i = 0; i < children.length; i++) {
-            var candidate = children[i];
-            if (candidate.getAttribute ('brailchem_row') == row && candidate.getAttribute ('brailchem_column') == col)
-                return candidate;
+        for (var i = 0; i < nodelist.length; i++) {
+            var node = nodelist[i];
+            if (node.getAttribute ('disabled') != 'true')
+                elements.push (nodelist[i]);
         }
-        return null;
     }
-    var target = find_child ('element') || find_child ('xelement');
+    add_nodelist (table.getElementsByTagName ('element'));
+    add_nodelist (table.getElementsByTagName ('xelement'));    
+    var target = null;
+    var target_row = (row_increment == 0 ? row : (row_increment < 0 ? -1000 : 1000));
+    var target_col = (col_increment == 0 ? col : (col_increment < 0 ? -1000 : 1000));
+    function update_target (node, row, col) 
+    {
+        target = node;
+        target_row = row;
+        target_col = col;
+    }
+    for (var i = 0; i < elements.length; i++) {
+        var node = elements[i];
+        var node_row = parseInt (node.getAttribute ('brailchem_row'));
+        var node_col = parseInt (node.getAttribute ('brailchem_column'));
+        if (row_increment == 0) {
+            if (node_row != row)
+                continue;
+            if (col_increment < 0) {
+                if (node_col <= col && node_col > target_col)
+                    update_target (node, node_row, node_col);
+            }
+            else {              // col_increment > 0
+                if (node_col >= col && node_col < target_col)
+                    update_target (node, node_row, node_col);
+            }
+        }
+        else {
+            if (row_increment < 0 && (node_row > row || node_row < target_row))
+                continue;
+            if (row_increment > 0 && (node_row < row || node_row > target_row))
+                continue;
+            if (node_row != target_row ||
+                (target_col > col && node_col < target_col) ||
+                (target_col < col && node_col <= col && node_col > target_col))
+                update_target (node, node_row, node_col);
+        }
+    }
     if (target)
         brailchem_focus (target);
 }
