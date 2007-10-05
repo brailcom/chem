@@ -2,6 +2,8 @@
 <!ENTITY periodic.settings.header "Settings">
 <!ENTITY periodic.settings.label.autoread "Automated reading">
 <!ENTITY periodic.settings.autoread "Walk through selected elements automatically">
+<!ENTITY periodic.settings.label.general "General">
+<!ENTITY periodic.settings.label.emptycells "Walk over empty cells">
 <!ENTITY periodic.settings.label.tooltips "Tooltip contents">
 <!ENTITY periodic.label.details "Element details">
 <!ENTITY periodic.help.keys "You can use the following keys to navigate here:

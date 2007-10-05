@@ -25,6 +25,7 @@ var g_element_data = null;
 var g_tooltips = null;
 var g_last_element = null;
 var g_last_extra_element = null;
+var g_empty_walk = false;
 
 function brailchem_periodic_display (page)
 {
@@ -89,10 +90,11 @@ function brailchem_periodic_display (page)
             for (var col = col_min; col <= col_max; col++) {
                 var element = table_row[col];
                 var dom_element_node = brailchem_add_element (dom_row_node, (element ? 'element' : 'xelement'),
-                                                         {class: 'brailchem-element-button',
-                                                          id: 'brailchem-element-' + row + '-' + col,
-                                                          onfocus: focus_variable + '=this;',
-                                                          brailchem_row: row, brailchem_column: col});
+                                                              {class: 'brailchem-element-button',
+                                                               id: 'brailchem-element-' + row + '-' + col,
+                                                               disabled: (element || g_empty_walk ? 'false' : 'true'),
+                                                               onfocus: focus_variable + '=this;',
+                                                               brailchem_row: row, brailchem_column: col});
                 if (element) {
                     var symbol = element['ATOM_SYMBOL'].value;
                     dom_element_node.setAttribute ('label', symbol);
@@ -214,6 +216,17 @@ function brailchem_periodic_set_tooltip (element)
     var value = element.checked;
     g_tooltips[property_name] = element.getAttribute('checked');
     brailchem_periodic_update_tooltips ();
+}
+
+function brailchem_periodic_empty_cells (enabled)
+{
+    if ((g_empty_walk && ! enabled) || (! g_empty_walk && enabled)) {
+        g_empty_walk = enabled;
+        var value = (g_empty_walk ? 'false' : 'true');
+        var xelements = document.getElementsByTagName ('xelement');
+        for (var i = 0; i < xelements.length; i++)
+            xelements[i].setAttribute ('disabled', value);
+    }
 }
 
 // Commands

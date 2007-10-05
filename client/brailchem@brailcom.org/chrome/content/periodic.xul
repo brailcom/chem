@@ -49,11 +49,16 @@
     <spacer style="height: 3ex;"/>
 
     <hbox><description class="header" level="2" id="brailchem-periodic-settings" value="&periodic.settings.header;"/></hbox>
-    <hbox>
+    <vbox>
+      <groupbox>
+        <caption label="&periodic.settings.label.general;"/>
+        <checkbox id="brailchem-setting-emptycell" label="&periodic.settings.label.emptycells;"
+                  oncommand="brailchem_periodic_empty_cells(event.target.checked)"/>
+      </groupbox>      
       <groupbox>
         <caption label="&periodic.settings.label.tooltips;"/>
         <vbox id="brailchem-tooltip-settings"/>
       </groupbox>
-    </hbox>
+    </vbox>
   </vbox>
 </window>
