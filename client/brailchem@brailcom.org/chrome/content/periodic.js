@@ -21,15 +21,15 @@ function brailchem_periodic_table ()
     brailchem_switch_page ("chrome://brailchem/content/periodic.xul", 'brailchem-periodic-window', function () { brailchem_periodic_display (this); });
 }
 
-var brailchem_periodic_element_data = null;
-var brailchem_periodic_tooltips = null;
-var brailchem_periodic_last_element = null;
-var brailchem_periodic_last_extra_element = null;
+var g_element_data = null;
+var g_tooltips = null;
+var g_last_element = null;
+var g_last_extra_element = null;
 
 function brailchem_periodic_display (page)
 {
     brailchem_periodic_update_data ();
-    var element_data = brailchem_periodic_element_data;
+    var element_data = g_element_data;
     // Any problem?
     if (element_data == null)
         return;
@@ -105,13 +105,13 @@ function brailchem_periodic_display (page)
             }
         }
     }
-    render_table ('brailchem-periodic-table-node', 1, row_max, 1, col_max, 'brailchem_periodic_last_element');
-    render_table ('brailchem-periodic-extra-table-node', extra_row_min, extra_row_max, extra_col_min, extra_col_max, 'brailchem_periodic_last_extra_element');
+    render_table ('brailchem-periodic-table-node', 1, row_max, 1, col_max, 'g_last_element');
+    render_table ('brailchem-periodic-extra-table-node', extra_row_min, extra_row_max, extra_col_min, extra_col_max, 'g_last_extra_element');
     brailchem_periodic_update_tooltips (page.document);
     // Update settings
     var tooltips_node = page.find_element ('brailchem-tooltip-settings');
     brailchem_remove_children (tooltips_node);
-    var tooltips = brailchem_periodic_tooltips;
+    var tooltips = g_tooltips;
     properties_as_list.sort (function (x0, y0) { var x = x0.label, y = y0.label; return (x==y ? 0 : (x<y ? -1 : 1)); });
     for (var i = 0; i < properties_as_list.length; i++) {
         var item = properties_as_list[i];
@@ -124,15 +124,15 @@ function brailchem_periodic_display (page)
 
 function brailchem_periodic_update_data ()
 {
-    if (brailchem_periodic_element_data == null)
+    if (g_element_data == null)
         brailchem_periodic_update_element_data ();
-    if (brailchem_periodic_tooltips == null)
+    if (g_tooltips == null)
         brailchem_periodic_init_tooltips ();
 }
 
 function brailchem_periodic_init_tooltips ()
 {
-    brailchem_periodic_tooltips = {'ELEMENT_NAME': true};
+    g_tooltips = {'ELEMENT_NAME': true};
 }
 
 function brailchem_periodic_update_element_data ()
@@ -161,7 +161,7 @@ function brailchem_periodic_update_element_data ()
         }
         data[symbol] = properties;
     }
-    brailchem_periodic_element_data = data;
+    g_element_data = data;
 }
 
 function brailchem_periodic_update_tooltips (doc_node)
@@ -169,8 +169,8 @@ function brailchem_periodic_update_tooltips (doc_node)
     if (! doc_node)
         doc_node = document;
     brailchem_periodic_update_data ();
-    var element_data = brailchem_periodic_element_data;
-    var tooltips = brailchem_periodic_tooltips;
+    var element_data = g_element_data;
+    var tooltips = g_tooltips;
     var element_nodes = doc_node.getElementsByTagName ('element');
     for (var i = 0; i < element_nodes.length; i++) {
         var element_node = element_nodes[i];
@@ -212,7 +212,7 @@ function brailchem_periodic_set_tooltip (element)
     brailchem_periodic_update_data ();
     var property_name = element.getAttribute ('brailchem_property_name');
     var value = element.checked;
-    brailchem_periodic_tooltips[property_name] = element.getAttribute('checked');
+    g_tooltips[property_name] = element.getAttribute('checked');
     brailchem_periodic_update_tooltips ();
 }
 
@@ -230,7 +230,7 @@ function brailchem_element_info (element)
     var symbol = element.getAttribute ('brailchem-element-symbol');
     var top_node = document.getElementById ('brailchem-element-details');
     brailchem_remove_children (top_node);
-    var properties = brailchem_periodic_element_data[symbol];
+    var properties = g_element_data[symbol];
     for (var name in properties) {
         var row = brailchem_add_element (top_node, 'row');
         var info = properties[name];
@@ -298,16 +298,16 @@ function brailchem_element_related (element)
 
 function brailchem_periodic_go_table ()
 {
-    if (! brailchem_periodic_last_element)
-        brailchem_periodic_last_element = document.getElementById ('brailchem-periodic-table-node').getElementsByTagName ('element')[0];
-    brailchem_focus (brailchem_periodic_last_element);
+    if (! g_last_element)
+        g_last_element = document.getElementById ('brailchem-periodic-table-node').getElementsByTagName ('element')[0];
+    brailchem_focus (g_last_element);
 }
 
 function brailchem_periodic_go_extra_table ()
 {
-    if (! brailchem_periodic_last_extra_element)
-        brailchem_periodic_last_extra_element = document.getElementById ('brailchem-periodic-extra-table-node').getElementsByTagName ('element')[0];
-    brailchem_focus (brailchem_periodic_last_extra_element);
+    if (! g_last_extra_element)
+        g_last_extra_element = document.getElementById ('brailchem-periodic-extra-table-node').getElementsByTagName ('element')[0];
+    brailchem_focus (g_last_extra_element);
 }
 
 function brailchem_periodic_go_settings ()
