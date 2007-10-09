@@ -53,10 +53,14 @@ function brailchem_add_element (parent, tag, attributes, text)
     return child;
 }
 
-function brailchem_remove_children (node)
+function brailchem_remove_children (node, condition)
 {
-    while (node.hasChildNodes ())
-        node.removeChild (node.childNodes[0]);
+    var child_nodes = node.childNodes;
+    for (var i = child_nodes.length - 1; i >= 0; i--) {
+        var child = child_nodes[i];
+        if (! condition || condition (child))
+            node.removeChild (child);
+    }
 }
 
 // Page switching
