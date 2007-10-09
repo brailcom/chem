@@ -61,10 +61,13 @@ function brailchem_remove_children (node)
 
 // Page switching
 
+var brailchem_current_page = null;
+
 var BrailchemPage = {
     frame: null,
     display_timer_interval: 100,
     get document() { return this.frame.contentDocument; },
+    get primary_element_id() { return this._primary_element_id },
     data: {},
     // Public methods
     find_element: function (element_id)
@@ -122,9 +125,9 @@ brailchem_page.prototype = BrailchemPage;
 
 function brailchem_switch_page (uri, primary_element_id, after_function)
 {
-    var page = new brailchem_page (uri, primary_element_id);
-    page.display (after_function);
-    return page;
+    brailchem_current_page = new brailchem_page (uri, primary_element_id);
+    brailchem_current_page.display (after_function);
+    return brailchem_current_page;
 }
 
 // Miscellaneous
@@ -136,6 +139,11 @@ function brailchem_focus (element)
     var dispatcher = document.commandDispatcher;
     element.focus ();
     dispatcher.advanceFocusIntoSubtree (element);
+}
+
+function brailchem_jump_to_main_frame ()
+{
+    brailchem_focus (parent.document.getElementById ('brailchem-primary'));
 }
 
 // Preference handling

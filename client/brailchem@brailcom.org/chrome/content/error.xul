@@ -12,6 +12,10 @@
   <script src="util.js"/>
   <script src="error.js"/>
 
+  <keyset>
+    <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_main_frame()"/>
+  </keyset>
+
   <description class="header" level="1">&error.caption;</description>
   <description id="error-description" value="."/>
 </window>

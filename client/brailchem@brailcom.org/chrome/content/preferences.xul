@@ -12,6 +12,10 @@
   <script src="util.js"/>
   <script src="preferences.js"/>
 
+  <keyset>
+    <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_main_frame()"/>
+  </keyset>
+
   <description class="header" value="&preferences.label.preferences;"/>
   <groupbox id="brailchem-server-prefs">
     <caption label="Brailchem server"/>

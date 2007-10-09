@@ -11,5 +11,10 @@
         style="-moz-user-focus: normal;"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
+
+  <keyset>
+    <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_main_frame()"/>
+  </keyset>
+  
   <description>&empty.text.nothing;</description>
 </window>

@@ -22,8 +22,12 @@
   <stringbundle id="brailchem-periodic-strings" src="chrome://brailchem/locale/periodic.properties"/>
 </stringbundleset>
 
+<keyset>
+  <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_subframe()"/>
+</keyset>
+
 <vbox id="main-box" flex="1">
-  <description>&main.text.intro;</description>
+  <description id="brailchem-primary">&main.text.intro;</description>
   <description style="white-space: pre;">&main.text.help;</description>
   <spacer style="height: 10px"/>
   <vbox id="function-box">
