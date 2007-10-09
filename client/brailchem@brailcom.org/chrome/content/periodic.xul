@@ -60,7 +60,7 @@
         <checkbox id="brailchem-setting-filter" label="&periodic.settings.label.filtering;"
                   oncommand="brailchem_periodic_set_filter(event.target.checked)"/>
         <hbox>
-          <label for="brailchem-setting-filter-group" value="&periodic.settings.label.group;"/>
+          <label control="brailchem-setting-filter-group" value="&periodic.settings.label.group;"/>
           <menulist id="brailchem-setting-filter-group" label="&periodic.settings.label.selectgroup;">
             <menupopup id="brailchem-setting-filter-group-menu"/>
           </menulist>
