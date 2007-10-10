@@ -1,4 +1,3 @@
-import chem_reader_fake
 import chem_reader
 
 class Config:

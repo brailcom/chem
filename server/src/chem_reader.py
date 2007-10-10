@@ -1,4 +1,3 @@
-import Pyro.core
 from object_types import Value, Part, Complex, MultiView, Relation, PartMultiView, ValuePart, LanguageDependentValue
 from data_types import DataTypeFactory, DataType
 import oasa
