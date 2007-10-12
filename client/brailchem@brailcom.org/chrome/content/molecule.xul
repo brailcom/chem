@@ -15,11 +15,15 @@
   <script src="server.js"/>
   <script src="molecule.js"/>
 
+  <script>addEventListener ('focus', brailchem_focus_callback, true);</script>
+
   <keyset>
     <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_main_frame()"/>
   </keyset>
   
-  <box id="molecule-display-box" orient="vertical" flex="1" style="overflow: auto;">
-    <description>Molecule viewer</description>
-  </box>
+  <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
+    <box id="molecule-display-box">
+      <description>Molecule viewer</description>
+    </box>
+  </scrollbox>
 </window>

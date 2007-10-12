@@ -134,7 +134,32 @@ function brailchem_switch_page (uri, primary_element_id, after_function)
     return brailchem_current_page;
 }
 
-// Miscellaneous
+// Focus
+
+var brailchem_scroller = null;
+var brailchem_scrollbox = null;
+
+function brailchem_scrollto (element)
+{
+    if (brailchem_scrollbox == null) {
+        brailchem_scrollbox = document.getElementById ('brailchem-scrollbox');
+        if (! brailchem_scrollbox)
+            return;
+    }
+    if (brailchem_scroller == null)
+        brailchem_scroller = brailchem_scrollbox.boxObject.QueryInterface (Components.interfaces.nsIScrollBoxObject);
+    // Apparently brailchem_scroller.ensureElementIsVisible doesn't work
+    var scroll_x = {}, scroll_y = {};
+    brailchem_scroller.getPosition (scroll_x, scroll_y);
+    var y = element.boxObject.y - scroll_y.value;
+    if (y < 0 || y > window.innerHeight)
+        brailchem_scroller.scrollToElement (element);
+}
+
+function brailchem_focus_callback ()
+{
+    brailchem_scrollto (document.commandDispatcher.focusedElement);
+}
 
 function brailchem_focus (element)
 {

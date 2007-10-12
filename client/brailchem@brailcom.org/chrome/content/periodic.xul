@@ -12,6 +12,8 @@
   <script src="util.js"/>
   <script src="server.js"/>
   <script src="periodic.js"/>
+
+  <script>addEventListener ('focus', brailchem_focus_callback, true);</script>
   
   <keyset>
     <key id="brailchem-periodic-go-table-key" key="T" oncommand="brailchem_periodic_go_main_table();"/>
@@ -21,7 +23,7 @@
     <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_main_frame()"/>
   </keyset>
   
-  <vbox flex="1" style="overflow: auto;">
+  <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
     <hbox><description id="brailchem-primary" class="header" level="1" value="&periodic.header;"/></hbox>
     <hbox>
       <description style="white-space: pre;">&periodic.help.keys;</description>
@@ -75,5 +77,5 @@
         <vbox id="brailchem-tooltip-settings"/>
       </groupbox>
     </vbox>
-  </vbox>
+  </scrollbox>
 </window>

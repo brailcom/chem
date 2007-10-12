@@ -12,25 +12,29 @@
   <script src="util.js"/>
   <script src="preferences.js"/>
 
+  <script>addEventListener ('focus', brailchem_focus_callback, true);</script>
+
   <keyset>
     <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_main_frame()"/>
   </keyset>
 
   <description class="header" value="&preferences.label.preferences;"/>
-  <groupbox id="brailchem-server-prefs">
-    <caption label="Brailchem server"/>
-    <grid>
-      <rows>
-        <row>
-          <label control="pref-brailchem-host" value="&preferences.label.host;"/>
-          <textbox id="pref-brailchem-host"/>
-        </row>
-        <row>
-          <label control="pref-brailchem-port" value="&preferences.label.port;"/>
-          <textbox id="pref-brailchem-port" maxlength="5"/>
-        </row>
-      </rows>
-    </grid>
-  </groupbox>
-  <button id="brailchem-submit-prefs" label="&preferences.button.ok;" oncommand="brailchem_set_preferences()"/>
+  <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
+    <groupbox id="brailchem-server-prefs">
+      <caption label="Brailchem server"/>
+      <grid>
+        <rows>
+          <row>
+            <label control="pref-brailchem-host" value="&preferences.label.host;"/>
+            <textbox id="pref-brailchem-host"/>
+          </row>
+          <row>
+            <label control="pref-brailchem-port" value="&preferences.label.port;"/>
+            <textbox id="pref-brailchem-port" maxlength="5"/>
+          </row>
+        </rows>
+      </grid>
+    </groupbox>
+    <button id="brailchem-submit-prefs" label="&preferences.button.ok;" oncommand="brailchem_set_preferences()"/>
+  </scrollbox>
 </window>
