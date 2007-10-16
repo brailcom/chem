@@ -93,7 +93,7 @@ class ChemReader:
                 a_data.add_view(LanguageDependentValue(id2t("DESC"), {'cs':symbol2properties[atom.symbol]['DESC']}))
             # other atom data
             for key,dtype in self.table_key_to_data_type.iteritems():
-                if key in symbol2properties[atom.symbol]:
+                if key in symbol2properties[atom.symbol] and key != 'NAMES':
                     value = symbol2properties[atom.symbol][key]
                     if type(value) == type([]):
                         value = ",".join(map(str, value))
