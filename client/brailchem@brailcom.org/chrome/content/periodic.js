@@ -27,7 +27,8 @@ var g_tooltips = null;
 var g_last_element = {main: null, extra: null};
 var g_empty_walk = false;
 var g_element_groups = null;
-var g_filter_condition = function (element) { return true; };
+var g_oxidation_numbers = null;
+var g_filter_conditions = {};
 
 function brailchem_periodic_display (page)
 {
@@ -123,15 +124,25 @@ function brailchem_periodic_display (page)
         var checkbox_node = brailchem_add_element (tooltips_node, 'checkbox',
                                                    {label: item.label, checked: tooltips[name], brailchem_property_name: name,
                                                     oncommand: 'brailchem_periodic_set_tooltip(event.target)'});
-    }
+    }    
     var group_menu_node = page.find_element ('brailchem-setting-filter-group-menu');
-    function condition (element)
+    function removal_condition (element)
     {
         return element.tagName != 'menuitem' || element.getAttribute ('brailchem-noremove') != 'true';
     }
-    brailchem_remove_children (group_menu_node, condition);
+    brailchem_remove_children (group_menu_node, removal_condition);
     for (var group in g_element_groups)
         brailchem_add_element (group_menu_node, 'menuitem', {label: group, oncommand: "brailchem_periodic_group_filter('"+group+"')"});
+    var oxidation_menu_node = page.find_element ('brailchem-setting-filter-oxidation-menu');
+    brailchem_remove_children (oxidation_menu_node, removal_condition);
+    var oxidation_list = [];
+    for (var number in g_oxidation_numbers)
+        oxidation_list.push (number);
+    oxidation_list.sort (function (x0, y0) { var x = parseInt(x0), y = parseInt(y0); return (x==y ? 0 : (x<y ? -1 : 1)); });
+    for (var i in oxidation_list) {
+        var number = oxidation_list[i];
+        brailchem_add_element (oxidation_menu_node, 'menuitem', {label: number, oncommand: "brailchem_periodic_oxidation_filter('"+number+"')"});
+    }
 }
 
 function brailchem_periodic_update_data ()
@@ -156,6 +167,7 @@ function brailchem_periodic_update_element_data ()
         return;
     var data = {};
     var groups = {};
+    var oxidation_numbers = {};
     var top_element = doc.documentElement;
     var elements = top_element.childNodes;
     for (var i = 0; i < elements.length; i++) {
@@ -186,10 +198,14 @@ function brailchem_periodic_update_element_data ()
         var group = properties['ELEMENT_GROUP'];
         if (group)
             groups[group.value] = true;
+        var oxidation_number_list = properties['OX_NUMBERS'].value;
+        for (var j = 0; j < oxidation_number_list.length; j++)
+            oxidation_numbers[oxidation_number_list[j]] = true;
         data[symbol] = properties;
     }
     g_element_data = data;
     g_element_groups = groups;
+    g_oxidation_numbers = oxidation_numbers;
 }
 
 function brailchem_periodic_update_tooltips (doc_node)
@@ -211,12 +227,18 @@ function brailchem_periodic_update_tooltips (doc_node)
     }
 }
 
-function brailchem_periodic_filter (condition)
+function brailchem_periodic_filter (conditions)
 {
     var node_list = document.getElementsByTagName ('element');
     for (var i = 0; i < node_list.length; i++) {
         var element = node_list[i];
-        if (condition (element)) {
+        var enabled = true;
+        for (var j in conditions)
+            if (! conditions[j] (element)) {
+                enabled = false;
+                break;
+            }
+        if (enabled) {
             element.setAttribute ('disabled', 'false');
             element.setAttribute ('brailchem-emphasized', 'true');
         }
@@ -262,8 +284,15 @@ function brailchem_periodic_empty_cells (enabled)
 function brailchem_periodic_set_filter (enable)
 {
     brailchem_periodic_update_data ();
-    if (enable)
-        brailchem_periodic_filter (g_filter_condition);
+    if (enable) {
+        var conditions = [];
+        for (var i in g_filter_conditions) {
+            var c = g_filter_conditions[i];
+            if (c != null)
+                conditions.push (c);
+        }
+        brailchem_periodic_filter (conditions);
+    }
     else
         brailchem_periodic_unfilter ();
 }
@@ -276,12 +305,31 @@ function brailchem_periodic_group_filter (group)
             var symbol = element.getAttribute('brailchem-element-symbol');
             return g_element_data[symbol]['ELEMENT_GROUP'].value == group;
         }
-        g_filter_condition = filter;
+        g_filter_conditions['group'] = filter;
         document.getElementById ('brailchem-setting-filter').setAttribute ('checked', 'true');
     }
-    else {
-        g_filter_condition = function (element) { return true; };
+    else
+        g_filter_conditions['group'] = null;
+    brailchem_periodic_set_filter (true);
+}
+
+function brailchem_periodic_oxidation_filter (oxidation_number)
+{
+    if (oxidation_number != null) {
+        function filter (element)
+        {
+            var symbol = element.getAttribute('brailchem-element-symbol');
+            var numbers = g_element_data[symbol]['OX_NUMBERS'].value;
+            for (var i in numbers)
+                if (numbers[i] == oxidation_number)
+                    return true;
+            return false;
+        }
+        g_filter_conditions['oxidation'] = filter;
+        document.getElementById ('brailchem-setting-filter').setAttribute ('checked', 'true');
     }
+    else
+        g_filter_conditions['oxidation'] = null;
     brailchem_periodic_set_filter (true);
 }
 
@@ -442,5 +490,5 @@ function brailchem_periodic_go_settings ()
 
 function brailchem_periodic_change_group_filter ()
 {
-    brailchem_focus (document.getElementById ('brailchem-setting-filter-group-hbox'));
+    brailchem_focus (document.getElementById ('brailchem-setting-filter-box'));
 }

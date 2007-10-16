@@ -7,10 +7,11 @@
 <!ENTITY periodic.settings.label.filtering "Enable filters">
 <!ENTITY periodic.settings.label.filters "Filter">
 <!ENTITY periodic.settings.label.group "Group">
+<!ENTITY periodic.settings.label.oxidation "Oxidation number">
 <!ENTITY periodic.settings.label.selectgroup "Select group">
 <!ENTITY periodic.settings.label.tooltips "Tooltip contents">
 <!ENTITY periodic.label.details "Element details">
-<!ENTITY periodic.settings.group.all "all">
+<!ENTITY periodic.settings.all "all">
 <!ENTITY periodic.help.keys "You can use the following keys to navigate here:
 T: go to the periodic table;
 Shift+T: go to the table of lanthanoids and actinoids;
