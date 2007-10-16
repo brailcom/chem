@@ -61,10 +61,9 @@ description.header[level="5"]
   text-align: center;
 }
 
-element[brailchem-emphasized="true"]
+element[brailchem-emphasized="true"] button
 {
   font-weight: bold;
-  color: red;
 }
 
 element button:focus, xelement button:focus
