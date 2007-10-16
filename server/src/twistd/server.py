@@ -79,11 +79,11 @@ class ChemInterface(object):
             long_description = data_type.long_description()
             attributes = dict(id=id, type=data_type_id, description=description, long=long_description)
             data_node = add_element(node, 'data', attributes=attributes)
-            if isinstance(data, Value):
-                if isinstance(data, LanguageDependentValue):
-                    value = data.value(language)
-                else:
-                    value = data.value()
+            if isinstance(data, LanguageDependentValue):
+                value = data.value(language)[1]
+                add_element(data_node, 'value', text=value)
+            elif isinstance(data, Value):
+                value = data.value()
                 add_element(data_node, 'value', text=value)
             if isinstance(data, Complex):
                 parts_node = add_element(data_node, 'parts')
