@@ -67,6 +67,12 @@ element[brailchem-emphasized="true"]
   color: red;
 }
 
+element button:focus, xelement button:focus
+{
+  font-weight: bold;
+  color: blue;
+}
+
 description[brailchem-type="group"]
 {
   font-weight: bold;
