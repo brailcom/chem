@@ -22,7 +22,7 @@
   </keyset>
   
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
-    <box id="molecule-display-box">
+    <box id="molecule-display-box" orient="vertical">
       <description>Molecule viewer</description>
     </box>
   </scrollbox>
