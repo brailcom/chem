@@ -84,7 +84,12 @@ class ChemInterface(object):
                 add_element(data_node, 'value', text=value)
             elif isinstance(data, Value):
                 value = data.value()
-                add_element(data_node, 'value', text=value)
+                if isinstance(value, list):
+                    list_node = add_element(data_node, 'listvalue')
+                    for list_item in value:
+                        add_element(list_node, 'value', text=list_item)
+                else:
+                    add_element(data_node, 'value', text=value)
             if isinstance(data, Complex):
                 parts_node = add_element(data_node, 'parts')
                 for part in data.parts():
@@ -128,10 +133,15 @@ class ChemInterface(object):
                 else:
                     translated_value = value
                 attributes = {'name': name,
-                              'value': translated_value,
                               'label': info and info.description() or name,
                               }
-                add_element(element, 'property', attributes=attributes)
+                if not isinstance(translated_value, list):
+                    attributes['value'] = translated_value
+                property_element = add_element(element, 'property', attributes=attributes)
+                if isinstance(translated_value, list):
+                    list_element = add_element(property_element, 'listvalue')
+                    for item in translated_value:
+                        add_element(list_element, 'value', attributes={'value': item})
         return dom
 
     # Public methods

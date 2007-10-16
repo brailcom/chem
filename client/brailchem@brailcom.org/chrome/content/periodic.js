@@ -171,8 +171,17 @@ function brailchem_periodic_update_element_data ()
             if (p.nodeName != 'property')
                 // ignore text nodes
                 continue;
-            var name = p.getAttribute ('name');            
-            properties[name] = {name: name, label: p.getAttribute ('label'), value: p.getAttribute ('value')};
+            var name = p.getAttribute ('name');
+            if (p.hasAttribute ('value')) {
+                var value = p.getAttribute ('value');
+            }
+            else {
+                var value_items = p.getElementsByTagName ('listvalue')[0].getElementsByTagName ('value');
+                var value = [];
+                for (var k = 0; k < value_items.length; k++)
+                    value.push (value_items[k].getAttribute ('value'));
+            }
+            properties[name] = {name: name, label: p.getAttribute ('label'), value: value};
         }
         var group = properties['ELEMENT_GROUP'];
         if (group)
