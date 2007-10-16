@@ -20,8 +20,207 @@
 
   <description class="header" value="&preferences.label.preferences;"/>
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
+    <groupbox>
+      <caption label="&preferences.caption.general;"/>
+      <grid>
+        <rows>
+          <row>
+            <label control="pref-language" value="&preferences.label.language;"/>
+            <menulist id="pref-language">
+              <menupopup id="pref-language-menu">
+                <menuitem value="*" label="*" selected="true" id="pref-language-first"/>
+                <menuitem value="ab" label="Abkhazian"/>
+                <menuitem value="aa" label="Afar"/>
+                <menuitem value="af" label="Afrikaans"/>
+                <menuitem value="ak" label="Akan"/>
+                <menuitem value="sq" label="Albanian"/>
+                <menuitem value="am" label="Amharic"/>
+                <menuitem value="ar" label="Arabic"/>
+                <menuitem value="an" label="Aragonese"/>
+                <menuitem value="hy" label="Armenian"/>
+                <menuitem value="as" label="Assamese"/>
+                <menuitem value="av" label="Avaric"/>
+                <menuitem value="ae" label="Avestan"/>
+                <menuitem value="ay" label="Aymara"/>
+                <menuitem value="az" label="Azerbaijani"/>
+                <menuitem value="bm" label="Bambara"/>
+                <menuitem value="ba" label="Bashkir"/>
+                <menuitem value="eu" label="Basque"/>
+                <menuitem value="be" label="Belarusian"/>
+                <menuitem value="bn" label="Bengali"/>
+                <menuitem value="bh" label="Bihari"/>
+                <menuitem value="bi" label="Bislama"/>
+                <menuitem value="bs" label="Bosnian"/>
+                <menuitem value="br" label="Breton"/>
+                <menuitem value="bg" label="Bulgarian"/>
+                <menuitem value="my" label="Burmese"/>
+                <menuitem value="ca" label="Catalan"/>
+                <menuitem value="km" label="Central Khmer"/>
+                <menuitem value="ch" label="Chamorro"/>
+                <menuitem value="ce" label="Chechen"/>
+                <menuitem value="ny" label="Chichewa"/>
+                <menuitem value="zh" label="Chinese"/>
+                <menuitem value="cv" label="Chuvash"/>
+                <menuitem value="kw" label="Cornish"/>
+                <menuitem value="co" label="Corsican"/>
+                <menuitem value="cr" label="Cree"/>
+                <menuitem value="hr" label="Croatian"/>
+                <menuitem value="cs" label="Czech"/>
+                <menuitem value="da" label="Danish"/>
+                <menuitem value="dv" label="Divehi"/>
+                <menuitem value="nl" label="Dutch"/>
+                <menuitem value="dz" label="Dzongkha"/>
+                <menuitem value="en" label="English"/>
+                <menuitem value="eo" label="Esperanto"/>
+                <menuitem value="et" label="Estonian"/>
+                <menuitem value="ee" label="Ewe"/>
+                <menuitem value="fo" label="Faroese"/>
+                <menuitem value="fj" label="Fijian"/>
+                <menuitem value="fi" label="Finnish"/>
+                <menuitem value="fr" label="French"/>
+                <menuitem value="ff" label="Fulah"/>
+                <menuitem value="gd" label="Gaelic"/>
+                <menuitem value="gl" label="Galician"/>
+                <menuitem value="lg" label="Ganda"/>
+                <menuitem value="ka" label="Georgian"/>
+                <menuitem value="de" label="German"/>
+                <menuitem value="el" label="Greek"/>
+                <menuitem value="gn" label="Guarani"/>
+                <menuitem value="gu" label="Gujarati"/>
+                <menuitem value="ht" label="Haitian"/>
+                <menuitem value="ha" label="Hausa"/>
+                <menuitem value="he" label="Hebrew"/>
+                <menuitem value="hz" label="Herero"/>
+                <menuitem value="hi" label="Hindi"/>
+                <menuitem value="ho" label="Hiri Motu"/>
+                <menuitem value="hu" label="Hungarian"/>
+                <menuitem value="is" label="Icelandic"/>
+                <menuitem value="io" label="Ido"/>
+                <menuitem value="ig" label="Igbo"/>
+                <menuitem value="id" label="Indonesian"/>
+                <menuitem value="ia" label="Interlingua"/>
+                <menuitem value="ie" label="Interlingue"/>
+                <menuitem value="iu" label="Inuktitut"/>
+                <menuitem value="ik" label="Inupiaq"/>
+                <menuitem value="ga" label="Irish"/>
+                <menuitem value="it" label="Italian"/>
+                <menuitem value="ja" label="Japanese"/>
+                <menuitem value="jv" label="Javanese"/>
+                <menuitem value="kl" label="Kalaallisut"/>
+                <menuitem value="kn" label="Kannada"/>
+                <menuitem value="kr" label="Kanuri"/>
+                <menuitem value="ks" label="Kashmiri"/>
+                <menuitem value="kk" label="Kazakh"/>
+                <menuitem value="ki" label="Kikuyu"/>
+                <menuitem value="rw" label="Kinyarwanda"/>
+                <menuitem value="ky" label="Kirghiz"/>
+                <menuitem value="kv" label="Komi"/>
+                <menuitem value="kg" label="Kongo"/>
+                <menuitem value="ko" label="Korean"/>
+                <menuitem value="kj" label="Kuanyama"/>
+                <menuitem value="ku" label="Kurdish"/>
+                <menuitem value="lo" label="Lao"/>
+                <menuitem value="la" label="Latin"/>
+                <menuitem value="lv" label="Latvian"/>
+                <menuitem value="li" label="Limburgan"/>
+                <menuitem value="ln" label="Lingala"/>
+                <menuitem value="lt" label="Lithuanian"/>
+                <menuitem value="lu" label="Luba-Katanga"/>
+                <menuitem value="lb" label="Luxembourgish"/>
+                <menuitem value="mk" label="Macedonian"/>
+                <menuitem value="mg" label="Malagasy"/>
+                <menuitem value="ml" label="Malayalam"/>
+                <menuitem value="ms" label="Malay"/>
+                <menuitem value="mt" label="Maltese"/>
+                <menuitem value="gv" label="Manx"/>
+                <menuitem value="mi" label="Maori"/>
+                <menuitem value="mr" label="Marathi"/>
+                <menuitem value="mh" label="Marshallese"/>
+                <menuitem value="mo" label="Moldavian"/>
+                <menuitem value="mn" label="Mongolian"/>
+                <menuitem value="na" label="Nauru"/>
+                <menuitem value="nv" label="Navajo"/>
+                <menuitem value="ng" label="Ndonga"/>
+                <menuitem value="ne" label="Nepali"/>
+                <menuitem value="nd" label="North Ndebele"/>
+                <menuitem value="se" label="Northern Sami"/>
+                <menuitem value="nb" label="Norwegian Bokmål"/>
+                <menuitem value="nn" label="Norwegian Nynorsk"/>
+                <menuitem value="no" label="Norwegian"/>
+                <menuitem value="oc" label="Occitan"/>
+                <menuitem value="oj" label="Ojibwa"/>
+                <menuitem value="or" label="Oriya"/>
+                <menuitem value="om" label="Oromo"/>
+                <menuitem value="os" label="Ossetian"/>
+                <menuitem value="pi" label="Pali"/>
+                <menuitem value="pa" label="Panjabi"/>
+                <menuitem value="fa" label="Persian"/>
+                <menuitem value="pl" label="Polish"/>
+                <menuitem value="pt" label="Portuguese"/>
+                <menuitem value="ps" label="Pushto"/>
+                <menuitem value="qu" label="Quechua"/>
+                <menuitem value="ro" label="Romanian"/>
+                <menuitem value="rm" label="Romansh"/>
+                <menuitem value="rn" label="Rundi"/>
+                <menuitem value="ru" label="Russian"/>
+                <menuitem value="sm" label="Samoan"/>
+                <menuitem value="sg" label="Sango"/>
+                <menuitem value="sa" label="Sanskrit"/>
+                <menuitem value="sc" label="Sardinian"/>
+                <menuitem value="sr" label="Serbian"/>
+                <menuitem value="sn" label="Shona"/>
+                <menuitem value="ii" label="Sichuan Yi"/>
+                <menuitem value="sd" label="Sindhi"/>
+                <menuitem value="si" label="Sinhala"/>
+                <menuitem value="sk" label="Slovak"/>
+                <menuitem value="sl" label="Slovenian"/>
+                <menuitem value="so" label="Somali"/>
+                <menuitem value="nr" label="South Ndebele"/>
+                <menuitem value="st" label="Southern Sotho"/>
+                <menuitem value="es" label="Spanish"/>
+                <menuitem value="su" label="Sundanese"/>
+                <menuitem value="sw" label="Swahili"/>
+                <menuitem value="ss" label="Swati"/>
+                <menuitem value="sv" label="Swedish"/>
+                <menuitem value="tl" label="Tagalog"/>
+                <menuitem value="ty" label="Tahitian"/>
+                <menuitem value="tg" label="Tajik"/>
+                <menuitem value="ta" label="Tamil"/>
+                <menuitem value="tt" label="Tatar"/>
+                <menuitem value="te" label="Telugu"/>
+                <menuitem value="th" label="Thai"/>
+                <menuitem value="bo" label="Tibetan"/>
+                <menuitem value="ti" label="Tigrinya"/>
+                <menuitem value="to" label="Tonga"/>
+                <menuitem value="ts" label="Tsonga"/>
+                <menuitem value="tn" label="Tswana"/>
+                <menuitem value="tr" label="Turkish"/>
+                <menuitem value="tk" label="Turkmen"/>
+                <menuitem value="tw" label="Twi"/>
+                <menuitem value="ug" label="Uighur"/>
+                <menuitem value="uk" label="Ukrainian"/>
+                <menuitem value="ur" label="Urdu"/>
+                <menuitem value="uz" label="Uzbek"/>
+                <menuitem value="ve" label="Venda"/>
+                <menuitem value="vi" label="Vietnamese"/>
+                <menuitem value="vo" label="Volapük"/>
+                <menuitem value="wa" label="Walloon"/>
+                <menuitem value="cy" label="Welsh"/>
+                <menuitem value="fy" label="Western Frisian"/>
+                <menuitem value="wo" label="Wolof"/>
+                <menuitem value="xh" label="Xhosa"/>
+                <menuitem value="yi" label="Yiddish"/>
+                <menuitem value="yo" label="Yoruba"/>
+                <menuitem value="za" label="Zhuang"/>
+                <menuitem value="zu" label="Zulu"/>
+              </menupopup>
+            </menulist>
+          </row>
+        </rows>
+      </grid>
+    </groupbox>
     <groupbox id="brailchem-server-prefs">
-      <caption label="Brailchem server"/>
+      <caption label="&preferences.caption.server;"/>
       <grid>
         <rows>
           <row>

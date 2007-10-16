@@ -24,7 +24,8 @@ function brailchem_call_server (func, argument)
         alert ("brailchem component not found!");
         return null;
     }
-    var doc = brailchem.fetch_xml (brailchem_preferences.char ('server.host'), brailchem_preferences.int ('server.port'), func, argument);
+    var doc = brailchem.fetch_xml (brailchem_preferences.char ('server.host'), brailchem_preferences.int ('server.port'), func, argument,
+                                   brailchem_preferences.char ('language'));
     if (doc == null) {
         alert (brailchem.error_message);
     }

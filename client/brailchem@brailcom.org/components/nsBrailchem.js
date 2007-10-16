@@ -23,11 +23,13 @@ BrailchemComponent.prototype = {
     error_string: null,
     get error_message () { return this.error_string; },
     
-    fetch_xml: function (host, port, function_name, argument) {
+    fetch_xml: function (host, port, function_name, argument, language_code) {
         this.error_string = null;
         var uri = 'http://' + host + ':' + port + '/' + function_name;
         if (argument)
             uri = uri + '/' + encodeURIComponent(argument);
+        if (language_code)
+            uri = uri + '/?language=' + language_code;
         var req  = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance (Components.interfaces.nsIXMLHttpRequest);
         try {
             req.open ('GET', uri, false);

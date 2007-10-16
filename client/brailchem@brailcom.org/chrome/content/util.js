@@ -183,6 +183,7 @@ var brailchem_preferences = {
 
     _default_values: {
         'server.host': 'www.brailcom.org', 'server.port': 8000,
+        'language': 'en',
         'display.preferred_views': 'ATOM_SYMBOL;NAME',
     },
     

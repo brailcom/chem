@@ -41,7 +41,8 @@ class ChemInterface(object):
     def __init__(self, *args, **kwargs):
         super(ChemInterface, self).__init__(self, *args, **kwargs)
         self._session = Session(1)
-        self._periodic_table_xml = None
+        self._periodic_table_xml = {}
+        self._language_list_xml = None
 
     # DOM utilities
 
@@ -66,7 +67,7 @@ class ChemInterface(object):
         data = session.process_string(smiles, format="SMILES")
         return data
 
-    def _chem_to_dom(self, data):
+    def _chem_to_dom(self, data, language):
         dom = self._create_dom()
         def add_element(*args, **kwargs):
             return self._add_dom_element(dom, *args, **kwargs)
@@ -79,12 +80,11 @@ class ChemInterface(object):
             attributes = dict(id=id, type=data_type_id, description=description, long=long_description)
             data_node = add_element(node, 'data', attributes=attributes)
             if isinstance(data, Value):
-                value = data.value()
-                if isinstance(value, dict):
-                    translated_value = value['en'] or value['cs'] or ''
+                if isinstance(data, LanguageDependentValue):
+                    value = data.value(language)
                 else:
-                    translated_value = value
-                add_element(data_node, 'value', text=translated_value)
+                    value = data.value()
+                add_element(data_node, 'value', text=value)
             if isinstance(data, Complex):
                 parts_node = add_element(data_node, 'parts')
                 for part in data.parts():
@@ -100,12 +100,12 @@ class ChemInterface(object):
         transform(data, dom)
         return dom
 
-    def _molecule_dom(self, smiles):
+    def _molecule_dom(self, smiles, language):
         data = self._retrieve_molecule_data(smiles)
-        dom = self._chem_to_dom(data)
+        dom = self._chem_to_dom(data, language)
         return dom
 
-    def _make_periodic_table_dom(self):
+    def _make_periodic_table_dom(self, language):
         periodic_table = brailchem.detail_periodic_table.symbol2properties
         info_provider = brailchem.data_types.DataTypeFactory()
         dom = self._create_dom()
@@ -124,7 +124,7 @@ class ChemInterface(object):
                 name = info.id()
                 value = properties[property_key]
                 if isinstance(value, dict):
-                    translated_value = value['en'] or value['cs'] or ''
+                    translated_value = value.get(language, '') or value.get('en', '')
                 else:
                     translated_value = value
                 attributes = {'name': name,
@@ -133,10 +133,10 @@ class ChemInterface(object):
                               }
                 add_element(element, 'property', attributes=attributes)
         return dom
-        
+
     # Public methods
 
-    def molecule_details(self, smiles):
+    def molecule_details(self, smiles, language):
         """Return information about the given molecule as a DOM object.
 
         Arguments:
@@ -144,10 +144,10 @@ class ChemInterface(object):
           smiles -- molecule name as a string in the SMILES notation
 
         """
-        dom = self._molecule_dom(smiles)
+        dom = self._molecule_dom(smiles, language)
         return dom
     
-    def molecule_details_xml(self, smiles):
+    def molecule_details_xml(self, smiles, language):
         """Return information about the given molecule as an XML unicode.
 
         Arguments:
@@ -155,18 +155,18 @@ class ChemInterface(object):
           smiles -- molecule name as a string in the SMILES notation
 
         """
-        dom = self._molecule_dom(smiles)
+        dom = self._molecule_dom(smiles, language)
         xml = dom.toprettyxml(' ')
         return xml
 
-    def periodic_table_xml(self):
+    def periodic_table_xml(self, language):
         """Return periodic table data as an XML unicode.
         """
-        if self._periodic_table_xml is None:
-            dom = self._make_periodic_table_dom()
+        if self._periodic_table_xml.get(language) is None:
+            dom = self._make_periodic_table_dom(language)
             xml = dom.toprettyxml(' ')
-            self._periodic_table_xml = xml
-        return self._periodic_table_xml
+            self._periodic_table_xml[language] = xml
+        return self._periodic_table_xml[language]
 
 ### HTTP output interface
 
@@ -190,7 +190,7 @@ class XMLWebResource(twisted.web.resource.Resource):
         request.setHeader("content-type", 'application/xml')
         request.setHeader("content-length", str(len(data)))
         request.write(data)
-        request.finish()    
+        request.finish()
 
 class SmilesWebResource(XMLWebResource):
     """SMILES request web handler."""
@@ -204,7 +204,8 @@ class SmilesWebResource(XMLWebResource):
             smiles = request.postpath[0]
         else:
             smiles = self._default_smiles
-        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(smiles))
+        language = request.args.get('language', ['en'])[0]
+        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(smiles, language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
 
@@ -214,7 +215,8 @@ class PeriodicWebResource(XMLWebResource):
     isLeaf = True
         
     def render_GET(self, request):
-        defer = twisted.internet.defer.succeed(self._service.periodic_table_xml())
+        language = request.args.get('language', ['en'])[0]
+        defer = twisted.internet.defer.succeed(self._service.periodic_table_xml(language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
 

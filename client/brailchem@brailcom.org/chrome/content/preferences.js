@@ -22,15 +22,26 @@ function brailchem_edit_preferences ()
 }
 
 function brailchem_update_preferences ()
-{
+{    
+    // Server
     var host = brailchem_preferences.char ('server.host');
     var port = brailchem_preferences.int ('server.port');
     this.find_element ('pref-brailchem-host').setAttribute ('value', host);;
-    this.find_element ('pref-brailchem-port').setAttribute ('value', port);
+    this.find_element ('pref-brailchem-port').setAttribute ('value', port);    
+    // General
+    // It is quite tricky to select XUL menu item during frame initialization.
+    // Any better method known?
+    var language = brailchem_preferences.char ('language');
+    var replaceable_node = this.document.getElementById ('pref-language-first');
+    var menu_node = this.document.getElementById ('pref-language-menu');
+    replaceable_node.setAttribute ('value', '*');
+    replaceable_node.setAttribute ('label', menu_node.getElementsByAttribute ('value', language)[0].getAttribute ('label'));
+    replaceable_node.setAttribute ('value', language);
 }
 
 function brailchem_set_preferences ()
 {
     brailchem_preferences.set_char ('server.host', document.getElementById ('pref-brailchem-host').value);
     brailchem_preferences.set_int ('server.port', document.getElementById ('pref-brailchem-port').value);
+    brailchem_preferences.set_char ('language', document.getElementById ('pref-language').value);
 }

@@ -22,11 +22,12 @@ function brailchem_periodic_table ()
 }
 
 var g_element_data = null;
+var g_language = null;
 var g_tooltips = null;
 var g_last_element = {main: null, extra: null};
 var g_empty_walk = false;
 var g_element_groups = null;
-var g_filter_condition = function (element) { return true; }    
+var g_filter_condition = function (element) { return true; };
 
 function brailchem_periodic_display (page)
 {
@@ -135,10 +136,12 @@ function brailchem_periodic_display (page)
 
 function brailchem_periodic_update_data ()
 {
-    if (g_element_data == null)
-        brailchem_periodic_update_element_data ();
+    if (g_language != brailchem_preferences.char ('language'))
+        g_element_data = null;
     if (g_tooltips == null)
         brailchem_periodic_init_tooltips ();
+    if (g_element_data == null)
+        brailchem_periodic_update_element_data ();
 }
 
 function brailchem_periodic_init_tooltips ()
