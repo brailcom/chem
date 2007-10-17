@@ -27,10 +27,6 @@
       <handler event="keypress" phase="capturing" modifier="shift" key="K" action="brailchem_element_command (event, brailchem_element_up)"/>
       <handler event="keypress" phase="capturing" keycode="VK_DOWN" action="brailchem_element_command (event, brailchem_element_down)"/>
       <handler event="keypress" phase="capturing" modifier="shift" key="J" action="brailchem_element_command (event, brailchem_element_down)"/>
-      <handler event="keypress" phase="capturing" key="e" action="brailchem_element_command (event, brailchem_element_electrons)"/>
-      <handler event="keypress" phase="capturing" key="g" action="brailchem_element_command (event, brailchem_element_group)"/>
-      <handler event="keypress" phase="capturing" key="p" action="brailchem_element_command (event, brailchem_element_period)"/>
-      <handler event="keypress" phase="capturing" key="r" action="brailchem_element_command (event, brailchem_element_related)"/>
       <handler event="click" action="brailchem_element_info (this)"/>
     </handlers>
   </binding>

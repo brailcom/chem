@@ -457,22 +457,6 @@ function brailchem_element_up (element)
     brailchem_element_move (element, -1, 0);
 }
 
-function brailchem_element_electrons (element)
-{
-}
-
-function brailchem_element_group (element)
-{
-}
-
-function brailchem_element_period (element)
-{
-}
-
-function brailchem_element_related (element)
-{
-}
-
 function brailchem_periodic_go_table (table_node_id, last_element_field)
 {
     var last_element = g_last_element[last_element_field];
