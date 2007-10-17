@@ -18,7 +18,7 @@
 
 function brailchem_start ()
 {
-    open('chrome://brailchem/content/brailchem.xul')
+    open ('chrome://brailchem/content/brailchem.xul', 'brailchem', 'chrome');
 }
 
 function brailchem_jump_to_subframe ()
