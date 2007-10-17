@@ -19,6 +19,7 @@ Control+Home: jump to other frame
 <!ENTITY main.button.molecule "Inspect molecule">
 <!ENTITY main.button.periodic "Periodic table">
 <!ENTITY main.button.preferences "Edit preferences">
+<!ENTITY main.button.quit "Quit">
 
 <!ENTITY main.label.molecule "Write a molecule in the SMILES notation to the input box and press the following button to inspect the molecule.">
 <!ENTITY main.label.periodic "You can view periodic table of atoms by pressing the button below.">

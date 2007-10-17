@@ -52,6 +52,8 @@
   </box>
   <separator class="groove"/>
   <iframe id="brailchem-frame" src="chrome://brailchem/content/empty.xul" type="content" flex="1"/>
+  <separator class="groove"/>
+  <button label="&main.button.quit;" oncommand="window.close()"/>
 </vbox>
 
 </window>
