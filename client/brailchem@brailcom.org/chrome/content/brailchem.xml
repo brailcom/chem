@@ -7,7 +7,6 @@
       <xul:description xbl:inherits="value"/>
     </content>
     <handlers>
-      <handler event="keypress" key="f" action="brailchem_follow_reference(this)"/>
       <handler event="keypress" keycode="VK_RETURN" action="brailchem_follow_reference(this)"/>
       <handler event="click" action="brailchem_follow_reference(this)"/>
     </handlers>
@@ -18,15 +17,16 @@
       <xul:button xbl:inherits="label,disabled,flex"/>
     </content>
     <handlers>
-      <handler event="keypress" phase="capturing" keycode="VK_RETURN" action="brailchem_element_command (event, brailchem_element_info)"/>
-      <handler event="keypress" phase="capturing" keycode="VK_LEFT" action="brailchem_element_command (event, brailchem_element_left)"/>
-      <handler event="keypress" phase="capturing" modifier="shift" key="H" action="brailchem_element_command (event, brailchem_element_left)"/>
-      <handler event="keypress" phase="capturing" keycode="VK_RIGHT" action="brailchem_element_command (event, brailchem_element_right)"/>
-      <handler event="keypress" phase="capturing" modifier="shift" key="L" action="brailchem_element_command (event, brailchem_element_right)"/>
-      <handler event="keypress" phase="capturing" keycode="VK_UP" action="brailchem_element_command (event, brailchem_element_up)"/>
-      <handler event="keypress" phase="capturing" modifier="shift" key="K" action="brailchem_element_command (event, brailchem_element_up)"/>
-      <handler event="keypress" phase="capturing" keycode="VK_DOWN" action="brailchem_element_command (event, brailchem_element_down)"/>
-      <handler event="keypress" phase="capturing" modifier="shift" key="J" action="brailchem_element_command (event, brailchem_element_down)"/>
+      <handler event="keypress" phase="capturing" keycode="VK_RETURN"
+               action="brailchem_element_command (event, brailchem_element_info)"/>
+      <handler event="keypress" phase="capturing" modifiers="shift" keycode="VK_LEFT"
+               action="brailchem_element_command (event, brailchem_element_left)"/>
+      <handler event="keypress" phase="capturing" modifiers="shift" keycode="VK_RIGHT"
+               action="brailchem_element_command (event, brailchem_element_right)"/>
+      <handler event="keypress" phase="capturing" modifiers="shift" keycode="VK_UP"
+               action="brailchem_element_command (event, brailchem_element_up)"/>
+      <handler event="keypress" phase="capturing" modifiers="shift" keycode="VK_DOWN"
+               action="brailchem_element_command (event, brailchem_element_down)"/>
       <handler event="click" action="brailchem_element_info (this)"/>
     </handlers>
   </binding>

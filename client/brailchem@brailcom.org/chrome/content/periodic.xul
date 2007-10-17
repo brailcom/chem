@@ -7,6 +7,7 @@
         title="Brailchem periodic table window"
         orient="vertical"
         style="-moz-user-focus: normal;"
+        onkeypress="brailchem_process_key(event)"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
   <script src="util.js"/>
@@ -16,10 +17,10 @@
   <script>addEventListener ('focus', brailchem_focus_callback, true);</script>
   
   <keyset>
-    <key id="brailchem-periodic-go-table-key" key="T" oncommand="brailchem_periodic_go_main_table();"/>
-    <key id="brailchem-periodic-go-extra-table-key" modifiers="shift" key="T" oncommand="brailchem_periodic_go_extra_table();"/>
-    <key id="brailchem-periodic-go-settings" key="S" oncommand="brailchem_periodic_go_settings();"/>
-    <key id="brailchem-periodic-group-filter" key="G" oncommand="brailchem_periodic_change_group_filter()"/>
+    <key id="brailchem-periodic-go-table-key" modifiers="control" key="T" oncommand="brailchem_periodic_go_main_table()"/>
+    <key id="brailchem-periodic-go-extra-table-key" modifiers="control,shift" key="T" oncommand="brailchem_periodic_go_extra_table()"/>
+    <key id="brailchem-periodic-go-settings" modifiers="control" key="S" oncommand="brailchem_periodic_go_settings()"/>
+    <key id="brailchem-periodic-filter" modifiers="control" key="F" oncommand="brailchem_set_keymap(brailchem_periodic_filter_keymap)"/>
     <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_main_frame()"/>
   </keyset>
   
@@ -65,7 +66,7 @@
                   oncommand="brailchem_periodic_set_filter(event.target.checked)"/>
         <grid id="brailchem-setting-filter-box">
           <rows>
-            <row>
+            <row id="brailchem-setting-filter-group-row">
               <label control="brailchem-setting-filter-group" value="&periodic.settings.label.group;"/>
               <menulist id="brailchem-setting-filter-group" label="&periodic.settings.label.selectgroup;">
                 <menupopup id="brailchem-setting-filter-group-menu">
@@ -73,7 +74,7 @@
                 </menupopup>
               </menulist>
             </row>
-            <row>
+            <row id="brailchem-setting-filter-oxidation-row">
               <label control="brailchem-setting-filter-oxidation" value="&periodic.settings.label.oxidation;"/>
               <menulist id="brailchem-setting-filter-oxidation">
                 <menupopup id="brailchem-setting-filter-oxidation-menu">
@@ -81,7 +82,7 @@
                 </menupopup>
               </menulist>
             </row>
-            <row>
+            <row id="brailchem-setting-filter-electronegativity-row">
               <label control="brailchem-setting-filter-electronegativity" value="&periodic.settings.label.electronegativity;"/>
               <hbox id="brailchem-setting-filter-electronegativity">
                 <label control="electronegativity-from" value="&periodic.settings.label.from;"/>

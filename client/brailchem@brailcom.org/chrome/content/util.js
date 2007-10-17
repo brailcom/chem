@@ -170,6 +170,13 @@ function brailchem_focus (element)
     dispatcher.advanceFocusIntoSubtree (element);
 }
 
+function brailchem_defocus ()
+{
+    var focused = document.commandDispatcher.focusedElement;
+    if (focused)
+	focused.blur();
+}
+
 function brailchem_jump_to_main_frame ()
 {
     brailchem_focus (parent.document.getElementById ('brailchem-primary'));
@@ -241,6 +248,30 @@ var brailchem_preferences = {
     },
 };
 
+// Command key sequence handling
+
+var g_current_keymap = null;
+
+function brailchem_set_keymap (keymap)
+{
+    g_current_keymap = keymap;
+    brailchem_defocus ();
+}
+
+function brailchem_process_key (event)
+{
+    if (g_current_keymap == null)
+        return;    
+    var key = String.fromCharCode (event.charCode).toLowerCase ();
+    var command = g_current_keymap[key];
+    g_current_keymap = null;
+    if (command) {
+        event.preventDefault ();
+        event.preventBubble ();
+        command ();
+    }
+}
+    
 // Miscelaneous
 
 function brailchem_check_float_input (element)

@@ -6,7 +6,8 @@ You can use the functions provided below.
 <!ENTITY main.text.help "Available access keys (invoked by pressing Alt+Shift+key on Unix systems):
 M: molecule browser;
 P: periodic table;
-S: settings
+S: settings;
+Q: quit Brailchem
 
 Other keys:
 Control+Home: jump to other frame

@@ -18,9 +18,9 @@
 
 function brailchem_periodic_table ()
 {
-    brailchem_switch_page ("chrome://brailchem/content/periodic.xul", 'brailchem-periodic-window', function () { brailchem_periodic_display (this); });
+    brailchem_switch_page ("chrome://brailchem/content/periodic.xul", 'brailchem-periodic-window',
+                           function () { brailchem_periodic_display (this); });
 }
-
 var g_element_data = null;
 var g_language = null;
 var g_tooltips = null;
@@ -29,6 +29,11 @@ var g_empty_walk = false;
 var g_element_groups = null;
 var g_oxidation_numbers = null;
 var g_filter_conditions = {};
+
+var brailchem_periodic_filter_keymap = {'e': brailchem_periodic_go_electronegativity_filter,
+                                        'g': brailchem_periodic_go_group_filter,
+                                        'o': brailchem_periodic_go_oxidation_filter,
+                                       };
 
 function brailchem_periodic_display (page)
 {
@@ -496,7 +501,17 @@ function brailchem_periodic_go_settings ()
     brailchem_focus (document.getElementById ('brailchem-periodic-settings'));
 }
 
-function brailchem_periodic_change_group_filter ()
+function brailchem_periodic_go_electronegativity_filter ()
 {
-    brailchem_focus (document.getElementById ('brailchem-setting-filter-box'));
+    brailchem_focus (document.getElementById ('brailchem-setting-filter-electronegativity-row'));
+}
+
+function brailchem_periodic_go_group_filter ()
+{
+    brailchem_focus (document.getElementById ('brailchem-setting-filter-group-row'));
+}
+
+function brailchem_periodic_go_oxidation_filter ()
+{
+    brailchem_focus (document.getElementById ('brailchem-setting-filter-oxidation-row'));
 }
