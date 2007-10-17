@@ -69,7 +69,10 @@ element[brailchem-emphasized="true"] button
 element button:focus, xelement button:focus
 {
   font-weight: bold;
-  color: blue;
+}
+element button:focus *
+{
+  background-color: yellow;
 }
 
 description[brailchem-type="group"]
