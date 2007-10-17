@@ -239,4 +239,22 @@ var brailchem_preferences = {
             this.initialize_preferences ();
         this._preferences.setIntPref (name, value);
     },
+};
+
+// Miscelaneous
+
+function brailchem_check_float_input (element)
+{
+    var value = element.value;
+    if (value == '' || value == '-' || value == '+')
+        return;
+    var float_value = parseFloat (value);
+    var new_value = (float_value || float_value == '0' ? float_value.toString () : '');
+    if ((value[0] == '+' || value[0] == '-') &&
+        (new_value.length == 0 || (new_value[0] != '+' && new_value[0] != '-')))
+        new_value = value[0] + new_value;
+    if (value[value.length-1] == '.')
+            new_value = new_value + '.';
+    if (new_value != value)
+        element.value = new_value;
 }

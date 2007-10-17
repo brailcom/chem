@@ -333,6 +333,30 @@ function brailchem_periodic_oxidation_filter (oxidation_number)
     brailchem_periodic_set_filter (true);
 }
 
+function brailchem_periodic_electronegativity_filter ()
+{
+    var from_value = parseFloat (document.getElementById ('electronegativity-from').value);
+    var to_value = parseFloat (document.getElementById ('electronegativity-to').value);
+    var empty = (! from_value && from_value != 0 && ! to_value && to_value != 0);
+    if (empty)
+        g_filter_conditions['electronegativity'] = null;
+    else {
+        if (! from_value && from_value != 0)
+            from_value = -1000;
+        if (! to_value && to_value != 0)
+            to_value = 1000;
+        function filter (element) 
+        {
+            var symbol = element.getAttribute('brailchem-element-symbol');
+            var electronegativity = g_element_data[symbol]['EN'].value;
+            return (from_value <= electronegativity && electronegativity <= to_value);
+        }
+        g_filter_conditions['electronegativity'] = filter;
+        document.getElementById ('brailchem-setting-filter').setAttribute ('checked', 'true');
+    }
+    brailchem_periodic_set_filter (true);
+}
+
 // Commands
 
 function brailchem_element_command (event, command)

@@ -81,6 +81,17 @@
                 </menupopup>
               </menulist>
             </row>
+            <row>
+              <label control="brailchem-setting-filter-electronegativity" value="&periodic.settings.label.electronegativity;"/>
+              <hbox id="brailchem-setting-filter-electronegativity">
+                <label control="electronegativity-from" value="&periodic.settings.label.from;"/>
+                <textbox id="electronegativity-from" size="4"
+                         oninput="brailchem_check_float_input(event.target)" onchange="brailchem_periodic_electronegativity_filter()"/>
+                <label control="electronegativity-to" value="&periodic.settings.label.to;"/>
+                <textbox id="electronegativity-to" size="4"
+                         oninput="brailchem_check_float_input(event.target)" onchange="brailchem_periodic_electronegativity_filter()"/>
+              </hbox>
+            </row>
           </rows>
         </grid>
       </groupbox>
