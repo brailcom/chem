@@ -3,7 +3,7 @@ This is Brailchem, an accessible chemistry studying tool brought to you by
 <html:a href='http://www.brailcom.org'>Brailcom</html:a> and others.
 You can use the functions provided below.
 ">
-<!ENTITY main.text.help "Available access keys (invoked by pressing Alt+Shift+key on Unix systems):
+<!ENTITY main.text.help "Available access keys (invoked by pressing Alt+key on Unix systems):
 M: molecule browser;
 P: periodic table;
 S: settings;
