@@ -69,10 +69,8 @@ element[brailchem-emphasized="true"] button
 element button:focus, xelement button:focus
 {
   font-weight: bold;
-}
-element button:focus *
-{
   background-color: yellow;
+  -moz-appearance: none;
 }
 
 description[brailchem-type="group"]
