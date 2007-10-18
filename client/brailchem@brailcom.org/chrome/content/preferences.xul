@@ -20,6 +20,21 @@
 
   <description class="brailchem-heading" value="&preferences.label.preferences;"/>
   <scrollbox id="brailchem-scrollbox" class="bfooob" orient="vertical" flex="1" style="overflow: auto;">
+    <groupbox id="brailchem-server-prefs">
+      <caption label="&preferences.caption.server;"/>
+      <grid>
+        <rows>
+          <row>
+            <label control="pref-brailchem-host" value="&preferences.label.host;"/>
+            <textbox id="pref-brailchem-host"/>
+          </row>
+          <row>
+            <label control="pref-brailchem-port" value="&preferences.label.port;"/>
+            <textbox id="pref-brailchem-port" maxlength="5"/>
+          </row>
+        </rows>
+      </grid>
+    </groupbox>
     <groupbox>
       <caption label="&preferences.caption.general;"/>
       <grid>
@@ -215,21 +230,6 @@
                 <menuitem value="zu" label="Zulu"/>
               </menupopup>
             </menulist>
-          </row>
-        </rows>
-      </grid>
-    </groupbox>
-    <groupbox id="brailchem-server-prefs">
-      <caption label="&preferences.caption.server;"/>
-      <grid>
-        <rows>
-          <row>
-            <label control="pref-brailchem-host" value="&preferences.label.host;"/>
-            <textbox id="pref-brailchem-host"/>
-          </row>
-          <row>
-            <label control="pref-brailchem-port" value="&preferences.label.port;"/>
-            <textbox id="pref-brailchem-port" maxlength="5"/>
           </row>
         </rows>
       </grid>
