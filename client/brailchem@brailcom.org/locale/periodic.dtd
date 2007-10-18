@@ -1,4 +1,4 @@
-<!ENTITY periodic.header "Periodic table">
+<!ENTITY periodic.header "Periodic Table">
 <!ENTITY periodic.settings.header "Settings">
 <!ENTITY periodic.settings.label.autoread "Automated reading">
 <!ENTITY periodic.settings.autoread "Walk through selected elements automatically">
@@ -13,14 +13,15 @@
 <!ENTITY periodic.settings.label.oxidation "Oxidation number">
 <!ENTITY periodic.settings.label.selectgroup "Select group">
 <!ENTITY periodic.settings.label.tooltips "Tooltip contents">
+<!ENTITY periodic.label.table "Periodic table">
 <!ENTITY periodic.label.details "Element details">
 <!ENTITY periodic.settings.all "all">
 <!ENTITY periodic.help.keys "You can use the following keys to navigate here:
 Control+T: go to the periodic table;
 Control+Shift+T: go to the table of lanthanoids and actinoids;
-Control+S: go to settings
-Shift+Arrow keys: navigate through periodic tables
-Control+F E: go to electronegativity filter
-Control+F G: go to group filter
-Control+F O: go to oxidation number filter
+Control+S: go to settings;
+Shift+Arrow keys: navigate through elements in the periodic tables;
+Control+F E: go to electronegativity filtering;
+Control+F G: go to group filtering;
+Control+F O: go to oxidation number filtering
 ">

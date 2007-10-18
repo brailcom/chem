@@ -24,20 +24,26 @@
     <key id="brailchem-jump-to-frame" modifiers="control" key="O" oncommand="brailchem_jump_to_main_frame()"/>
   </keyset>
   
+  <hbox><description id="brailchem-primary" class="brailchem-heading" flex="1" value="&periodic.header;"/></hbox>
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
-    <hbox><description id="brailchem-primary" class="header" level="1" value="&periodic.header;"/></hbox>
     <hbox>
       <description style="white-space: pre;">&periodic.help.keys;</description>
     </hbox>
-    <vbox>
-      <grid>
-        <rows id="brailchem-periodic-table-node"/>
-      </grid>
-      <spacer style="height: 1ex;"/>
-      <grid>
-        <rows id="brailchem-periodic-extra-table-node"/>
-      </grid>
-    </vbox>
+    <hbox>
+      <description class="header" level="2" style="-moz-user-focus: normal;"
+                   value="&periodic.label.table;"/>
+    </hbox>
+    <hbox>
+      <vbox id="brailchem-periodic-table-box">
+        <grid>
+          <rows id="brailchem-periodic-table-node"/>
+        </grid>
+        <spacer style="height: 1ex;"/>
+        <grid>
+          <rows id="brailchem-periodic-extra-table-node"/>
+        </grid>
+      </vbox>
+    </hbox>
 
     <spacer style="height: 3ex;"/>
 
@@ -45,7 +51,7 @@
       <description class="header" level="2" style="-moz-user-focus: normal;"
                    value="&periodic.label.details;"/>
     </hbox>
-    <hbox>
+    <hbox id="brailchem-element-details-box">
       <grid>
         <rows id="brailchem-element-details"/>
       </grid>

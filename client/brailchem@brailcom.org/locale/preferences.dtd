@@ -4,5 +4,5 @@
 <!ENTITY preferences.label.preferences "Preferences">
 <!ENTITY preferences.label.host "Host">
 <!ENTITY preferences.label.port "Port">
-<!ENTITY preferences.label.language "Language of chemistry names">
+<!ENTITY preferences.label.language "Language of chemical names">
 <!ENTITY preferences.label.primaryview "Primary view">

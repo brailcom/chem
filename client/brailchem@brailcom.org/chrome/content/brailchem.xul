@@ -28,36 +28,42 @@
 </keyset>
 
 <vbox id="main-box" flex="1">
-  <box id="brailchem-primary">
-    <description class="header" flex="1">Brailchem</description>
-  </box>
-  <description>&main.text.intro;</description>
-  <description style="white-space: pre;">&main.text.help;</description>
-  <spacer style="height: 10px"/>
-  <box id="function-box" orientation="horizontal">
-    <groupbox id="molecule-box" maxwidth="300">
-      <caption id="molecule-caption" label="&main.caption.molecule;"/>
-      <description>&main.label.molecule;</description>
-      <hbox id="molecule-input-box">
-        <textbox id="molecule-textbox" value="Oc1ccccc1C" accesskey="M"/>
-        <button id="molecule-button" label="&main.button.molecule;" oncommand="brailchem_molecule();"/>
-      </hbox>
-    </groupbox>
-    <groupbox id="periodic-box" maxwidth="200">
-      <caption id="periodic-caption" label="&main.caption.periodic;"/>
-      <description>&main.label.periodic;</description>
-      <button id="periodic-button" label="&main.button.periodic;" accesskey="P" oncommand="brailchem_periodic_table();"/>
-    </groupbox>
-    <groupbox id="preferences-box" maxwidth="200">
-      <caption id="preferences-caption" label="&main.caption.preferences;"/>
-      <description>&main.label.preferences;</description>
-      <button id="preferences-button" label="&main.button.preferences;" accesskey="S" oncommand="brailchem_edit_preferences();"/>
-    </groupbox>
-  </box>
-  <separator class="groove"/>
+  <vbox id="brailchem-navigation-box">
+    <box id="brailchem-primary">
+      <description class="brailchem-top-heading" flex="1">Brailchem</description>
+    </box>
+    <description style="white-space: pre;">&main.text.help;</description>
+    <spacer style="height: 10px"/>
+    <box id="function-box" orientation="horizontal">
+      <groupbox id="molecule-box" maxwidth="300">
+        <caption id="molecule-caption" label="&main.caption.molecule;"/>
+        <description>&main.label.molecule;</description>
+        <vbox flex="1"/>
+        <hbox id="molecule-input-box">
+          <textbox id="molecule-textbox" value="Oc1ccccc1C" accesskey="M"/>
+          <button id="molecule-button" label="&main.button.molecule;" oncommand="brailchem_molecule();"/>
+        </hbox>
+      </groupbox>
+      <groupbox id="periodic-box" maxwidth="200">
+        <caption id="periodic-caption" label="&main.caption.periodic;"/>
+        <description>&main.label.periodic;</description>
+        <vbox flex="1"/>
+        <button id="periodic-button" label="&main.button.periodic;" accesskey="P" oncommand="brailchem_periodic_table();"/>
+      </groupbox>
+      <groupbox id="preferences-box" maxwidth="200">
+        <caption id="preferences-caption" label="&main.caption.preferences;"/>
+        <description>&main.label.preferences;</description>
+        <vbox flex="1"/>
+        <button id="preferences-button" label="&main.button.preferences;" accesskey="S" oncommand="brailchem_edit_preferences();"/>
+      </groupbox>
+      <vbox>
+        <vbox flex="1"/>
+        <button label="&main.button.quit;" oncommand="window.close()" accesskey="Q"/>
+        <spacer style="height: 10px"/>
+      </vbox>
+    </box>
+  </vbox>
   <iframe id="brailchem-frame" src="chrome://brailchem/content/empty.xul" type="content" flex="1"/>
-  <separator class="groove"/>
-  <button label="&main.button.quit;" oncommand="window.close()" accesskey="Q"/>
 </vbox>
 
 </window>

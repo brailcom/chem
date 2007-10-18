@@ -90,3 +90,29 @@ description
 {
   -moz-user-focus: normal;
 }
+
+.brailchem-top-heading
+{
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  background-color: black;
+}
+
+.brailchem-heading
+{
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  background-color: darkblue;
+}
+
+iframe
+{
+  border: 3px solid black;
+}
+
+#brailchem-periodic-table-box, #brailchem-element-details-box
+{
+  background-color: white;
+}
