@@ -8,6 +8,7 @@
 <window id="brailchem-window"
         title="Brailchem main application window"
         orient="vertical"
+        onload="brailchem_init()"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
 <script src="util.js"/>
@@ -23,11 +24,14 @@
 </stringbundleset>
 
 <keyset>
-  <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_subframe()"/>
+  <key id="brailchem-jump-to-frame" modifiers="control" key="O" oncommand="brailchem_jump_to_subframe()"/>
 </keyset>
 
 <vbox id="main-box" flex="1">
-  <description id="brailchem-primary">&main.text.intro;</description>
+  <box id="brailchem-primary">
+    <description class="header" flex="1">Brailchem</description>
+  </box>
+  <description>&main.text.intro;</description>
   <description style="white-space: pre;">&main.text.help;</description>
   <spacer style="height: 10px"/>
   <box id="function-box" orientation="horizontal">

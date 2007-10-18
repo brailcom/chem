@@ -21,8 +21,13 @@ function brailchem_start ()
     open ('chrome://brailchem/content/brailchem.xul', 'brailchem', 'chrome');
 }
 
+function brailchem_init ()
+{
+    brailchem_focus (document.getElementById ('brailchem-primary'));
+}
+
 function brailchem_jump_to_subframe ()
-{    
+{
     var frame = document.getElementById ('brailchem-frame');
     var node_to_focus = brailchem_current_page.document.getElementById (brailchem_current_page.primary_element_id);
     brailchem_focus (node_to_focus);

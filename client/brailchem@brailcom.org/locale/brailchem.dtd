@@ -10,7 +10,7 @@ S: settings;
 Q: quit Brailchem
 
 Other keys:
-Control+Home: jump to other frame
+Control+O: switch between application frames
 ">
 
 <!ENTITY main.caption.molecule "Molecule browser">

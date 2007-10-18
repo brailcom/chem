@@ -21,7 +21,7 @@
     <key id="brailchem-periodic-go-extra-table-key" modifiers="control,shift" key="T" oncommand="brailchem_periodic_go_extra_table()"/>
     <key id="brailchem-periodic-go-settings" modifiers="control" key="S" oncommand="brailchem_periodic_go_settings()"/>
     <key id="brailchem-periodic-filter" modifiers="control" key="F" oncommand="brailchem_set_keymap(brailchem_periodic_filter_keymap)"/>
-    <key id="brailchem-jump-to-frame" modifiers="control" keycode="VK_HOME" oncommand="brailchem_jump_to_main_frame()"/>
+    <key id="brailchem-jump-to-frame" modifiers="control" key="O" oncommand="brailchem_jump_to_main_frame()"/>
   </keyset>
   
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
