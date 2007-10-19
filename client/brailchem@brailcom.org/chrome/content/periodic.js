@@ -534,3 +534,21 @@ function brailchem_periodic_go_oxidation_filter ()
 {
     brailchem_focus (document.getElementById ('brailchem-setting-filter-oxidation-row'));
 }
+
+function brailchem_periodic_show_filtered_elements ()
+{
+    if (document.getElementById ('brailchem-setting-filter').getAttribute ('checked') != 'true') {
+        var strings = document.getElementById ('brailchem-periodic-strings');
+        var message = strings.getString ('brailchemPeriodicNoFilter');
+    }
+    else {
+        var message = '';
+        var elements = document.getElementsByTagName ('element');
+        for (var i = 0; i < elements.length; i++) {
+            var node = elements[i];
+            if (node.getAttribute ('disabled') != 'true')
+                message = message + ' ' + node.getAttribute ('brailchem-element-symbol');
+        }
+    }
+    brailchem_message (message);
+}
