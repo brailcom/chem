@@ -107,19 +107,16 @@ description
   -moz-user-focus: normal;
 }
 
-.brailchem-top-heading
-{
-  font-weight: bold;
-  text-align: center;
-  color: white;
-  background-color: black;
-}
-
 .brailchem-heading
 {
   font-weight: bold;
   text-align: center;
   color: white;
+  background-color: darkgrey;
+}
+
+.brailchem-heading[brailchem-active="true"]
+{
   background-color: darkblue;
 }
 

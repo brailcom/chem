@@ -24,7 +24,7 @@
     <key id="brailchem-jump-to-frame" modifiers="control" key="O" oncommand="brailchem_jump_to_main_frame()"/>
   </keyset>
   
-  <hbox><description id="brailchem-primary" class="brailchem-heading" flex="1" value="&periodic.header;"/></hbox>
+  <hbox id="brailchem-primary"><description id="brailchem-heading" class="brailchem-heading" flex="1" value="&periodic.header;"/></hbox>
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
     <hbox>
       <description style="white-space: pre;">&periodic.help.keys;</description>

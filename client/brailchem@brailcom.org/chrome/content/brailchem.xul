@@ -30,7 +30,7 @@
 <vbox id="main-box" flex="1">
   <vbox id="brailchem-navigation-box">
     <box id="brailchem-primary">
-      <description class="brailchem-top-heading" flex="1">Brailchem</description>
+      <description id="brailchem-heading" class="brailchem-heading" flex="1">Brailchem</description>
     </box>
     <description style="white-space: pre;">&main.text.help;</description>
     <spacer style="height: 10px"/>

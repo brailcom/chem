@@ -159,6 +159,10 @@ function brailchem_scrollto (element)
 function brailchem_focus_callback ()
 {
     brailchem_scrollto (document.commandDispatcher.focusedElement);
+    document.getElementById ('brailchem-heading').setAttribute ('brailchem-active', 'true');
+    var iframe = document.getElementById ('brailchem-frame');
+    var other_document = (iframe ? iframe.contentDocument : parent.document);
+    other_document.getElementById ('brailchem-heading').setAttribute ('brailchem-active', 'false');
 }
 
 function brailchem_focus (element)
