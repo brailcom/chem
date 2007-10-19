@@ -453,6 +453,11 @@ function brailchem_element_move (element, row_increment, col_increment)
     }
     if (target)
         brailchem_focus (target);
+    else {
+        var strings = document.getElementById ('brailchem-periodic-strings');
+        var message = strings.getString ('brailchemPeriodicNoNextElement');
+        brailchem_message (message);
+    }
 }
 
 function brailchem_element_left (element)

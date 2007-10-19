@@ -13,8 +13,11 @@
   <script src="util.js"/>
   <script src="server.js"/>
   <script src="periodic.js"/>
-
   <script>addEventListener ('focus', brailchem_focus_callback, true);</script>
+  
+  <stringbundleset>
+    <stringbundle id="brailchem-periodic-strings" src="chrome://brailchem/locale/periodic.properties"/>
+  </stringbundleset>
   
   <keyset>
     <key id="brailchem-periodic-go-table-key" modifiers="control" key="T" oncommand="brailchem_periodic_go_main_table()"/>
