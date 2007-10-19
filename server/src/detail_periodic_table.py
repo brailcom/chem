@@ -435,3 +435,13 @@ symbol2properties = {
 'ATOM_WEIGHT': 266.1378, 'NAME_LAT': u'meitnerium', 'COLUMN': 9, 'ATOM_SYMBOL': u'Mt', 'OX_NUMBERS': [], 'NAMES':{"ru":u"майтнерий","fr":u"meitnérium","en":u"meitnerium","nl":u"meitnerium","de":u"meitnerium","sv":u"meitnerium","cs":u"meitnerium","fi":u"meitnerium","es":u"meitnerio"},
 'PROTON_NUMBER': 109, 'ROW': 7, },
 }
+
+group2color = { 'rare-earth-metals' : 'rgb(181, 182, 176)',
+'inert-gases' : 'rgb(253, 71, 3)',
+'halogens' : 'rgb(255, 153, 102)',
+'alkali-metals' : 'rgb(254, 219, 0)',
+'other-metals' : 'rgb(65, 137, 221)',
+'metals' : 'rgb(255, 159, 0)',
+'alkali-earth-metals' : 'rgb(161, 189, 234)',
+'non-metals' : 'rgb(135, 211, 0)',
+}
