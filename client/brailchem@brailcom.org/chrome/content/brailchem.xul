@@ -64,6 +64,9 @@
     </box>
   </vbox>
   <iframe id="brailchem-frame" src="chrome://brailchem/content/empty.xul" flex="1"/>
+  <statusbar>
+    <statusbarpanel id="brailchem-echo-area" flex="1" label=""/>
+  </statusbar>
 </vbox>
 
 </window>

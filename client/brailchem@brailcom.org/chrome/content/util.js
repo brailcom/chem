@@ -271,7 +271,24 @@ function brailchem_process_key (event)
         command ();
     }
 }
-    
+
+// Echo area
+
+function brailchem_echo_area ()
+{
+    return document.getElementById ('brailchem-echo-area') || parent.document.getElementById ('brailchem-echo-area');
+}
+
+function brailchem_message (message)
+{
+    brailchem_echo_area ().label = message || '';
+}
+
+function brailchem_clear_message ()
+{
+    brailchem_echo_area ().label = '';
+}
+
 // Miscelaneous
 
 function brailchem_check_float_input (element)

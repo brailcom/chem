@@ -101,7 +101,7 @@ function brailchem_periodic_display (page)
                                                               {class: 'brailchem-element-button',
                                                                id: 'brailchem-element-' + row + '-' + col,
                                                                disabled: (element || g_empty_walk ? 'false' : 'true'),
-                                                               onfocus: focus_variable + '=this;',
+                                                               onfocus: focus_variable + '=this; brailchem_periodic_show_tooltip(this);',
                                                                brailchem_row: row, brailchem_column: col});
                 if (element) {
                     var symbol = element['ATOM_SYMBOL'].value;
@@ -273,6 +273,13 @@ function brailchem_periodic_set_tooltip (element)
     var value = element.checked;
     g_tooltips[property_name] = element.getAttribute('checked');
     brailchem_periodic_update_tooltips ();
+}
+
+function brailchem_periodic_show_tooltip (element) 
+{
+    var tooltip_text = element.getAttribute ('tooltiptext');
+    if (tooltip_text)
+        brailchem_message (tooltip_text.replace ('\n', '; '));
 }
 
 function brailchem_periodic_empty_cells (enabled)
