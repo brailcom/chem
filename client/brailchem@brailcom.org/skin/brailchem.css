@@ -59,6 +59,7 @@ description.header[level="5"]
 {
   font-weight: bold;
   text-align: center;
+  -moz-user-focus: none;
 }
 
 element[brailchem-emphasized="true"] button
