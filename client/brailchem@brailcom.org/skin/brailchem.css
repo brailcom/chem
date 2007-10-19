@@ -37,6 +37,11 @@ description.header[level="5"]
   font-size: 120%;
 }
 
+#brailchem-window
+{
+  min-height: 500px;
+}
+
 .brailchem-reference
 {
   color: blue;
