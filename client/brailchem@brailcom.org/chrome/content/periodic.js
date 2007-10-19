@@ -107,6 +107,7 @@ function brailchem_periodic_display (page)
                     var symbol = element['ATOM_SYMBOL'].value;
                     dom_element_node.setAttribute ('label', symbol);
                     dom_element_node.setAttribute ('brailchem-element-symbol', symbol);
+                    dom_element_node.setAttribute ('style', '-moz-appearance: none; background-color: ' + element['_color'].value);
                 }
                 else {
                     var tooltip_text = empty_cell_string + ' (' + row_string + ' ' + row + ', ' + column_string + ' ' + col + ')';
@@ -126,9 +127,11 @@ function brailchem_periodic_display (page)
     for (var i = 0; i < properties_as_list.length; i++) {
         var item = properties_as_list[i];
         var name = item.name;
-        var checkbox_node = brailchem_add_element (tooltips_node, 'checkbox',
-                                                   {label: item.label, checked: tooltips[name], brailchem_property_name: name,
-                                                    oncommand: 'brailchem_periodic_set_tooltip(event.target)'});
+        if (name[0] != '_') {
+            var checkbox_node = brailchem_add_element (tooltips_node, 'checkbox',
+                                                       {label: item.label, checked: tooltips[name], brailchem_property_name: name,
+                                                        oncommand: 'brailchem_periodic_set_tooltip(event.target)'});
+        }
     }    
     var group_menu_node = page.find_element ('brailchem-setting-filter-group-menu');
     function removal_condition (element)

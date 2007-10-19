@@ -73,6 +73,18 @@ element button:focus, xelement button:focus
   -moz-appearance: none;
 }
 
+xelement button
+{
+  border: 1px solid black;
+  background-color: white;
+  -moz-appearance: none;
+}
+
+#brailchem-periodic-table-box
+{
+  border: 3px solid black;
+}
+
 description[brailchem-type="group"]
 {
   font-weight: bold;

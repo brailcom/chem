@@ -35,11 +35,11 @@
     </hbox>
     <hbox>
       <vbox id="brailchem-periodic-table-box">
-        <grid>
+        <grid class="periodic-table-box">
           <rows id="brailchem-periodic-table-node"/>
         </grid>
-        <spacer style="height: 1ex;"/>
-        <grid>
+        <separator class="groove"/>
+        <grid class="periodic-table-box">
           <rows id="brailchem-periodic-extra-table-node"/>
         </grid>
       </vbox>
