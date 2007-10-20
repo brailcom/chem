@@ -152,7 +152,8 @@ function brailchem_scrollto (element)
     var scroll_x = {}, scroll_y = {};
     brailchem_scroller.getPosition (scroll_x, scroll_y);
     var y = element.boxObject.y - scroll_y.value;
-    if (y < 0 || y > window.innerHeight)
+    var x = element.boxObject.x - scroll_x.value;
+    if (y < 0 || y > window.innerHeight || x < 0 || x > window.innerWidth)
         brailchem_scroller.scrollToElement (element);
 }
 

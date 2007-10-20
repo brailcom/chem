@@ -40,6 +40,7 @@ description.header[level="5"]
 #brailchem-window
 {
   min-height: 500px;
+  min-width: 780px;
 }
 
 .brailchem-reference
@@ -65,6 +66,11 @@ description.header[level="5"]
   font-weight: bold;
   text-align: center;
   -moz-user-focus: none;
+}
+
+element button, xelement button
+{
+  max-width: 3em;
 }
 
 element[brailchem-emphasized="true"] button
