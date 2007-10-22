@@ -548,3 +548,34 @@ function brailchem_periodic_show_filtered_elements ()
     }
     brailchem_message (message);
 }
+
+function brailchem_periodic_jump_to_element ()
+{
+    var strings = document.getElementById ('brailchem-periodic-strings');
+    var title = strings.getString ('brailchemPeriodicElementPromptTitle');
+    var label = strings.getString ('brailchemPeriodicElementPromptLabel');
+    var focused_element = document.commandDispatcher.focusedElement;
+    var symbol = brailchem_prompt (title, label);
+    if (! symbol)
+        return;
+    symbol = symbol.toLowerCase ();
+    var element_nodes = document.getElementsByTagName ('element');
+    var target_node = null;
+    for (var i = 0; i < element_nodes.length; i++) {
+        var node = element_nodes[i];
+        if (node.getAttribute ('brailchem-element-symbol').toLowerCase () == symbol) {
+            target_node = node;
+            break;
+        }
+    }
+    if (target_node) {
+        if (focused_element) {
+            // This is necessary to get the contingent old periodic table element decolored
+            focused_element.focus ();
+            focused_element.blur ();
+        }
+        brailchem_focus (target_node);
+    }
+    else
+        brailchem_alert (brailchem_string ('brailchemPeriodicInvalidSymbol', 'brailchem-periodic-strings'));
+}

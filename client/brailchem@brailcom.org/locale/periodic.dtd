@@ -24,5 +24,6 @@ Shift+Arrow keys: navigate through elements in the periodic tables;
 Control+F E: go to electronegativity filtering;
 Control+F G: go to group filtering;
 Control+F O: go to oxidation number filtering;
-Control+A: report currently filtered elements
+Control+A: report currently filtered elements;
+Control+E: jump to element
 ">
