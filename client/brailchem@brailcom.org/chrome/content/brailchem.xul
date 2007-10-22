@@ -6,7 +6,7 @@
           %brailchemDTD;
           ]>
 <window id="brailchem-window"
-        title="Brailchem main application window"
+        title="Brailchem"
         orient="vertical"
         onload="brailchem_init()"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
