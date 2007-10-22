@@ -554,10 +554,14 @@ function brailchem_periodic_jump_to_element ()
     var strings = document.getElementById ('brailchem-periodic-strings');
     var title = strings.getString ('brailchemPeriodicElementPromptTitle');
     var label = strings.getString ('brailchemPeriodicElementPromptLabel');
-    var focused_element = document.commandDispatcher.focusedElement;
+    // We have to perform some manual focus/defocus here to ensure proper refresh of defocused elements
+    var focused_element = brailchem_defocus ();
     var symbol = brailchem_prompt (title, label);
-    if (! symbol)
+    if (! symbol) {
+        if (focused_element)
+            focused_element.focus ();
         return;
+    }
     symbol = symbol.toLowerCase ();
     var element_nodes = document.getElementsByTagName ('element');
     var target_node = null;
@@ -568,14 +572,14 @@ function brailchem_periodic_jump_to_element ()
             break;
         }
     }
-    if (target_node) {
-        if (focused_element) {
-            // This is necessary to get the contingent old periodic table element decolored
-            focused_element.focus ();
-            focused_element.blur ();
-        }
+    if (target_node && target_node.getAttribute ('disabled') != 'true')
         brailchem_focus (target_node);
+    else if (target_node) {
+        brailchem_alert (brailchem_string ('brailchemPeriodicElementFiltered', 'brailchem-periodic-strings'));
+        focused_element.focus ();
     }
-    else
+    else {
         brailchem_alert (brailchem_string ('brailchemPeriodicInvalidSymbol', 'brailchem-periodic-strings'));
+        focused_element.focus ();
+    }
 }

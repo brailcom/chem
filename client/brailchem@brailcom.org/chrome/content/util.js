@@ -180,6 +180,7 @@ function brailchem_defocus ()
     var focused = document.commandDispatcher.focusedElement;
     if (focused)
 	focused.blur();
+    return focused;
 }
 
 function brailchem_jump_to_main_frame ()
