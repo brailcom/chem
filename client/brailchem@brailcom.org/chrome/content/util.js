@@ -304,6 +304,14 @@ function brailchem_alert (message)
     prompt_service.alert (window, brailchem_string ('brailchemErrorWindow', 'brailchem-strings'), message);
 }
 
+function brailchem_prompt (title, label)
+{
+    var prompt_service = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService (Components.interfaces.nsIPromptService);
+    var input = {value: ''};
+    var result = prompt_service.prompt (window, title, label, input, null, {value: false});
+    return (result ? input.value : null);
+}
+
 // Miscelaneous
 
 function brailchem_string (string, string_element)
