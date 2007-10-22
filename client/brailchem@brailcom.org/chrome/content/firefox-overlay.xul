@@ -7,7 +7,6 @@
 
 <menupopup id="menu_ToolsPopup">
   <menuitem id="brailchem-menu-item" oncommand="brailchem_start()" 
-            insertafter="javascriptConsole,devToolsSeparator"
             label="&brailchem.menu.label;" accesskey="&brailchem.menu.accesskey;"/>
 </menupopup>
 
