@@ -16,6 +16,7 @@
   <script>addEventListener ('focus', brailchem_focus_callback, true);</script>
   
   <stringbundleset>
+    <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
     <stringbundle id="brailchem-periodic-strings" src="chrome://brailchem/locale/periodic.properties"/>
   </stringbundleset>
   

@@ -454,11 +454,8 @@ function brailchem_element_move (element, row_increment, col_increment)
     }
     if (target)
         brailchem_focus (target);
-    else {
-        var strings = document.getElementById ('brailchem-periodic-strings');
-        var message = strings.getString ('brailchemPeriodicNoNextElement');
-        brailchem_message (message);
-    }
+    else
+        brailchem_message (brailchem_string ('brailchemPeriodicNoNextElement', 'brailchem-periodic-strings'));
 }
 
 function brailchem_element_left (element)
@@ -498,7 +495,7 @@ function brailchem_periodic_go_table (table_node_id, last_element_field)
         }
         if (! found) {
             var strings = document.getElementById ('brailchem-periodic-strings');
-            alert (strings.getString ('brailchemPeriodicNoActiveElement'));
+            brailchem_alert (strings.getString ('brailchemPeriodicNoActiveElement'));
             return;
         }
     }
@@ -538,8 +535,7 @@ function brailchem_periodic_go_oxidation_filter ()
 function brailchem_periodic_show_filtered_elements ()
 {
     if (document.getElementById ('brailchem-setting-filter').getAttribute ('checked') != 'true') {
-        var strings = document.getElementById ('brailchem-periodic-strings');
-        var message = strings.getString ('brailchemPeriodicNoFilter');
+        var message = brailchem_string ('brailchemPeriodicNoFilter', 'brailchem-periodic-strings');
     }
     else {
         var message = '';

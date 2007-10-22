@@ -12,6 +12,10 @@
   <script src="util.js"/>
   <script src="error.js"/>
 
+  <stringbundleset>
+    <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
+  </stringbundleset>
+
   <keyset>
     <key id="brailchem-jump-to-frame" modifiers="control" key="O" oncommand="brailchem_jump_to_main_frame()"/>
   </keyset>

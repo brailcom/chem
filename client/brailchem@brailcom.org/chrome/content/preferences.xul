@@ -14,6 +14,11 @@
 
   <script>addEventListener ('focus', brailchem_focus_callback, true);</script>
 
+  <stringbundleset>
+    <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
+    <stringbundle id="brailchem-preferences-strings" src="chrome://brailchem/locale/preferences.properties"/>
+  </stringbundleset>
+
   <keyset>
     <key id="brailchem-jump-to-frame" modifiers="control" key="O" oncommand="brailchem_jump_to_main_frame()"/>
   </keyset>

@@ -44,5 +44,5 @@ function brailchem_set_preferences ()
     brailchem_preferences.set_char ('server.host', document.getElementById ('pref-brailchem-host').value);
     brailchem_preferences.set_int ('server.port', document.getElementById ('pref-brailchem-port').value);
     brailchem_preferences.set_char ('language', document.getElementById ('pref-language').value);
-    alert ('Preferences set');
+    brailchem_message ('brailchemPreferencesSet', 'brailchem-preferences-strings');
 }

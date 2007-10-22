@@ -284,8 +284,10 @@ function brailchem_echo_area ()
     return document.getElementById ('brailchem-echo-area') || parent.document.getElementById ('brailchem-echo-area');
 }
 
-function brailchem_message (message)
+function brailchem_message (message, string_element)
 {
+    if (string_element)
+        message = brailchem_string (message, string_element);
     brailchem_echo_area ().label = message || '';
 }
 
@@ -294,7 +296,21 @@ function brailchem_clear_message ()
     brailchem_echo_area ().label = '';
 }
 
+// Dialogs
+
+function brailchem_alert (message)
+{
+    var prompt_service = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService (Components.interfaces.nsIPromptService);
+    prompt_service.alert (window, brailchem_string ('brailchemErrorWindow', 'brailchem-strings'), message);
+}
+
 // Miscelaneous
+
+function brailchem_string (string, string_element)
+{
+    var strings = document.getElementById (string_element);
+    return strings.getString (string);
+}
 
 function brailchem_check_float_input (element)
 {
