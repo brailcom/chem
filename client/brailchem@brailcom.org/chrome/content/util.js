@@ -140,7 +140,7 @@ var brailchem_scroller = null;
 var brailchem_scrollbox = null;
 
 function brailchem_scrollto (element)
-{
+{    
     if (brailchem_scrollbox == null) {
         brailchem_scrollbox = document.getElementById ('brailchem-scrollbox');
         if (! brailchem_scrollbox)
@@ -148,13 +148,30 @@ function brailchem_scrollto (element)
     }
     if (brailchem_scroller == null)
         brailchem_scroller = brailchem_scrollbox.boxObject.QueryInterface (Components.interfaces.nsIScrollBoxObject);
-    // Apparently brailchem_scroller.ensureElementIsVisible doesn't work
+    // Scrolling is somewhat overcomplicated because:
+    // - brailchem_scroller.ensureElementIsVisible doesn't work at all
+    // - brailchem_scroller.scrollToElement scrolls only in the vertical direction
+    // - it's not obvious how to determine exact size of the available area
     var scroll_x = {}, scroll_y = {};
     brailchem_scroller.getPosition (scroll_x, scroll_y);
-    var y = element.boxObject.y - scroll_y.value;
-    var x = element.boxObject.x - scroll_x.value;
-    if (y < 0 || y > window.innerHeight || x < 0 || x > window.innerWidth)
-        brailchem_scroller.scrollToElement (element);
+    var x1 = element.boxObject.x - scroll_x.value - brailchem_scrollbox.boxObject.x;
+    var x2 = x1 + element.boxObject.width;
+    var y1 = element.boxObject.y - scroll_y.value - brailchem_scrollbox.boxObject.y;
+    var y2 = y1 + element.boxObject.height;
+    var dx = 0, dy = 0;
+    var scrollbar_width = 20; // approximately
+    var available_width = brailchem_scrollbox.boxObject.width - scrollbar_width;
+    var available_height = brailchem_scrollbox.boxObject.height - scrollbar_width;
+    if (y1 < 0)
+        dy = y1;
+    else if (y2 > available_height)
+        dy = y2 - available_height;
+    if (x1 < 0)
+        dx = x1;
+    else if (x2 > available_width)
+        dx = x2 - available_width;
+    if (dy || dx)
+        brailchem_scroller.scrollBy (dx, dy);
 }
 
 function brailchem_focus_callback ()

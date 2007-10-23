@@ -43,6 +43,11 @@ description.header[level="5"]
   min-height: 820px;
 }
 
+#main-box #brailchem-scrollbox
+{
+  min-height: 280px;
+}
+
 .brailchem-reference
 {
   color: blue;

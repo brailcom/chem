@@ -29,7 +29,7 @@
 </keyset>
 
 <vbox id="main-box" flex="1">
-  <vbox id="brailchem-navigation-box">
+  <scrollbox id="brailchem-scrollbox" orient="vertical" style="overflow: auto;">
     <box id="brailchem-primary">
       <description id="brailchem-heading" class="brailchem-heading" flex="1">Brailchem</description>
     </box>
@@ -63,7 +63,7 @@
         <spacer style="height: 10px"/>
       </vbox>
     </box>
-  </vbox>
+  </scrollbox>
   <iframe id="brailchem-frame" src="chrome://brailchem/content/empty.xul" flex="1"/>
   <statusbar>
     <statusbarpanel id="brailchem-echo-area" flex="1" label=""/>
