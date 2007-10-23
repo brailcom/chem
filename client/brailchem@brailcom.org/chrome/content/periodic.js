@@ -37,6 +37,8 @@ var brailchem_periodic_filter_keymap = {'e': brailchem_periodic_go_electronegati
 
 function brailchem_periodic_display (page)
 {
+    var strings = document.getElementById ('brailchem-periodic-strings');
+    brailchem_message (strings.getString ('brailchemPeriodicPleaseWait'));
     brailchem_periodic_update_data ();
     var element_data = g_element_data;
     // Any problem?
@@ -80,7 +82,6 @@ function brailchem_periodic_display (page)
             properties_as_list.push (properties[p]);    
     properties_as_list.sort (function (x0, y0) { var x = x0.name, y = y0.name; return (x==y ? 0 : (x<y ? -1 : 1)); });
     // Render the table
-    var strings = document.getElementById ('brailchem-periodic-strings');
     var empty_cell_string = strings.getString ('brailchemPeriodicEmptyCell');
     var row_string = strings.getString ('brailchemPeriodicRow');
     var column_string = strings.getString ('brailchemPeriodicColumn');
@@ -151,6 +152,7 @@ function brailchem_periodic_display (page)
         var number = oxidation_list[i];
         brailchem_add_element (oxidation_menu_node, 'menuitem', {label: number, oncommand: "brailchem_periodic_oxidation_filter('"+number+"')"});
     }
+    brailchem_message (strings.getString ('brailchemPeriodicDone'));
 }
 
 function brailchem_periodic_update_data ()
