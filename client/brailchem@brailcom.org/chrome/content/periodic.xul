@@ -59,7 +59,7 @@
     </hbox>
     <hbox id="brailchem-element-details-box">
       <grid>
-        <rows id="brailchem-element-details"/>
+        <rows id="brailchem-element-details"><description value="&periodic.element-info;"/></rows>
       </grid>
     </hbox>
 

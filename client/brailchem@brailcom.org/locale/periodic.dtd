@@ -1,4 +1,5 @@
 <!ENTITY periodic.header "Periodic Table">
+<!ENTITY periodic.element-info "Press some element button in the periodic table to view element details.">
 <!ENTITY periodic.settings.header "Settings">
 <!ENTITY periodic.settings.label.autoread "Automated reading">
 <!ENTITY periodic.settings.autoread "Walk through selected elements automatically">
