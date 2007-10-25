@@ -389,7 +389,8 @@ function brailchem_element_info (element)
             brailchem_add_element (row, 'description', {value: info.label});
             brailchem_add_element (row, 'description', {}, info.value);
         }
-    brailchem_focus (document.getElementById ('brailchem-element-info'));
+    document.getElementById ('brailchem-element-details-box').setAttribute ('hidden', 'false');
+    brailchem_focus (document.getElementById ('brailchem-element-details-box'));
 }
 
 function brailchem_element_move (element, row_increment, col_increment)
