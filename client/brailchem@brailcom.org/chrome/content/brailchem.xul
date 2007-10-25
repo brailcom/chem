@@ -63,7 +63,7 @@
       </menu>
     </menubar>
   </toolbox>
-  <iframe id="brailchem-frame" src="chrome://brailchem/content/help.xul" flex="1"/>
+  <iframe id="brailchem-frame" src="empty.xul" flex="1"/>
   <statusbar>
     <statusbarpanel id="brailchem-echo-area" flex="1" label=""/>
   </statusbar>

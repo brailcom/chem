@@ -18,5 +18,5 @@
 
 function brailchem_help ()
 {
-    brailchem_switch_page ('chrome://brailchem/content/help.xul', 'brailchem-help-window');
+    window.open ('chrome://brailchem/content/help.html', 'brailchem-help');
 }

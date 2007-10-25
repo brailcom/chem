@@ -2,23 +2,12 @@
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://brailchem/skin/brailchem.css" type="text/css"?>
 <!DOCTYPE window [
-          <!ENTITY % brailchemDTD SYSTEM "chrome://brailchem/locale/empty.dtd">
+          <!ENTITY % brailchemDTD SYSTEM "chrome://brailchem/locale/brailchem.dtd">
           %brailchemDTD;
           ]>
-<window id="brailchem-browser-window"
-        title="Brailchem sub-application window"
+<window id="brailchem-empty"
+        title="Brailchem"
         orient="vertical"
-        style="-moz-user-focus: normal;"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
-
-  <stringbundleset>
-    <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
-  </stringbundleset>
-
-  <keyset>
-    <key id="brailchem-jump-to-frame" modifiers="control" key="O" oncommand="brailchem_jump_to_main_frame()"/>
-  </keyset>
-  
-  <description>&empty.text.nothing;</description>
 </window>
