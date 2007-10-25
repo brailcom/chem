@@ -11,6 +11,7 @@
         xmlns:html="http://www.w3.org/1999/xhtml">
   <script src="util.js"/>
   <script src="preferences.js"/>
+  <script src="periodic.js"/>
 
   <script>addEventListener ('focus', brailchem_focus_callback, true);</script>
 
@@ -25,21 +26,6 @@
 
   <description id="brailchem-primary" class="brailchem-heading" value="&preferences.label.preferences;"/>
   <scrollbox id="brailchem-scrollbox" class="bfooob" orient="vertical" flex="1" style="overflow: auto;">
-    <groupbox id="brailchem-server-prefs">
-      <caption label="&preferences.caption.server;"/>
-      <grid>
-        <rows>
-          <row>
-            <label control="pref-brailchem-host" value="&preferences.label.host;"/>
-            <textbox id="pref-brailchem-host"/>
-          </row>
-          <row>
-            <label control="pref-brailchem-port" value="&preferences.label.port;"/>
-            <textbox id="pref-brailchem-port" maxlength="5"/>
-          </row>
-        </rows>
-      </grid>
-    </groupbox>
     <groupbox>
       <caption label="&preferences.caption.general;"/>
       <grid>
@@ -239,6 +225,30 @@
         </rows>
       </grid>
     </groupbox>
+    <groupbox id="brailchem-server-prefs">
+      <caption label="&preferences.caption.server;"/>
+      <grid>
+        <rows>
+          <row>
+            <label control="pref-brailchem-host" value="&preferences.label.host;"/>
+            <textbox id="pref-brailchem-host"/>
+          </row>
+          <row>
+            <label control="pref-brailchem-port" value="&preferences.label.port;"/>
+            <textbox id="pref-brailchem-port" maxlength="5"/>
+          </row>
+        </rows>
+      </grid>
+    </groupbox>
+    <groupbox>
+      <caption label="&preferences.caption.periodic;"/>
+      <checkbox id="pref-brailchem-periodic-emptycell" label="&preferences.periodic.label.emptycells;"
+                oncommand="brailchem_periodic_empty_cells(event.target.checked)"/>
+      <groupbox>
+        <caption label="&preferences.periodic.label.tooltips;"/>
+        <vbox id="pref-brailchem-periodic-tooltips"/>
+      </groupbox>
+    </groupbox>    
     <button id="brailchem-submit-prefs" label="&preferences.button.ok;" oncommand="brailchem_set_preferences()"/>
   </scrollbox>
 </window>

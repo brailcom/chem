@@ -52,6 +52,47 @@
     </hbox>
 
     <spacer style="height: 3ex;"/>
+    
+    <vbox>
+      <groupbox>
+        <caption label="&periodic.filters.label;"/>
+        <checkbox id="brailchem-setting-filter" label="&periodic.filters.enable;"
+                  oncommand="brailchem_periodic_set_filter(event.target.checked)"/>
+        <grid id="brailchem-setting-filter-box">
+          <rows>
+            <row id="brailchem-setting-filter-group-row">
+              <label control="brailchem-setting-filter-group" value="&periodic.filters.group;"/>
+              <menulist id="brailchem-setting-filter-group">
+                <menupopup id="brailchem-setting-filter-group-menu">
+                  <menuitem brailchem-noremove="true" label="&periodic.filters.all;" oncommand="brailchem_periodic_group_filter(null)"/>
+                </menupopup>
+              </menulist>
+            </row>
+            <row id="brailchem-setting-filter-oxidation-row">
+              <label control="brailchem-setting-filter-oxidation" value="&periodic.filters.oxidation;"/>
+              <menulist id="brailchem-setting-filter-oxidation">
+                <menupopup id="brailchem-setting-filter-oxidation-menu">
+                  <menuitem brailchem-noremove="true" label="&periodic.filters.all;" oncommand="brailchem_periodic_oxidation_filter(null)"/>
+                </menupopup>
+              </menulist>
+            </row>
+            <row id="brailchem-setting-filter-electronegativity-row">
+              <label control="brailchem-setting-filter-electronegativity" value="&periodic.filters.electronegativity;"/>
+              <hbox id="brailchem-setting-filter-electronegativity">
+                <label control="electronegativity-from" value="&periodic.filters.from;"/>
+                <textbox id="electronegativity-from" size="4"
+                         oninput="brailchem_check_float_input(event.target)" onchange="brailchem_periodic_electronegativity_filter()"/>
+                <label control="electronegativity-to" value="&periodic.filters.to;"/>
+                <textbox id="electronegativity-to" size="4"
+                         oninput="brailchem_check_float_input(event.target)" onchange="brailchem_periodic_electronegativity_filter()"/>
+              </hbox>
+            </row>
+          </rows>
+        </grid>
+      </groupbox>
+    </vbox>
+
+    <spacer style="height: 3ex;"/>
 
     <hbox id="brailchem-element-info">
       <description class="header" level="2" style="-moz-user-focus: normal;"
@@ -63,55 +104,5 @@
       </grid>
     </hbox>
 
-    <spacer style="height: 3ex;"/>
-
-    <hbox><description class="header" level="2" id="brailchem-periodic-settings" value="&periodic.settings.header;"/></hbox>
-    <vbox>
-      <groupbox>
-        <caption label="&periodic.settings.label.general;"/>
-        <checkbox id="brailchem-setting-emptycell" label="&periodic.settings.label.emptycells;"
-                  oncommand="brailchem_periodic_empty_cells(event.target.checked)"/>
-      </groupbox>      
-      <groupbox>
-        <caption label="&periodic.settings.label.filters;"/>
-        <checkbox id="brailchem-setting-filter" label="&periodic.settings.label.filtering;"
-                  oncommand="brailchem_periodic_set_filter(event.target.checked)"/>
-        <grid id="brailchem-setting-filter-box">
-          <rows>
-            <row id="brailchem-setting-filter-group-row">
-              <label control="brailchem-setting-filter-group" value="&periodic.settings.label.group;"/>
-              <menulist id="brailchem-setting-filter-group" label="&periodic.settings.label.selectgroup;">
-                <menupopup id="brailchem-setting-filter-group-menu">
-                  <menuitem brailchem-noremove="true" label="&periodic.settings.all;" oncommand="brailchem_periodic_group_filter(null)"/>
-                </menupopup>
-              </menulist>
-            </row>
-            <row id="brailchem-setting-filter-oxidation-row">
-              <label control="brailchem-setting-filter-oxidation" value="&periodic.settings.label.oxidation;"/>
-              <menulist id="brailchem-setting-filter-oxidation">
-                <menupopup id="brailchem-setting-filter-oxidation-menu">
-                  <menuitem brailchem-noremove="true" label="&periodic.settings.all;" oncommand="brailchem_periodic_oxidation_filter(null)"/>
-                </menupopup>
-              </menulist>
-            </row>
-            <row id="brailchem-setting-filter-electronegativity-row">
-              <label control="brailchem-setting-filter-electronegativity" value="&periodic.settings.label.electronegativity;"/>
-              <hbox id="brailchem-setting-filter-electronegativity">
-                <label control="electronegativity-from" value="&periodic.settings.label.from;"/>
-                <textbox id="electronegativity-from" size="4"
-                         oninput="brailchem_check_float_input(event.target)" onchange="brailchem_periodic_electronegativity_filter()"/>
-                <label control="electronegativity-to" value="&periodic.settings.label.to;"/>
-                <textbox id="electronegativity-to" size="4"
-                         oninput="brailchem_check_float_input(event.target)" onchange="brailchem_periodic_electronegativity_filter()"/>
-              </hbox>
-            </row>
-          </rows>
-        </grid>
-      </groupbox>
-      <groupbox>
-        <caption label="&periodic.settings.label.tooltips;"/>
-        <vbox id="brailchem-tooltip-settings"/>
-      </groupbox>
-    </vbox>
   </scrollbox>
 </window>

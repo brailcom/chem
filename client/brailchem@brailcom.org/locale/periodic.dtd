@@ -1,22 +1,15 @@
 <!ENTITY periodic.header "Periodic Table">
 <!ENTITY periodic.element-info "Press some element button in the periodic table to view element details.">
-<!ENTITY periodic.settings.header "Settings">
-<!ENTITY periodic.settings.label.autoread "Automated reading">
-<!ENTITY periodic.settings.autoread "Walk through selected elements automatically">
-<!ENTITY periodic.settings.label.from "from">
-<!ENTITY periodic.settings.label.to "to">
-<!ENTITY periodic.settings.label.general "General">
-<!ENTITY periodic.settings.label.emptycells "Walk over empty cells">
-<!ENTITY periodic.settings.label.filtering "Enable filters">
-<!ENTITY periodic.settings.label.filters "Filter">
-<!ENTITY periodic.settings.label.group "Group">
-<!ENTITY periodic.settings.label.electronegativity "Electronegativity">
-<!ENTITY periodic.settings.label.oxidation "Oxidation number">
-<!ENTITY periodic.settings.label.selectgroup "Select group">
-<!ENTITY periodic.settings.label.tooltips "Tooltip contents">
+<!ENTITY periodic.filters.from "from">
+<!ENTITY periodic.filters.to "to">
+<!ENTITY periodic.filters.enable "Enable filters">
+<!ENTITY periodic.filters.label "Filters">
+<!ENTITY periodic.filters.group "Group">
+<!ENTITY periodic.filters.electronegativity "Electronegativity">
+<!ENTITY periodic.filters.oxidation "Oxidation number">
 <!ENTITY periodic.label.table "Periodic table">
 <!ENTITY periodic.label.details "Element details">
-<!ENTITY periodic.settings.all "all">
+<!ENTITY periodic.filters.all "all">
 <!ENTITY periodic.help.keys "You can use the following keys to navigate here:
 Control+T: go to the periodic table;
 Control+Shift+T: go to the table of lanthanoids and actinoids;

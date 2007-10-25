@@ -37,12 +37,28 @@ function brailchem_update_preferences ()
     replaceable_node.setAttribute ('value', '*');
     replaceable_node.setAttribute ('label', menu_node.getElementsByAttribute ('value', language)[0].getAttribute ('label'));
     replaceable_node.setAttribute ('value', language);
+    // Periodic table
+    var periodic_walk_over_empty = (brailchem_preferences.int ('periodic.walk_over_empty') ? 'true' : 'false');
+    this.find_element ('pref-brailchem-periodic-emptycell').setAttribute ('checked', periodic_walk_over_empty);
+    brailchem_periodic_update_tooltip_settings_node (this.find_element ('pref-brailchem-periodic-tooltips'));
 }
 
 function brailchem_set_preferences ()
 {
+    // General
+    brailchem_preferences.set_char ('language', document.getElementById ('pref-language').value);
+    // Server
     brailchem_preferences.set_char ('server.host', document.getElementById ('pref-brailchem-host').value);
     brailchem_preferences.set_int ('server.port', document.getElementById ('pref-brailchem-port').value);
-    brailchem_preferences.set_char ('language', document.getElementById ('pref-language').value);
+    // Periodic
+    var periodic_walk_over_empty = (document.getElementById ('pref-brailchem-periodic-emptycell').getAttribute ('checked') == 'true' ? 1 : 0);
+    brailchem_preferences.set_int ('periodic.walk_over_empty', periodic_walk_over_empty);
+    var periodic_tooltips = [];
+    var periodic_tooltip_box = document.getElementById ('pref-brailchem-periodic-tooltips');
+    var tooltip_node_list = periodic_tooltip_box.getElementsByAttribute ('checked', 'true');
+    for (var i = 0; i < tooltip_node_list.length; i++)
+        periodic_tooltips.push (tooltip_node_list[i].getAttribute ('brailchem_property_name'));
+    brailchem_preferences.set_char ('periodic.tooltips', periodic_tooltips.join (':'));
+    // all done
     brailchem_message ('brailchemPreferencesSet', 'brailchem-preferences-strings');
 }

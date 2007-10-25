@@ -39,6 +39,7 @@ function brailchem_periodic_display (page)
 {
     var strings = document.getElementById ('brailchem-periodic-strings');
     brailchem_message (strings.getString ('brailchemPeriodicPleaseWait'));
+    g_tooltips = null;
     brailchem_periodic_update_data ();
     var element_data = g_element_data;
     // Any problem?
@@ -48,7 +49,6 @@ function brailchem_periodic_display (page)
     var row_max = 0, col_max = 0;
     var extra_row_min = 1000, extra_row_max = 0, extra_col_min = 1000, extra_col_max = 0;
     var table = [];
-    var property_names = {};
     for (var symbol in element_data) {
         var properties = element_data[symbol];
         var row = parseInt (properties['PERIODIC_TABLE_ROW'].value);
@@ -73,18 +73,12 @@ function brailchem_periodic_display (page)
         if (! table_row)
             table_row = table[row] = [];
         table_row[col] = properties;
-        for (var p in properties)
-            property_names[properties[p].name] = true;
     }
-    var properties_as_list = [];
-    for (var p in property_names)
-        if (properties[p])
-            properties_as_list.push (properties[p]);    
-    properties_as_list.sort (function (x0, y0) { var x = x0.name, y = y0.name; return (x==y ? 0 : (x<y ? -1 : 1)); });
     // Render the table
     var empty_cell_string = strings.getString ('brailchemPeriodicEmptyCell');
     var row_string = strings.getString ('brailchemPeriodicRow');
     var column_string = strings.getString ('brailchemPeriodicColumn');
+    var empty_walk = brailchem_preferences.int ('periodic.walk_over_empty');
     function render_table (top_node_id, row_min, row_max, col_min, col_max, focus_variable) {
         var top_node = page.find_element (top_node_id);
         brailchem_remove_children (top_node);
@@ -101,7 +95,7 @@ function brailchem_periodic_display (page)
                 var dom_element_node = brailchem_add_element (dom_row_node, (element ? 'element' : 'xelement'),
                                                               {class: 'brailchem-element-button',
                                                                id: 'brailchem-element-' + row + '-' + col,
-                                                               disabled: (element || g_empty_walk ? 'false' : 'true'),
+                                                               disabled: (element || empty_walk ? 'false' : 'true'),
                                                                onfocus: focus_variable + '=this; brailchem_periodic_show_tooltip(this);',
                                                                brailchem_row: row, brailchem_column: col});
                 if (element) {
@@ -120,20 +114,7 @@ function brailchem_periodic_display (page)
     render_table ('brailchem-periodic-table-node', 1, row_max, 1, col_max, 'g_last_element.main');
     render_table ('brailchem-periodic-extra-table-node', extra_row_min, extra_row_max, extra_col_min, extra_col_max, 'g_last_element.extra');
     brailchem_periodic_update_tooltips (page.document);
-    // Update settings
-    var tooltips_node = page.find_element ('brailchem-tooltip-settings');
-    brailchem_remove_children (tooltips_node);
-    var tooltips = g_tooltips;
-    properties_as_list.sort (function (x0, y0) { var x = x0.label, y = y0.label; return (x==y ? 0 : (x<y ? -1 : 1)); });
-    for (var i = 0; i < properties_as_list.length; i++) {
-        var item = properties_as_list[i];
-        var name = item.name;
-        if (name[0] != '_') {
-            var checkbox_node = brailchem_add_element (tooltips_node, 'checkbox',
-                                                       {label: item.label, checked: tooltips[name], brailchem_property_name: name,
-                                                        oncommand: 'brailchem_periodic_set_tooltip(event.target)'});
-        }
-    }    
+    // Update filter selectors
     var group_menu_node = page.find_element ('brailchem-setting-filter-group-menu');
     function removal_condition (element)
     {
@@ -167,7 +148,36 @@ function brailchem_periodic_update_data ()
 
 function brailchem_periodic_init_tooltips ()
 {
-    g_tooltips = {'ELEMENT_NAME': true};
+    var periodic_enabled_tooltips = brailchem_preferences.char ('periodic.tooltips').split (':');
+    tooltips = {};
+    for (var i in periodic_enabled_tooltips)
+        tooltips[periodic_enabled_tooltips[i]] = true;
+    g_tooltips = tooltips;
+}
+
+function brailchem_periodic_update_tooltip_settings_node (tooltips_node)
+{
+    brailchem_periodic_update_data ();
+    brailchem_remove_children (tooltips_node);
+    var property_names = {};
+    for (var symbol in g_element_data) {
+        var properties = g_element_data[symbol];
+        for (var p in properties)
+            property_names[properties[p].name] = true;
+    }
+    var properties_as_list = [];
+    for (var p in property_names)
+        if (properties[p])
+            properties_as_list.push (properties[p]);    
+    properties_as_list.sort (function (x0, y0) { var x = x0.name, y = y0.name; return (x==y ? 0 : (x<y ? -1 : 1)); });
+    var tooltips = brailchem_preferences.char ('periodic.tooltips').split (':');
+    for (var i = 0; i < properties_as_list.length; i++) {
+        var item = properties_as_list[i];
+        var name = item.name;
+        if (name[0] != '_')
+            brailchem_add_element (tooltips_node, 'checkbox',
+                                   {label: item.label, checked: (tooltips.indexOf (name) != -1), brailchem_property_name: name});
+    }
 }
 
 function brailchem_periodic_update_element_data ()
@@ -274,31 +284,11 @@ function brailchem_periodic_unfilter ()
 
 // Callbacks
 
-function brailchem_periodic_set_tooltip (element)
-{
-    brailchem_periodic_update_data ();
-    var property_name = element.getAttribute ('brailchem_property_name');
-    var value = element.checked;
-    g_tooltips[property_name] = element.getAttribute('checked');
-    brailchem_periodic_update_tooltips ();
-}
-
 function brailchem_periodic_show_tooltip (element) 
 {
     var tooltip_text = element.getAttribute ('tooltiptext');
     if (tooltip_text)
         brailchem_message (tooltip_text.replace ('\n', '; ', 'g'));
-}
-
-function brailchem_periodic_empty_cells (enabled)
-{
-    if ((g_empty_walk && ! enabled) || (! g_empty_walk && enabled)) {
-        g_empty_walk = enabled;
-        var value = (g_empty_walk ? 'false' : 'true');
-        var xelements = document.getElementsByTagName ('xelement');
-        for (var i = 0; i < xelements.length; i++)
-            xelements[i].setAttribute ('disabled', value);
-    }
 }
 
 function brailchem_periodic_set_filter (enable)

@@ -215,6 +215,8 @@ var brailchem_preferences = {
         'server.host': 'www.brailcom.org', 'server.port': 8000,
         'language': 'en',
         'display.preferred_views': 'ATOM_SYMBOL;NAME',
+        'periodic.walk_over_empty': 0,
+        'periodic.tooltips': 'ELEMENT_NAME',
     },
     
     initialize_preferences: function () 
