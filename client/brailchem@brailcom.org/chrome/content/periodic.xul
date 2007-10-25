@@ -33,13 +33,6 @@
   <hbox id="brailchem-primary"><description id="brailchem-heading" class="brailchem-heading" flex="1" value="&periodic.header;"/></hbox>
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
     <hbox>
-      <description style="white-space: pre;">&periodic.help.keys;</description>
-    </hbox>
-    <hbox>
-      <description class="header" level="2" style="-moz-user-focus: normal;"
-                   value="&periodic.label.table;"/>
-    </hbox>
-    <hbox>
       <vbox id="brailchem-periodic-table-box">
         <grid class="periodic-table-box">
           <rows id="brailchem-periodic-table-node"/>

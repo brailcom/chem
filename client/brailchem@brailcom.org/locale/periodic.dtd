@@ -10,14 +10,3 @@
 <!ENTITY periodic.label.table "Periodic table">
 <!ENTITY periodic.label.details "Element details">
 <!ENTITY periodic.filters.all "all">
-<!ENTITY periodic.help.keys "You can use the following keys to navigate here:
-Control+T: go to the periodic table;
-Control+Shift+T: go to the table of lanthanoids and actinoids;
-Control+S: go to settings;
-Shift+Arrow keys: navigate through elements in the periodic tables;
-Control+F E: go to electronegativity filtering;
-Control+F G: go to group filtering;
-Control+F O: go to oxidation number filtering;
-Control+A: report currently filtered elements;
-Control+E: jump to element
-">
