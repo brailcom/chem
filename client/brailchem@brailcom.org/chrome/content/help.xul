@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://brailchem/skin/brailchem.css" type="text/css"?>
+<!DOCTYPE window [
+          <!ENTITY % brailchemDTD SYSTEM "chrome://brailchem/locale/help.dtd">
+          %brailchemDTD;
+          ]>
+<window id="brailchem-help-window"
+        title="Brailchem Help"
+        orient="vertical"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:html="http://www.w3.org/1999/xhtml">
+  <script src="help.js"/>
+
+  <hbox id="brailchem-primary"><description id="brailchem-heading" class="brailchem-heading" flex="1" value="&help.header;"/></hbox>
+  <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
+    <description style="white-space: pre;">&help.text;</description>
+  </scrollbox>
+</window>

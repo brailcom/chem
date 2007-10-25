@@ -17,6 +17,7 @@
 <script src="molecule.js"/>
 <script src="periodic.js"/>
 <script src="preferences.js"/>
+<script src="help.js"/>
 <script src="brailchem.js"/>
   
 <stringbundleset>
@@ -24,47 +25,45 @@
   <stringbundle id="brailchem-periodic-strings" src="chrome://brailchem/locale/periodic.properties"/>
 </stringbundleset>
 
+<commandset>
+  <command id="com-quit" oncommand="brailchem_quit ()"/>
+  <command id="com-start-molecule" oncommand="brailchem_molecule ()"/>
+  <command id="com-start-periodic" oncommand="brailchem_periodic_table ()"/>
+  <command id="com-start-settings" oncommand="brailchem_edit_preferences ()"/>
+  <command id="com-start-help" oncommand="brailchem_help ()"/>
+</commandset>
+
 <keyset>
-  <key id="brailchem-jump-to-frame" modifiers="control" key="O" oncommand="brailchem_jump_to_subframe()"/>
+  <key id="key-quit" command="com-quit" modifiers="control" key="Q"/>
 </keyset>
 
 <vbox id="main-box" flex="1">
-  <scrollbox id="brailchem-scrollbox" orient="vertical" style="overflow: auto;">
-    <box id="brailchem-primary">
-      <description id="brailchem-heading" class="brailchem-heading" flex="1">Brailchem</description>
-    </box>
-    <description style="white-space: pre;">&main.text.help;</description>
-    <spacer style="height: 10px"/>
-    <box id="function-box" orientation="horizontal">
-      <groupbox id="molecule-box" maxwidth="300">
-        <caption id="molecule-caption" label="&main.caption.molecule;"/>
-        <description>&main.label.molecule;</description>
-        <vbox flex="1"/>
-        <hbox id="molecule-input-box">
-          <textbox id="molecule-textbox" value="Oc1ccccc1C" accesskey="M"/>
-          <button id="molecule-button" label="&main.button.molecule;" oncommand="brailchem_molecule();"/>
-        </hbox>
-      </groupbox>
-      <groupbox id="periodic-box" maxwidth="200">
-        <caption id="periodic-caption" label="&main.caption.periodic;"/>
-        <description>&main.label.periodic;</description>
-        <vbox flex="1"/>
-        <button id="periodic-button" label="&main.button.periodic;" accesskey="P" oncommand="brailchem_periodic_table();"/>
-      </groupbox>
-      <groupbox id="preferences-box" maxwidth="200">
-        <caption id="preferences-caption" label="&main.caption.preferences;"/>
-        <description>&main.label.preferences;</description>
-        <vbox flex="1"/>
-        <button id="preferences-button" label="&main.button.preferences;" accesskey="S" oncommand="brailchem_edit_preferences();"/>
-      </groupbox>
-      <vbox>
-        <vbox flex="1"/>
-        <button label="&main.button.quit;" oncommand="window.close()" accesskey="Q"/>
-        <spacer style="height: 10px"/>
-      </vbox>
-    </box>
-  </scrollbox>
-  <iframe id="brailchem-frame" src="chrome://brailchem/content/empty.xul" flex="1"/>
+  <toolbox>
+    <menubar id="brailchem-menubar" flex="1">
+      <menu id="file-menu" label="&main.menu.file;" accesskey="&main.menu.file-key;">
+        <menupopup id="file-popup">
+          <menuitem label="&main.menu.file.window;" accesskey="&main.menu.file.window-key;" disabled="true"/>
+          <menuitem label="&main.menu.file.settings;" command="com-start-settings" accesskey="&main.menu.file.settings-key;"/>
+          <menuitem label="&main.menu.file.upgrade;" accesskey="&main.menu.file.upgrade-key;" disabled="true"/>
+          <menuseparator/>
+          <menuitem label="&main.menu.file.quit;" command="com-quit" accesskey="&main.menu.file.quit-key;"/>
+        </menupopup>
+      </menu>
+      <menu id="application-menu" label="&main.menu.applications;" accesskey="&main.menu.applications-key;">
+        <menupopup id="application-popup">
+          <menuitem label="&main.menu.applications.molecule;" command="com-start-molecule" accesskey="&main.menu.applications.molecule-key;"/>
+          <menuitem label="&main.menu.applications.periodic;" command="com-start-periodic" accesskey="&main.menu.applications.periodic-key;"/>
+        </menupopup>
+      </menu>
+      <menu id="help-menu" label="&main.menu.help;" accesskey="&main.menu.help-key;">
+        <menupopup id="help-popup">
+          <menuitem label="&main.menu.help.introduction;" command="com-start-help" accesskey="&main.menu.help.introduction-key;"/>
+          <menuitem label="&main.menu.help.about;" accesskey="&main.menu.help.about-key;" disabled="true"/>
+        </menupopup>
+      </menu>
+    </menubar>
+  </toolbox>
+  <iframe id="brailchem-frame" src="chrome://brailchem/content/help.xul" flex="1"/>
   <statusbar>
     <statusbarpanel id="brailchem-echo-area" flex="1" label=""/>
   </statusbar>

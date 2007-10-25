@@ -123,17 +123,7 @@ description
   font-weight: bold;
   text-align: center;
   color: white;
-  background-color: darkgrey;
-}
-
-.brailchem-heading[brailchem-active="true"]
-{
   background-color: darkblue;
-}
-
-iframe
-{
-  border: 3px solid black;
 }
 
 #brailchem-periodic-table-box, #brailchem-element-details-box

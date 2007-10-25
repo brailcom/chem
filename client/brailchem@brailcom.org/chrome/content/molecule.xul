@@ -26,9 +26,15 @@
   </keyset>
 
   <hbox><description id="brailchem-heading" class="brailchem-heading" flex="1" value="&molecule.header;"/></hbox>
+
+  <description>&molecule.text.intro;</description>
+  <hbox id="molecule-input-box">
+    <description>&molecule.label.smiles;</description>
+    <textbox id="molecule-textbox" value="Oc1ccccc1C" accesskey="M"/>
+    <button id="molecule-button" label="&molecule.button.smiles;" oncommand="brailchem_browse_molecule();"/>
+  </hbox>
+
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
-    <box id="molecule-display-box" orient="vertical">
-      <description>Please wait...</description>
-    </box>
+    <box id="molecule-display-box" orient="vertical"/>
   </scrollbox>
 </window>

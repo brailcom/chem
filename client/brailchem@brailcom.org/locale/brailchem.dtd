@@ -1,22 +1,25 @@
-<!ENTITY main.text.help "Available access keys (invoked by pressing Alt+key on Unix systems):
-M: molecule browser;
-P: periodic table;
-S: settings;
-Q: quit Brailchem
+<!ENTITY main.menu.file "File">
+<!ENTITY main.menu.file-key "F">
+<!ENTITY main.menu.applications "Applications">
+<!ENTITY main.menu.applications-key "A">
+<!ENTITY main.menu.help "Help">
+<!ENTITY main.menu.help-key "H">
 
-Other keys:
-Control+O: switch between application frames
-">
+<!ENTITY main.menu.file.window "New Window">
+<!ENTITY main.menu.file.window-key "N">
+<!ENTITY main.menu.file.settings "Preferences">
+<!ENTITY main.menu.file.settings-key "P">
+<!ENTITY main.menu.file.upgrade "Upgrade Brailchem">
+<!ENTITY main.menu.file.upgrade-key "U">
+<!ENTITY main.menu.file.quit "Quit">
+<!ENTITY main.menu.file.quit-key "Q">
 
-<!ENTITY main.caption.molecule "Molecule browser">
-<!ENTITY main.caption.periodic "Periodic table">
-<!ENTITY main.caption.preferences "Settings">
+<!ENTITY main.menu.applications.molecule "Molecule Browser">
+<!ENTITY main.menu.applications.molecule-key "M">
+<!ENTITY main.menu.applications.periodic "Periodic Table">
+<!ENTITY main.menu.applications.periodic-key "P">
 
-<!ENTITY main.button.molecule "Inspect molecule">
-<!ENTITY main.button.periodic "Periodic table">
-<!ENTITY main.button.preferences "Edit preferences">
-<!ENTITY main.button.quit "Quit">
-
-<!ENTITY main.label.molecule "Write a molecule in the SMILES notation to the input box and press the following button to inspect the molecule.">
-<!ENTITY main.label.periodic "You can view periodic table of elements by pressing the button here.">
-<!ENTITY main.label.preferences "Press the button here to edit Brailchem preferences.">
+<!ENTITY main.menu.help.introduction "Introduction">
+<!ENTITY main.menu.help.introduction-key "I">
+<!ENTITY main.menu.help.about "About">
+<!ENTITY main.menu.help.about-key "A">

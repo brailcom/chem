@@ -18,24 +18,29 @@
 
 function brailchem_molecule ()
 {
+    brailchem_switch_page ('chrome://brailchem/content/molecule.xul', 'molecule-display-box');
+}
+
+function brailchem_browse_molecule ()
+{
     var smiles = document.getElementById ('molecule-textbox').value;
-    brailchem_switch_page ('chrome://brailchem/content/molecule.xul', 'molecule-display-box', function () { brailchem_update_molecule (this, smiles); });
+    brailchem_update_molecule (smiles);
 }
 
-function brailchem_update_molecule (page, smiles)
+function brailchem_update_molecule (smiles)
 {    
-    brailchem_display_molecule (page, smiles);
-    page.document.getElementsByTagName ('description')[0].focus ();
+    brailchem_display_molecule (smiles);
+    document.getElementsByTagName ('description')[0].focus ();
 }
 
-function brailchem_display_molecule (page, smiles)
+function brailchem_display_molecule (smiles)
 {
     // Fetch data
     var doc = brailchem_call_server ('smiles', smiles);
     if (doc == null)
         return;
     // Remove old contents
-    var top_box = page.find_element ('molecule-display-box');
+    var top_box = document.getElementById ('molecule-display-box');
     brailchem_remove_children (top_box);
     // Display data
     var element = doc.documentElement;
