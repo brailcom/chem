@@ -142,12 +142,14 @@ function brailchem_periodic_display (page)
 
 function brailchem_periodic_update_data ()
 {
-    if (g_language != brailchem_preferences.char ('language'))
+    var current_language = brailchem_preferences.char ('language');
+    if (g_language != current_language)
         g_element_data = null;
     if (g_tooltips == null)
         brailchem_periodic_init_tooltips ();
     if (g_element_data == null)
         brailchem_periodic_update_element_data ();
+    g_language = current_language;
 }
 
 function brailchem_periodic_init_tooltips ()
