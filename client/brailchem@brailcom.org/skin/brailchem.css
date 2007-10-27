@@ -83,10 +83,16 @@ element[brailchem-emphasized="true"] button
   font-weight: bold;
 }
 
-element button:focus, xelement button:focus
+element button:focus, xelement button:focus, element[brailchem-custom-filter="true"] button:focus
 {
   font-weight: bold;
   background-color: yellow;
+  -moz-appearance: none;
+}
+
+element[brailchem-custom-filter="true"] button
+{
+  background-color: lightblue;
   -moz-appearance: none;
 }
 
@@ -94,6 +100,12 @@ xelement button
 {
   border: 1px solid black;
   background-color: white;
+  -moz-appearance: none;
+}
+
+#brailchem-custom-elements-button[brailchem-filtering="true"]
+{
+  background-color: yellow;
   -moz-appearance: none;
 }
 

@@ -7,6 +7,8 @@
 <!ENTITY periodic.filters.group "Group">
 <!ENTITY periodic.filters.electronegativity "Electronegativity">
 <!ENTITY periodic.filters.oxidation "Oxidation number">
+<!ENTITY periodic.filters.selected-elements "Set of elements">
+<!ENTITY periodic.filters.select-elements "Change">
 <!ENTITY periodic.label.table "Periodic table">
 <!ENTITY periodic.label.details "Element details">
 <!ENTITY periodic.filters.all "all">
