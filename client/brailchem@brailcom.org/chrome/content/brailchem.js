@@ -24,7 +24,6 @@ function brailchem_start ()
 function brailchem_init ()
 {
     addEventListener ('focus', brailchem_focus_callback, true);
-    brailchem_focus (document.getElementById ('brailchem-primary'));
 }
 
 // Commands
