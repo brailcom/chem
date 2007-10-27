@@ -32,6 +32,7 @@
   <command id="com-start-settings" oncommand="brailchem_edit_preferences ()"/>
   <command id="com-start-help" oncommand="brailchem_help ()"/>
   <command id="com-new-window" oncommand="brailchem_new_window ()"/>
+  <command id="com-upgrade" oncommand="brailchem_upgrade ()"/>
 </commandset>
 
 <keyset>
@@ -45,7 +46,7 @@
         <menupopup id="file-popup">
           <menuitem label="&main.menu.file.window;" command="com-new-window" accesskey="&main.menu.file.window-key;"/>
           <menuitem label="&main.menu.file.settings;" command="com-start-settings" accesskey="&main.menu.file.settings-key;"/>
-          <menuitem label="&main.menu.file.upgrade;" accesskey="&main.menu.file.upgrade-key;" disabled="true"/>
+          <menuitem label="&main.menu.file.upgrade;" command="com-upgrade" accesskey="&main.menu.file.upgrade-key;"/>
           <menuseparator/>
           <menuitem label="&main.menu.file.quit;" command="com-quit" accesskey="&main.menu.file.quit-key;"/>
         </menupopup>

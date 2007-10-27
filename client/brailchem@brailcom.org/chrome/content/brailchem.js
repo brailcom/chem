@@ -44,3 +44,8 @@ function brailchem_quit ()
 {
     window.close ();
 }
+
+function brailchem_upgrade ()
+{
+    window.open ('http://www.freebsoft.org/pub/projects/brailchem/brailchem.xpi');
+}
