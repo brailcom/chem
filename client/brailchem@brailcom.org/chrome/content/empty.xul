@@ -10,5 +10,8 @@
         orient="vertical"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
+  <stringbundleset>
+    <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
+  </stringbundleset>
   <description style="white-space: pre;">&main.intro.message;</description>
 </window>

@@ -44,7 +44,6 @@ var brailchem_periodic_element_selection_keymap = {'.': brailchem_custom_element
 function brailchem_periodic_display (page)
 {
     var strings = document.getElementById ('brailchem-periodic-strings');
-    brailchem_message (strings.getString ('brailchemPeriodicPleaseWait'));
     g_tooltips = null;
     brailchem_periodic_update_data ();
     var element_data = g_element_data;
@@ -139,7 +138,6 @@ function brailchem_periodic_display (page)
         var number = oxidation_list[i];
         brailchem_add_element (oxidation_menu_node, 'menuitem', {label: number, oncommand: "brailchem_periodic_oxidation_filter('"+number+"')"});
     }
-    brailchem_message (strings.getString ('brailchemPeriodicDone'));
 }
 
 function brailchem_periodic_update_data ()

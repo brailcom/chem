@@ -35,6 +35,7 @@ function brailchem_update_molecule (smiles)
 
 function brailchem_display_molecule (smiles)
 {
+    brailchem_wait_start ();
     // Fetch data
     var doc = brailchem_call_server ('smiles', smiles);
     if (doc == null)
@@ -51,6 +52,7 @@ function brailchem_display_molecule (smiles)
         brailchem_display_element (element, top_box, 1, references, labels);
         brailchem_backpatch_references (references, labels);
     }
+    brailchem_wait_end ();
 }
 
 function brailchem_display_element (element, box, header_level, references, labels)

@@ -87,6 +87,8 @@ var BrailchemPage = {
             // The frame elements often don't appear immediately, so we have to use
             // a timer to wait until they get available
             this.run_timer (this._display_callback);
+        else
+            brailchem_wait_end ();
     },
     run_timer: function (callback) 
     {
@@ -95,8 +97,10 @@ var BrailchemPage = {
         var callback_object =
         {
             notify: function (timer) {
-                if (callback (page))
+                if (callback (page)) {
                     timer.cancel ();
+                    brailchem_wait_end ();
+                }
             }
         }
         timer.initWithCallback (callback_object, this.display_timer_interval, timer.TYPE_REPEATING_SLACK);    
@@ -129,6 +133,7 @@ brailchem_page.prototype = BrailchemPage;
 
 function brailchem_switch_page (uri, primary_element_id, after_function)
 {
+    brailchem_wait_start ();
     brailchem_current_page = new brailchem_page (uri, primary_element_id);
     brailchem_current_page.display (after_function);
     return brailchem_current_page;
@@ -354,4 +359,14 @@ function brailchem_check_float_input (element)
             new_value = new_value + '.';
     if (new_value != value)
         element.value = new_value;
+}
+
+function brailchem_wait_start ()
+{
+    brailchem_message ('brailchemGlobalPleaseWait', 'brailchem-strings');
+}
+
+function brailchem_wait_end ()
+{
+    brailchem_message ('brailchemGlobalDone', 'brailchem-strings');
 }
