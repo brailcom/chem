@@ -31,6 +31,7 @@
   <command id="com-start-periodic" oncommand="brailchem_periodic_table ()"/>
   <command id="com-start-settings" oncommand="brailchem_edit_preferences ()"/>
   <command id="com-start-help" oncommand="brailchem_help ()"/>
+  <command id="com-new-window" oncommand="brailchem_new_window ()"/>
 </commandset>
 
 <keyset>
@@ -42,7 +43,7 @@
     <menubar id="brailchem-menubar" flex="1">
       <menu id="file-menu" label="&main.menu.file;" accesskey="&main.menu.file-key;">
         <menupopup id="file-popup">
-          <menuitem label="&main.menu.file.window;" accesskey="&main.menu.file.window-key;" disabled="true"/>
+          <menuitem label="&main.menu.file.window;" command="com-new-window" accesskey="&main.menu.file.window-key;"/>
           <menuitem label="&main.menu.file.settings;" command="com-start-settings" accesskey="&main.menu.file.settings-key;"/>
           <menuitem label="&main.menu.file.upgrade;" accesskey="&main.menu.file.upgrade-key;" disabled="true"/>
           <menuseparator/>

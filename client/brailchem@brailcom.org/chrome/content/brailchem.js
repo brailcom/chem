@@ -21,6 +21,17 @@ function brailchem_start ()
     open ('chrome://brailchem/content/brailchem.xul', 'brailchem', 'chrome');
 }
 
+function brailchem_new_window ()
+{
+    // We must make the window name unique otherwise current window is simply
+    // reused.  As I don't know how to share (in a reasonable way) global
+    // variables of all application windows, we do this hack.  Of course it
+    // doesn't make window name necessarily unique, but it works for intended
+    // uses of the function.
+    var window_name = 'brailchem' + (new Date().getTime()) + Math.random();
+    open ('chrome://brailchem/content/brailchem.xul', window_name, 'chrome');
+}
+
 function brailchem_init ()
 {
     addEventListener ('focus', brailchem_focus_callback, true);
