@@ -10,4 +10,5 @@
         orient="vertical"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
+  <description style="white-space: pre;">&main.intro.message;</description>
 </window>

@@ -23,3 +23,8 @@
 <!ENTITY main.menu.help.introduction-key "I">
 <!ENTITY main.menu.help.about "About">
 <!ENTITY main.menu.help.about-key "A">
+
+<!ENTITY main.intro.message "Welcome in Brailchem.
+Use menus to control the application.
+See Help menu for introductory information.
+">
