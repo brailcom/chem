@@ -18,7 +18,7 @@
 
 function brailchem_periodic_table ()
 {
-    brailchem_switch_page ("chrome://brailchem/content/periodic.xul", 'brailchem-periodic-window',
+    brailchem_switch_page ("chrome://brailchem/content/periodic.xul", 'brailchem-periodic-table-node',
                            function () { brailchem_periodic_display (this); });
 }
 var g_element_data = null;
