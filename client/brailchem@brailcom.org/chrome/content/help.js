@@ -16,9 +16,12 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function brailchem_help ()
+function brailchem_help (section)
 {
-    window.open ('chrome://brailchem/content/help.html', 'brailchem-help');
+    var url = 'chrome://brailchem/content/help.html';
+    if (section)
+        url = url + '#' + section;
+    window.open (url, 'brailchem-help');
 }
 
 function brailchem_help_about ()

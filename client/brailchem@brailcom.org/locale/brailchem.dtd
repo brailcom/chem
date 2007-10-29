@@ -21,6 +21,8 @@
 
 <!ENTITY main.menu.help.introduction "Introduction">
 <!ENTITY main.menu.help.introduction-key "I">
+<!ENTITY main.menu.help.keys "Keyboard Shortcuts">
+<!ENTITY main.menu.help.keys-key "K">
 <!ENTITY main.menu.help.about "About">
 <!ENTITY main.menu.help.about-key "A">
 
