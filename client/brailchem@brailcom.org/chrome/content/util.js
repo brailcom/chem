@@ -68,26 +68,34 @@ function brailchem_remove_children (node, condition)
 var brailchem_current_page = null;
 
 var BrailchemPage = {
-    frame: null,
+    _frame: null,
+    _window: null,
     display_timer_interval: 100,
-    get document() { return this.frame.contentDocument; },
+    get document() { return (this._frame ? this._frame.contentDocument : this._window.document); },
     get primary_element_id() { return this._primary_element_id },
     data: {},
     // Public methods
     find_element: function (element_id)
     {
-        return this.frame.contentDocument.getElementById (element_id);
+        return this.document.getElementById (element_id);
     },
-    display: function (after_function)
+    display: function (after_function, window_name)
     {
-        this.frame = document.getElementById ("brailchem-frame");
-        this.frame.setAttribute ('src', this._uri);
+        if (window_name) {
+            this._window = open (this._uri, window_name, 'chrome');
+            
+        }
+        else {
+            brailchem_wait_start ();
+            this._frame = document.getElementById ("brailchem-frame");
+            this._frame.setAttribute ('src', this._uri);
+        }
         this._after_display_function = after_function;
         if (this._primary_element_id || after_function)
             // The frame elements often don't appear immediately, so we have to use
             // a timer to wait until they get available
             this.run_timer (this._display_callback);
-        else
+        else if (this._frame)
             brailchem_wait_end ();
     },
     run_timer: function (callback) 
@@ -99,7 +107,8 @@ var BrailchemPage = {
             notify: function (timer) {
                 if (callback (page)) {
                     timer.cancel ();
-                    brailchem_wait_end ();
+                    if (this._frame)
+                        brailchem_wait_end ();
                 }
             }
         }
@@ -131,11 +140,10 @@ function brailchem_page (uri, primary_element_id)
 }
 brailchem_page.prototype = BrailchemPage;
 
-function brailchem_switch_page (uri, primary_element_id, after_function)
+function brailchem_switch_page (uri, primary_element_id, after_function, window_name)
 {
-    brailchem_wait_start ();
     brailchem_current_page = new brailchem_page (uri, primary_element_id);
-    brailchem_current_page.display (after_function);
+    brailchem_current_page.display (after_function, window_name);
     return brailchem_current_page;
 }
 

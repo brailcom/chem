@@ -18,11 +18,12 @@
 
 function brailchem_edit_preferences ()
 {
-    brailchem_switch_page ('chrome://brailchem/content/preferences.xul', 'brailchem-preferences-window', brailchem_update_preferences);
+    brailchem_switch_page ('chrome://brailchem/content/preferences.xul', 'brailchem-preferences-window', brailchem_update_preferences,
+                           'brailchem-preferences');
 }
 
 function brailchem_update_preferences ()
-{    
+{
     // Server
     var host = brailchem_preferences.char ('server.host');
     var port = brailchem_preferences.int ('server.port');
@@ -43,7 +44,7 @@ function brailchem_update_preferences ()
     brailchem_periodic_update_tooltip_settings_node (this.find_element ('pref-brailchem-periodic-tooltips'));
 }
 
-function brailchem_set_preferences ()
+function brailchem_set_preferences (close_window)
 {
     // General
     brailchem_preferences.set_char ('language', document.getElementById ('pref-language').value);
@@ -60,5 +61,6 @@ function brailchem_set_preferences ()
         periodic_tooltips.push (tooltip_node_list[i].getAttribute ('brailchem_property_name'));
     brailchem_preferences.set_char ('periodic.tooltips', periodic_tooltips.join (':'));
     // all done
-    brailchem_message ('brailchemPreferencesSet', 'brailchem-preferences-strings');
+    if (close_window)
+        window.close ();
 }

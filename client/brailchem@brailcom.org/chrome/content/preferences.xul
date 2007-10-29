@@ -19,6 +19,10 @@
     <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
     <stringbundle id="brailchem-preferences-strings" src="chrome://brailchem/locale/preferences.properties"/>
   </stringbundleset>
+  
+  <keyset>
+    <key id="key-cancel" oncommand="close()" keycode="VK_ESCAPE"/>
+  </keyset>
 
   <description id="brailchem-primary" class="brailchem-heading" value="&preferences.label.preferences;"/>
   <scrollbox id="brailchem-scrollbox" class="bfooob" orient="vertical" flex="1" style="overflow: auto;">
@@ -244,7 +248,16 @@
         <caption label="&preferences.periodic.label.tooltips;"/>
         <vbox id="pref-brailchem-periodic-tooltips"/>
       </groupbox>
-    </groupbox>    
-    <button id="brailchem-submit-prefs" label="&preferences.button.ok;" oncommand="brailchem_set_preferences()"/>
+    </groupbox>
+
+    <hbox>
+      <hbox flex="1"/>
+      <button id="brailchem-submit-prefs" label="&preferences.button.cancel;" accesskey="&preferences.button.cancel.key;"
+              oncommand="close()"/>
+      <button id="brailchem-submit-prefs" label="&preferences.button.apply;" accesskey="&preferences.button.apply.key;"
+              oncommand="brailchem_set_preferences()"/>
+      <button id="brailchem-submit-prefs" label="&preferences.button.ok;" accesskey="&preferences.button.ok.key;"
+              oncommand="brailchem_set_preferences(true)"/>
+    </hbox>
   </scrollbox>
 </window>
