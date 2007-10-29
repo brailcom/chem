@@ -47,5 +47,10 @@ function brailchem_quit ()
 
 function brailchem_upgrade ()
 {
-    window.open ('http://www.freebsoft.org/pub/projects/brailchem/brailchem.xpi');
+    var version = brailchem_read_url ('chrome://brailchem/content/VERSION');
+    var remote_version = brailchem_read_url ('http://www.freebsoft.org/pub/projects/brailchem/VERSION');
+    if (version == null || version < remote_version)
+        open ('http://www.freebsoft.org/pub/projects/brailchem/brailchem.xpi');
+    else
+        brailchem_alert (brailchem_string ('brailchemNewestVersion', 'brailchem-strings'));
 }

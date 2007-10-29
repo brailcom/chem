@@ -23,6 +23,9 @@ all:
 	zip -r $(xpiarchive) *
 
 clean:
-	rm -f $(xpiarchive)
+	rm -f $(xpiarchive) chrome/content/VERSION
 
-.PHONY: all clean
+version:
+	date -u +'%Y%m%d%H%M%S' > chrome/content/VERSION
+
+.PHONY: all clean version

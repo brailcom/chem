@@ -340,6 +340,28 @@ function brailchem_prompt (title, label)
     return (result ? input.value : null);
 }
 
+// IO
+
+function brailchem_read_url (url)
+{
+    try {
+        // Taken from http://forums.mozillazine.org/viewtopic.php?p=921150#921150
+        var io_service = Components.classes["@mozilla.org/network/io-service;1"].getService (Components.interfaces.nsIIOService);
+        var scriptable_stream = Components.classes["@mozilla.org/scriptableinputstream;1"]
+                                .getService (Components.interfaces.nsIScriptableInputStream);
+        var channel = io_service.newChannel (url, null, null);
+        var input = channel.open ();
+        scriptable_stream.init (input);
+        var text = scriptable_stream.read (input.available ());
+        scriptable_stream.close ();
+        input.close ();
+    }
+    catch (e) {
+        return null;
+    }
+    return text;
+}
+
 // Miscelaneous
 
 function brailchem_string (string, string_element)
