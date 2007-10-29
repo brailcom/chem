@@ -20,10 +20,6 @@
     <stringbundle id="brailchem-preferences-strings" src="chrome://brailchem/locale/preferences.properties"/>
   </stringbundleset>
 
-  <keyset>
-    <key id="brailchem-jump-to-frame" modifiers="control" key="O" oncommand="brailchem_jump_to_main_frame()"/>
-  </keyset>
-
   <description id="brailchem-primary" class="brailchem-heading" value="&preferences.label.preferences;"/>
   <scrollbox id="brailchem-scrollbox" class="bfooob" orient="vertical" flex="1" style="overflow: auto;">
     <groupbox>

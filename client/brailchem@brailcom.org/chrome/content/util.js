@@ -205,11 +205,6 @@ function brailchem_defocus ()
     return focused;
 }
 
-function brailchem_jump_to_main_frame ()
-{
-    brailchem_focus (parent.document.getElementById ('brailchem-primary'));
-}
-
 // Preference handling
 
 var brailchem_preferences = {
