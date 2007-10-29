@@ -35,6 +35,7 @@ var brailchem_periodic_filter_keymap = {'e': brailchem_periodic_go_electronegati
                                         'g': brailchem_periodic_go_group_filter,
                                         'o': brailchem_periodic_go_oxidation_filter,
                                         's': brailchem_periodic_go_elements_filter,
+                                        '?': brailchem_periodic_show_filtered_elements,
                                        };
 var brailchem_periodic_element_selection_keymap = {'.': brailchem_custom_elements_filter_finish,
                                                    'a': brailchem_custom_elements_filter_all,

@@ -25,7 +25,6 @@
     <key id="brailchem-periodic-go-extra-table-key" modifiers="control,shift" key="T" oncommand="brailchem_periodic_go_extra_table()"/>
     <key id="brailchem-periodic-filter" modifiers="control" key="F" oncommand="brailchem_set_keymap(brailchem_periodic_filter_keymap)"/>
     <key id="brailchem-periodic-filter" modifiers="control" key="S" oncommand="brailchem_set_keymap(brailchem_periodic_element_selection_keymap)"/>
-    <key id="brailchem-periodic-show-filter" modifiers="control" key="A" oncommand="brailchem_periodic_show_filtered_elements()"/>
     <key id="brailchem-periodic-element" modifiers="control" key="E" oncommand="brailchem_periodic_jump_to_element()"/>
   </keyset>
   
