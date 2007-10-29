@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
-    <title>Brailchem Introduction</title>
+    <title>Introduction to Brailchem</title>
   </head>
   <body>
     <h1>Introduction to Brailchem</h1>
@@ -11,7 +11,7 @@
       <li><a href="#usage">Usage</a></li>
       <li><a href="#periodic-table">Periodic Table Application</a></li>
       <li><a href="#molecule-browser">Molecule Browser Application</a></li>
-      <li><a href="#keys">Overview of Keyboard Shortcuts</a></li>
+      <li><a href="#keys">Overview of Keyboard Commands</a></li>
     </ul>
     
     <a name="what-is-brailchem">
@@ -19,43 +19,100 @@
     </a>
     
     <p>
-      <a href="http://www.freebsoft.org/brailchem">Brailchem</a> is a studying
-      tool for blind and visually impaired students of chemistry.  It is
-      developed as a part of the <a href="http://ict.brailcom.org">ICT
-        project</a>.
+      <a href="http://www.freebsoft.org/brailchem">Brailchem</a> is a tool to
+      help blind and visually impaired students to study chemistry.  Visually
+      impaired students have to deal with special difficulties during they
+      study such as understanding information commonly presented visually
+      (e.g. structures of organic molecules) or learning structurally
+      complicated relations without using its visual presentation
+      (e.g. periodic table of elements).  The purpose of Brailchem is to
+      present chemical information using computers in a way accessible to
+      blind and visually impaired students.
+    </p>
+    <p>
+      Brailchem is developed as a part of
+      the <a href="http://ict.brailcom.org">ICT project</a>.
     </p>
 
     <a name="usage">
       <h2>Usage</h2>
     </a>
 
-    <p>Brailchem consists of several subapplications described below.  All
-      basic commands are available in the menus.</p>
+    <p>Brailchem contains two subapplications: molecule browser and periodic
+      table of elements.  The subapplications can be started from corresponding
+      menu items in the <em>Application</em> menu.  If you want, you can run
+      each of the applications in one or more separate windows, created from
+      the <em>File / New Window</em> menu.
+    </p>
 
-    <p>Global command keys:</p>
+    <p>Brailchem is an internet oriented application.  It consists of two
+      parts: a client and a server.  The server, basically invisible to the
+      user, provides all chemical data to the client.  The client is dumb and
+      does not know anything about chemical elements or molecule structures, it
+      is just a presentation tool of data retrieved from the server.  So in
+      order to work the client must be connected to internet and have access to
+      a Brailchem server.  One such server is already preset in the application
+      and it is used by default; if you would like to use another one, you can
+      set it in the client preferences dialog.</p>
+
+    <p>To start using Brailchem, look into its menus, read available help and
+      try to use the available subapplications.  All important information
+      about current state of the program and performed actions is printed in
+      the application window status bar.</p>
+      
+    <p>For now there is just a single special global command key in
+      Brailchem:</p>
 
     <table>
-      <tr><td><code>Control+Q</code></td><td>Quit Brailchem window</td></tr>
+      <tr><td><code>Control+Q</code></td><td>Close Brailchem window</td></tr>
     </table>
 
+    <p>Of course, you can additionally use menu access keys.  Other command
+      keys are specific to particular Brailchem subapplications.
+    </p>
+
+    <p>The following sections describe the Brailchem subapplications.</p>
+    
     <a name="periodic-table">
       <h2>Periodic Table Application</h2>
     </a>
 
     <p>
-      Periodic table provides information about elements and their properties.
-      You can navigate through it using arrow keys together with Shift
-      modifier.  Pressing an element button with the Enter key shows complete
-      information about the given element.
+      Periodic table provides information about elements, their properties and
+      relations.  You can navigate through it using arrow keys while pressing
+      the Shift modifier.  Pressing an element button using the Enter key shows
+      complete information about the given element.
     </p>
 
-    <p>Periodic table command keys:</p>
+    <p>For the purpose of easier orientation the periodic table is split
+      according to the traditional presentation style in two parts: The main
+      periodic table and the table of lanthanoids and actinoids.  You can jump
+      into the main table by pressing <kbd>Control+T</kbd> and into the table
+      of lanthanoids and actinoids by pressing <kbd>Control+Shift+T</kbd>.
+
+    <p>Summary of basic periodic table command keys:</p>
 
     <table>
       <tr><td><code>Shift+arrow keys</code></td><td>navigate through elements of the periodic table</td></tr>
-      <tr><td><code>Control+T</code></td><td>go to the main periodic table</td></tr>
-      <tr><td><code>Control+Shift+T</code></td><td>go to the table of lanthanoids and actinoids</td></tr>
-      <tr><td><code>Control+E</code></td><td>jump to element</td></tr>
+      <tr><td><code>Control+T</code></td><td>jump to the main periodic table</td></tr>
+      <tr><td><code>Control+Shift+T</code></td><td>jump to the table of lanthanoids and actinoids</td></tr>
+      <tr><td><code>Control+E</code></td><td>jump to given element</td></tr>
+    </table>
+
+    <p>You can limit the periodic table view by using filters.  Filters can
+      reduce the set of browsable periodic table elements to only those
+      elements which satisfy given criteria based on some of element properties
+      (such as group or oxidation number).  You enable filters by specifying
+      them in the <em>Filters</em> box below the periodic table.  If you
+      specify more than one filter, only those elements which satisfy all the
+      given conditions are present in the resulting filtered set.  Defined
+      filters can be disabled or enabled using the check box in the filters
+      box.
+    </p>
+
+    <p>You can use the following keyboard shortcuts to work with filters:</p>
+
+    <table>
       <tr><td><code>Control+F E</code></td><td>go to electronegativity filtering</td></tr>
       <tr><td><code>Control+F G</code></td><td>go to group filtering</td></tr>
       <tr><td><code>Control+F O</code></td><td>go to oxidation number filtering</td></tr>
@@ -63,16 +120,15 @@
       <tr><td><code>Control+F ?</code></td><td>show currently filtered elements</td></tr>
     </table>
 
-    <p>You can limit browsable elements by setting filters.  When filters are
-      enabled, you can browse only elements satisfying all given filtering
-      conditions.</p>
+    <p>These shortcuts are composed of sequences of several keys.  First press
+      the <kbd>Control+F</kbd> key and then the second key.</p>
 
     <p>A special filter is the <em>Set of elements</em> filter.  You activate
       it by pressing the <samp>Change</samp> button in the <em>Set of
-        elements</em> filter.  Then you are directed to the periodic table when
-      you can insert or remove elements into or from the set by pressing their
-      buttons.  The following additional command keys are available during
-      element selection:</p>
+      elements</em> filter.  Then you are directed to the periodic table where
+      you can insert or remove elements into or from the custom element set by
+      pressing their buttons with the Enter key.  The following additional
+      command keys are available during element set selection:</p>
     
     <table>
       <tr><td><code>Control+S dot</code></td><td>finish element selection and activate it</td></tr>
@@ -89,22 +145,22 @@
       development and will change significantly.</p>
 
     <a name="keys">
-      <h2>Overview of Keyboard Shortcuts</h2>
+      <h2>Overview of Keyboard Commands</h2>
     </a>
 
     <h3>Global</h3>
 
     <table>
-      <tr><td><code>Control+Q</code></td><td>Quit Brailchem window</td></tr>
+      <tr><td><code>Control+Q</code></td><td>Close Brailchem window</td></tr>
     </table>
     
     <h3>Periodic Table</h3>
 
     <table>
       <tr><td><code>Shift+arrow keys</code></td><td>navigate through elements of the periodic table</td></tr>
-      <tr><td><code>Control+T</code></td><td>go to the main periodic table</td></tr>
-      <tr><td><code>Control+Shift+T</code></td><td>go to the table of lanthanoids and actinoids</td></tr>
-      <tr><td><code>Control+E</code></td><td>jump to element</td></tr>
+      <tr><td><code>Control+T</code></td><td>jump to the main periodic table</td></tr>
+      <tr><td><code>Control+Shift+T</code></td><td>jump to the table of lanthanoids and actinoids</td></tr>
+      <tr><td><code>Control+E</code></td><td>jump to given element</td></tr>
       <tr><td><code>Control+F E</code></td><td>go to electronegativity filtering</td></tr>
       <tr><td><code>Control+F G</code></td><td>go to group filtering</td></tr>
       <tr><td><code>Control+F O</code></td><td>go to oxidation number filtering</td></tr>
