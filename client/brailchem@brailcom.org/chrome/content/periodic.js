@@ -417,11 +417,11 @@ function brailchem_custom_elements_filter_finish ()
 
 function brailchem_custom_elements_filter_toggle (element)
 {
-    var selected = element.getAttribute ('brailchem-custom-filter') == 'true';
-    var new_value = (selected ? 'false' : 'true');
+    var old_selected = element.getAttribute ('brailchem-custom-filter') == 'true';
+    var new_value = (old_selected ? 'false' : 'true');
     element.setAttribute ('brailchem-custom-filter', new_value);
     var symbol = element.getAttribute ('brailchem-element-symbol');
-    var message = brailchem_string ((selected ? 'brailchemPeriodicSelected' : 'brailchemPeriodicDeselected'), 'brailchem-periodic-strings');
+    var message = brailchem_string ((old_selected ? 'brailchemPeriodicDeselected' : 'brailchemPeriodicSelected'), 'brailchem-periodic-strings');
     brailchem_message (symbol + ' ' + message);
 }
 
