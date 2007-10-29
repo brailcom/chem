@@ -33,6 +33,7 @@
   <command id="com-start-help" oncommand="brailchem_help ()"/>
   <command id="com-new-window" oncommand="brailchem_new_window ()"/>
   <command id="com-upgrade" oncommand="brailchem_upgrade ()"/>
+  <command id="com-help-about" oncommand="brailchem_help_about ()"/>
 </commandset>
 
 <keyset>
@@ -60,7 +61,7 @@
       <menu id="help-menu" label="&main.menu.help;" accesskey="&main.menu.help-key;">
         <menupopup id="help-popup">
           <menuitem label="&main.menu.help.introduction;" command="com-start-help" accesskey="&main.menu.help.introduction-key;"/>
-          <menuitem label="&main.menu.help.about;" accesskey="&main.menu.help.about-key;" disabled="true"/>
+          <menuitem label="&main.menu.help.about;" command="com-help-about" accesskey="&main.menu.help.about-key;"/>
         </menupopup>
       </menu>
     </menubar>

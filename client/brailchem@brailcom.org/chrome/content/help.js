@@ -20,3 +20,8 @@ function brailchem_help ()
 {
     window.open ('chrome://brailchem/content/help.html', 'brailchem-help');
 }
+
+function brailchem_help_about ()
+{
+    window.open ('http://www.freebsoft.org/brailchem', 'brailchem-help');
+}
