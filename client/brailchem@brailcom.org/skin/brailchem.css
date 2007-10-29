@@ -90,6 +90,12 @@ element button:focus, xelement button:focus, element[brailchem-custom-filter="tr
   -moz-appearance: none;
 }
 
+element[brailchem-custom-filter="true"] *
+/* This makes button visibly marked even when the button has focus. */
+{
+  background-color: lightblue;
+}
+
 element[brailchem-custom-filter="true"] button
 {
   background-color: lightblue;
