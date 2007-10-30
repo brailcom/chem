@@ -26,5 +26,5 @@ function brailchem_help (section)
 
 function brailchem_help_about ()
 {
-    window.open ('http://www.freebsoft.org/brailchem', 'brailchem-help');
+    window.open ('http://ict.brailcom.org/brailchem', 'brailchem-help');
 }
