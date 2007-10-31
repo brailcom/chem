@@ -94,11 +94,11 @@ var BrailchemPage = {
         if (this._primary_element_id || after_function)
             // The frame elements often don't appear immediately, so we have to use
             // a timer to wait until they get available
-            this.run_timer (this._display_callback);
-        else if (this._frame)
+            this.run_timer (this._display_callback, this._frame != null);
+        else if (this._frame != null)
             brailchem_wait_end ();
     },
-    run_timer: function (callback) 
+    run_timer: function (callback, report_finish)
     {
         var timer = Components.classes['@mozilla.org/timer;1'].createInstance (Components.interfaces.nsITimer);
         var page = this;
@@ -107,7 +107,7 @@ var BrailchemPage = {
             notify: function (timer) {
                 if (callback (page)) {
                     timer.cancel ();
-                    if (this._frame)
+                    if (report_finish)
                         brailchem_wait_end ();
                 }
             }
