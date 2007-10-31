@@ -16,6 +16,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var VERSION = '0.1';
+
 function brailchem_help (section)
 {
     var url = 'chrome://brailchem/content/help.html';
@@ -24,7 +26,17 @@ function brailchem_help (section)
     window.open (url, 'brailchem-help');
 }
 
-function brailchem_help_about ()
+function brailchem_help_homepage ()
 {
     window.open ('http://ict.brailcom.org/brailchem', 'brailchem-help');
+}
+
+function brailchem_help_about ()
+{
+    var text = brailchem_string ('brailchemSoftwareVersion', 'brailchem-strings') + ' ' + VERSION + '\n\n';        
+    text += brailchem_read_url ('chrome://brailchem/locale/about.text');
+    var stamp = brailchem_read_url ('chrome://brailchem/content/VERSION');
+    if (stamp)
+        text += brailchem_string ('brailchemBuildVersion', 'brailchem-strings') + ' ' + stamp + '\n\n';
+    brailchem_report (brailchem_string ('brailchemAboutTitle', 'brailchem-strings'), text);
 }

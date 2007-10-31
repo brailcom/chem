@@ -328,8 +328,13 @@ function brailchem_clear_message ()
 
 function brailchem_alert (message)
 {
+    brailchem_report (brailchem_string ('brailchemErrorWindow', 'brailchem-strings'), message);
+}
+
+function brailchem_report (title, message)
+{
     var prompt_service = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService (Components.interfaces.nsIPromptService);
-    prompt_service.alert (window, brailchem_string ('brailchemErrorWindow', 'brailchem-strings'), message);
+    prompt_service.alert (window, title, message);
 }
 
 function brailchem_prompt (title, label)
