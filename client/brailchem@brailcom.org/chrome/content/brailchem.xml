@@ -27,7 +27,7 @@
                action="brailchem_element_command (event, brailchem_element_up)"/>
       <handler event="keypress" phase="capturing" modifiers="shift" keycode="VK_DOWN"
                action="brailchem_element_command (event, brailchem_element_down)"/>
-      <handler event="click" action="brailchem_element_info (this)"/>
+      <handler event="click" action="brailchem_element_info (this, true)"/>
     </handlers>
   </binding>
 </bindings>

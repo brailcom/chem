@@ -454,7 +454,7 @@ function brailchem_element_command (event, command)
     event.stopPropagation ();
 }
 
-function brailchem_element_info (element)
+function brailchem_element_info (element, hold_focus)
 {
     if (element.tagName != 'element')
         return;
@@ -475,7 +475,8 @@ function brailchem_element_info (element)
             brailchem_add_element (row, 'description', {}, info.value);
         }
     document.getElementById ('brailchem-element-details-box').setAttribute ('hidden', 'false');
-    brailchem_focus (document.getElementById ('brailchem-element-details-box'));
+    if (! hold_focus)
+        brailchem_focus (document.getElementById ('brailchem-element-details-box'));
 }
 
 function brailchem_element_move (element, row_increment, col_increment)
