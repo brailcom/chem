@@ -456,6 +456,8 @@ function brailchem_element_command (event, command)
 
 function brailchem_element_info (element)
 {
+    if (element.tagName != 'element')
+        return;
     if (g_selecting_elements) {
         brailchem_custom_elements_filter_toggle (element);
         return;
