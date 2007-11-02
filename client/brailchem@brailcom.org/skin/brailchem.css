@@ -40,13 +40,13 @@ description.header[level="5"]
 #brailchem-window
 {
   min-width: 880px;
-  min-height: 820px;
+  min-height: 900px;
 }
 
 #brailchem-preferences-window
 {
   min-width: 400px;
-  min-height: 600px;
+  min-height: 700px;
 }
 
 #main-box #brailchem-scrollbox
