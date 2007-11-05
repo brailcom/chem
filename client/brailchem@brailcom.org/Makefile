@@ -29,6 +29,6 @@ version:
 	date -u +'%Y%m%d%H%M%S' > chrome/content/VERSION
 
 application.ini: application.ini.in version
-	sed "s/:BUILDID:/`cat VERSION`/" $< > $@
+	sed "s/:BUILDID:/`cat chrome/content/VERSION`/" $< > $@
 
 .PHONY: all clean version
