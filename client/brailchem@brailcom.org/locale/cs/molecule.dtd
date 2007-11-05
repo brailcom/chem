@@ -1,0 +1,4 @@
+<!ENTITY molecule.header "Prohlížeč molekul">
+<!ENTITY molecule.text.intro "Pro prohlížení molekuly zapište do vstupního políčka molekulu ve formátu SMILES a stiskněte následující tlačítko.">
+<!ENTITY molecule.label.smiles "Molekula ve SMILES">
+<!ENTITY molecule.button.smiles "Inspect molecule">
