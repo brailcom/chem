@@ -17,15 +17,18 @@
 
 xpiarchive = ../brailchem.xpi
 
-all:
+all: version application.ini
 	$(MAKE) -C components
 	rm -f $(xpiarchive)
 	zip -r $(xpiarchive) *
 
 clean:
-	rm -f $(xpiarchive) chrome/content/VERSION
+	rm -f $(xpiarchive) application.ini chrome/content/VERSION
 
 version:
 	date -u +'%Y%m%d%H%M%S' > chrome/content/VERSION
+
+application.ini: application.ini.in version
+	sed "s/:BUILDID:/`cat VERSION`/" $< > $@
 
 .PHONY: all clean version
