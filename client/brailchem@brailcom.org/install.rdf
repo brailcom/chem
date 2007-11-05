@@ -22,6 +22,6 @@
     <em:name>Brailchem</em:name>
     <em:description>Client to the Brailchem chemical database</em:description>
     <em:creator>Brailcom, o.p.s.</em:creator>
-    <em:homepageURL>http://www.brailcom.org/</em:homepageURL>
+    <em:homepageURL>http://ict.brailcom.org/brailchem</em:homepageURL>
   </Description>      
 </RDF>
