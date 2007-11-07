@@ -20,17 +20,26 @@
   <stringbundleset>
     <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
   </stringbundleset>
+  
+  <keyset>
+    <key id="brailchem-molecule-test" modifiers="control" key="A" oncommand="brailchem_mol_go_atoms()"/>
+    <key id="brailchem-molecule-test" modifiers="control" key="N" oncommand="brailchem_mol_next_atom()"/>
+    <key id="brailchem-molecule-test" modifiers="control" key="P" oncommand="brailchem_mol_previous_atom()"/>
+  </keyset>
 
   <hbox><description id="brailchem-heading" class="brailchem-heading" flex="1" value="&molecule.header;"/></hbox>
 
-  <description>&molecule.text.intro;</description>
+  <description id="brailchem-primary">&molecule.text.intro;</description>
   <hbox id="molecule-input-box">
-    <description>&molecule.label.smiles;</description>
+    <label control="molecule-textbox">&molecule.label.smiles;</label>
     <textbox id="molecule-textbox" value="Oc1ccccc1C" accesskey="M"/>
     <button id="molecule-button" label="&molecule.button.smiles;" oncommand="brailchem_browse_molecule();"/>
   </hbox>
 
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
-    <box id="molecule-display-box" orient="vertical"/>
+    <box id="molecule-display-box" orient="vertical" style="-moz-user-focus: normal">
+      <description id="brailchem-molecule-heading" class="header" level="1"/>
+      <box id="molecule-display-inner-box" orient="vertical"/>
+    </box>
   </scrollbox>
 </window>

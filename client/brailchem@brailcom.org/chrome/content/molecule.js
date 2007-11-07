@@ -18,19 +18,42 @@
 
 function brailchem_molecule ()
 {
-    brailchem_switch_page ('chrome://brailchem/content/molecule.xul', 'molecule-display-box');
+    brailchem_switch_page ('chrome://brailchem/content/molecule.xul');
 }
 
 function brailchem_browse_molecule ()
 {
     var smiles = document.getElementById ('molecule-textbox').value;
-    brailchem_update_molecule (smiles);
+    brailchem_display_molecule (smiles);
 }
 
-function brailchem_update_molecule (smiles)
-{    
-    brailchem_display_molecule (smiles);
-    document.getElementsByTagName ('description')[0].focus ();
+function brailchem_mol_element_text (element) {
+    var text = element.childNodes[0].nodeValue;
+    for (var i = 0; i < text.length; i++) {
+        ch = text.charAt (i);
+        if (ch != ' ' && ch != '\n')
+            break;
+    }
+    if (i > 0)
+        text = text.substring (i);
+    for (var i = text.length; i > 0; i--) {
+        ch = text.charAt (i-1);
+        if (ch != ' ' && ch != '\n')
+            break;
+    }
+    if (i < text.length)
+        text = text.substring (0, i);
+    return text;
+}
+
+function brailchem_mol_element_value (element)
+{
+    var children = element.childNodes;
+    for (var i = 0; i < children.length; i++) {
+        if (children[i].nodeName == 'value')
+            return brailchem_mol_element_text (children[i]);
+    }
+    return null;
 }
 
 function brailchem_display_molecule (smiles)
@@ -41,7 +64,7 @@ function brailchem_display_molecule (smiles)
     if (doc == null)
         return;
     // Remove old contents
-    var top_box = document.getElementById ('molecule-display-box');
+    var top_box = document.getElementById ('molecule-display-inner-box');
     brailchem_remove_children (top_box);
     // Display data
     var element = doc.documentElement;
@@ -49,210 +72,170 @@ function brailchem_display_molecule (smiles)
         brailchem_display_error (element.childNodes[0].nodeValue);
     else {
         var references = [], labels = {};
-        brailchem_display_element (element, top_box, 1, references, labels);
-        brailchem_backpatch_references (references, labels);
+        var summary = brailchem_display_molecule_summary (element, top_box);
+        if (summary) {
+            var atoms = summary[0], fragments = summary[1];
+            brailchem_display_pieces (atoms, fragments, top_box, references, labels);
+            var name_node = document.getElementById ('brailchem-molecule-heading');
+            brailchem_focus (name_node);
+        }
     }
     brailchem_wait_end ();
 }
 
-function brailchem_display_element (element, box, header_level, references, labels)
+function brailchem_display_molecule_summary (element, top_box)
 {
-    // Utility functions for displaying
-    var document = box.ownerDocument;
-    function make_description (text, style, use_value)
-    {
-        var description = document.createElement ('description');
-        if (! text)
-            null;
-        else if (use_value)
-            description.setAttribute ('value', text);
-        else
-            description.appendChild (document.createCDATASection (text));
-        if (style)
-            description.setAttribute ('class', style);
-        return description;
-    }
-    function make_section (caption, level, header_id)
-    {
-        var box = document.createElement ('vbox');
-        var header = make_description (caption, 'header');
-        header.setAttribute ('style', '-moz-user-focus: normal;');
-        if (level)
-            header.setAttribute ('level', level);
-        if (header_id)
-            header.setAttribute ('id', header_id);
-        box.appendChild (header);
-        return box;
-    }
-    function make_group (caption)
-    {
-        var box = document.createElement ('groupbox');
-        var header = document.createElement ('caption');
-        header.setAttribute ('label', caption);
-        box.appendChild (header);
-        return box;
-    }
-    function add_element (element, box)
-    {
-        box.appendChild (element);
-        return element;
-    }
-    function element_text (element) {
-        var text = element.childNodes[0].nodeValue;
-        for (var i = 0; i < text.length; i++) {
-            ch = text.charAt (i);
-            if (ch != ' ' && ch != '\n')
-                break;
+    var molecule_element = element;
+    var name = "Unknown molecule";
+    var properties = [];
+    var atoms = null;
+    var fragments = null;
+    var children = element.getElementsByTagName ('views')[0].childNodes;
+    for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+        if (child.tagName != 'data')
+            continue;
+        var type = child.getAttribute ('type');
+        if (type == 'FRAGMENTS')
+            fragments = child;
+        else if (type == 'ATOMS')
+            atoms = child;
+        else {
+            var property_name = child.getAttribute ('description');
+            var property_value = brailchem_mol_element_value (child);
+            properties.push ({name: property_name, value: property_value});
+            if (type == 'NAME')
+                name = property_value;
         }
-        if (i > 0)
-            text = text.substring (i);
-        return text;
-        for (var i = text.length; i > 0; i--) {
-            ch = text.charAt (i-1);
-            if (ch != ' ' && ch != '\n')
-                break;
-        }
-        if (i < text.length)
-            text = text.substring (0, i);
-        return text;
     }
-    function element_value (element)
-    {
-        var children = element.childNodes;
-        for (var i = 0; i < children.length; i++) {
-            if (children[i].nodeName == 'value')
-                return element_text (children[i]);
-        }
-        return null;
+    var name_node = document.getElementById ('brailchem-molecule-heading');
+    brailchem_set_element_text (name_node, name);
+    var grid = brailchem_add_element (top_box, 'grid');
+    var rows = brailchem_add_element (grid, 'rows');
+    for (var i in properties) {
+        var property = properties[i];
+        var row = brailchem_add_element (rows, 'row');
+        brailchem_add_element (row, 'description', {value: property.name});
+        brailchem_add_element (row, 'description', {}, property.value);
     }
-    // Get node's contents
-    var value, neighbors, parts;
-    var views = [];
-    var parts_as_views = [];
-    for (var index = 0; index < element.childNodes.length; index++) {
-        var child = element.childNodes[index];
-        if (child.nodeName == 'value')
-            value = element_text (child);
-            //value = child.childNodes[0].nodeValue;
-        else if (child.nodeName == 'views') {
-            for (var i = 0; i < child.childNodes.length; i++) {
-                var c = child.childNodes[i];
-                // just a hack to handle complex views for now
-                if (brailchem_map_element (function (element) { return element.nodeName == 'parts'; }, c))
-                    parts_as_views.push (c);
-                else
-                    views.push (c);
-            }
-        }
-        else if (child.nodeName == 'neighbors')
-            neighbors = brailchem_filter_element (function (element) { return element instanceof Element; }, child);
-        else if (child.nodeName == 'parts')
-            parts = child.childNodes;
-    }
-    // How much is the node empty?
-    var has_no_subparts = ((views == undefined || views.length == 0) &&
-                           (parts == undefined || parts.length == 0) &&
-                           (neighbors == undefined || neighbors.length == 0));
-    if (! has_no_subparts) {
-        function look_for_subparts (element) {
-            if (! element)
-                return false;
-            if (! (element instanceof Element))
-                return look_for_subparts (element.nextSibling);
-            var tag = element.nodeName;
-            if (tag == 'value' || tag == 'link')
-                return true;
-            if (look_for_subparts (element.firstChild))
-                return true;
-            return look_for_subparts (element.nextSibling);
-        }
-        has_no_subparts = ! look_for_subparts (element.firstChild);
-    }
-    if (value == undefined && has_no_subparts)
+    return [atoms, fragments];
+}
+
+function brailchem_display_pieces (atoms_element, fragments_element, box, references, labels)
+{
+    if (! atoms_element)
         return;
-    var label = element.getAttribute ('description');
-    // Show label or a property pair
-    if (has_no_subparts) {
-        if (value != undefined)
-            add_element (make_description (label+': '+value, null), box);
-        return;
+    var atom_data = {};
+    var atom_list = [];
+    var atom_numbers = {};
+    var atoms = atoms_element.getElementsByTagName ('parts')[0].childNodes;
+    for (var i = 0; i < atoms.length; i++) {
+        var atom = atoms[i];
+        if (atom.tagName != 'data')
+            continue;
+        var id = atom.getAttribute ('id');
+        var label = brailchem_mol_element_value (atom.getElementsByTagName ('data')[0]);
+        var number = (atom_numbers[label] || 0) + 1;
+        atom_numbers[label] = number;
+        var neighbors = [];
+        atom_data[id] = {id: id, label: label, number: number, neighbors: neighbors};
+        atom_list.push (id);
+        var neighbor_elements = atom.getElementsByTagName ('link');
+        for (var j = 0; j < neighbor_elements.length; j++) {
+            var link = neighbor_elements[j];
+            var bond = link.getAttribute ('description');
+            var target = link.getAttribute ('id');
+            neighbors.push ({bond: bond, id: target});
+        }
     }
-    if (value != undefined)
-        label = value;
-    else if (views) {
-        var preferred_views = brailchem_preferences.char ('display.preferred_views').split (';');
-        var chosen_label_index = 10000;
-        for (var i = 0; i < views.length; i++) {
-            var view = views[i];
-            if (view.nodeName == 'data') {
-                var value = element_value (view);
-                if (value) {
-                    var type = view.getAttribute ('type');
-                    if (type) {
-                        for (var j = 0; j < preferred_views.length && j < chosen_label_index; j++)
-                            if (preferred_views[j] == type) {
-                                label = value;
-                                chosen_label_index = j;
-                                break;
-                            }
-                    }
-                }
+    if (atoms.length > 0) {
+        brailchem_add_element (box, 'description', {id: 'brailchem-atom-heading', class: 'header', level: 2}, "Atoms");
+        for (var i in atom_list) {
+            var atom_box = brailchem_add_element (box, 'vbox', {class: 'brailchem-atom-box', onfocus: 'brailchem_mol_atom_focus(this)'});
+            var id = atom_list[i];
+            var atom = atom_data[id];
+            var label = atom.label+'/'+atom.number;
+            var neighbors = atom.neighbors;
+            var hbox = brailchem_add_element (atom_box, 'hbox');
+            brailchem_add_element (hbox, 'description', {id: id, class: 'brailchem-atom'}, label);
+            var terminals = [];
+            var nonterminals = [];
+            for (var j in neighbors) {
+                neighbor = neighbors[j];
+                (atom_data[neighbor.id].neighbors.length > 1 ? nonterminals : terminals).push (neighbor);
             }
+            function add_reference (neighbor)
+            {
+                var neighbor_data = atom_data[neighbor.id];
+                var label = neighbor_data.label + '/' + neighbor_data.number + '[' + neighbor.bond + ']';
+                brailchem_add_element (hbox, 'brailchemreference', {'brailchem-target': neighbor.id, value: label, class: 'brailchem-reference'});
+            }
+            if (terminals.length > 0) {
+                brailchem_add_element (hbox, 'description', {}, "Attached elements:");
+                for (var j in terminals)
+                    add_reference (terminals[j]);
+            }
+            var hbox = brailchem_add_element (atom_box, 'hbox');
+            brailchem_add_element (hbox, 'description', {}, "Neighbors:");
+            for (var j in nonterminals)
+                add_reference (nonterminals[j]);
         }
-    }
-    var brailchem_id = element.getAttribute ('id');
-    var displayed_element = add_element (make_section (label, header_level, brailchem_id), box);
-    labels[brailchem_id] = label;
-    // Views
-    if (views && views.length > 0) {
-        var view_box = add_element (make_group ("Properties"), box);
-        for (var i = 0; i < views.length; i++)
-            brailchem_display_element (views[i], view_box, header_level, references, labels);
-    }
-    // Neighbors
-    if (neighbors && neighbors.length > 0) {
-        var neighbor_box = add_element (make_group ("References"), box);
-        for (var i = 0; i < neighbors.length; i++) {
-            var id = neighbors[i].getAttribute ('id');
-            var reference_element = add_element (document.createElement ('brailchemreference'), neighbor_box);
-            reference_element.setAttribute ('brailchem-reference', id);
-            references.push (reference_element);
-        }
-    }
-    // Parts
-    if (parts && parts.length > 0) {
-        for (var i = 0; i < parts.length; i++)
-            brailchem_display_element (parts[i], box, header_level+1, references, labels);
-    }
-    // Parts disguised as views
-    if (parts_as_views) {
-        for (var i = 0; i < parts_as_views.length; i++)
-            brailchem_display_element (parts_as_views[i], box, header_level+1, references, labels);
     }
 }
 
-function brailchem_backpatch_references (references, labels)
+// Callbacks
+
+function brailchem_mol_atom_focus (element)
 {
-    for (var i = 0; i < references.length; i++) {
-        var reference_element = references[i];
-        var brailchem_id = reference_element.getAttribute ('brailchem-reference');
-        try {
-            var label = labels[brailchem_id];
+    var atoms = document.getElementsByAttribute ('brailchem-current', 'true');
+    for (var i = 0; i < atoms.length; i++)
+        atoms[i].setAttribute ('brailchem-current', 'false');
+    //element.parentNode.parentNode.setAttribute ('brailchem-current', 'true');
+    element.setAttribute ('brailchem-current', 'true');
+}
+
+// Commands
+
+function brailchem_mol_go_atoms ()
+{
+    brailchem_focus (document.getElementById ('brailchem-atom-heading'), true);
+}
+
+function brailchem_mol_move_atom (forward)
+{
+    var atoms = document.getElementsByAttribute ('class', 'brailchem-atom-box');
+    var index = null;
+    for (var i = 0; i < atoms.length; i++)
+        if (atoms[i].getAttribute ('brailchem-current') == 'true') {
+            index = i + (forward ? 1 : -1);
+            break;
         }
-        catch (e) {
-            label = null;
-        }
-        if (label) {
-            reference_element.setAttribute ('value', '*'+label);
-            reference_element.setAttribute ('class', 'brailchem-reference');
-        }
+    if (index == null)
+        index = (forward ? 0 : atoms.length - 1);
+    if (index < 0) {
+        brailchem_message ("No previous atom");
+        return;
     }
+    if (index >= atoms.length) {
+        brailchem_message ("No next atom");
+        return;
+    }
+    brailchem_focus (atoms[index], true);
+}
+
+function brailchem_mol_next_atom ()
+{
+    brailchem_mol_move_atom (true);
+}
+
+function brailchem_mol_previous_atom ()
+{
+    brailchem_mol_move_atom (false);
 }
 
 function brailchem_follow_reference (element)
 {
-    var reference = element.getAttribute ('brailchem-reference');
-    var document = element.ownerDocument;
-    var target = document.getElementById (reference);
+    var id = element.getAttribute ('brailchem-target');
+    var target = document.getElementById (id);
     brailchem_focus (target);
 }

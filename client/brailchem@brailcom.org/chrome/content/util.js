@@ -53,6 +53,12 @@ function brailchem_add_element (parent, tag, attributes, text)
     return child;
 }
 
+function brailchem_set_element_text (node, text)
+{
+    brailchem_remove_children (node);
+    node.appendChild (document.createCDATASection (text));
+}
+
 function brailchem_remove_children (node, condition)
 {
     var child_nodes = node.childNodes;

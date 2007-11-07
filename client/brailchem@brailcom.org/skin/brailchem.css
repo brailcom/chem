@@ -49,12 +49,29 @@ description.header[level="5"]
   min-height: 700px;
 }
 
+/* Molecule browser */
+
+.brailchem-atom
+{
+  font-weight: bold;
+}
+[brailchem-current="true"]
+{
+  background-color: white;
+}
+
 .brailchem-reference
 {
   color: blue;
-  -moz-user-focus: normal;
   -moz-binding: url('chrome://brailchem/content/brailchem.xml#reference');
 }
+
+.brailchem-atom-box *:focus
+{
+  border: 1px dotted black;
+}
+
+/* Periodic table */
 
 .brailchem-element-button
 {
