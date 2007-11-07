@@ -89,7 +89,7 @@ function brailchem_periodic_display (page)
         var top_node = page.find_element (top_node_id);
         brailchem_remove_children (top_node);
         var header_row = brailchem_add_element (top_node, 'row');
-        brailchem_add_element (header_row, 'description');
+        brailchem_add_element (header_row, 'description', {disabled: 'true'});
         for (var col = col_min; col <= col_max; col++)
             brailchem_add_element (header_row, 'description', {class: 'brailchem-periodic-header', value: col});
         for (var row = row_min; row <= row_max; row++) {
@@ -476,7 +476,7 @@ function brailchem_element_info (element, hold_focus)
         }
     document.getElementById ('brailchem-element-details-box').setAttribute ('hidden', 'false');
     if (! hold_focus)
-        brailchem_focus (document.getElementById ('brailchem-element-details-box'));
+        brailchem_focus (document.getElementById ('brailchem-element-details-box', true));
 }
 
 function brailchem_element_move (element, row_increment, col_increment)
@@ -532,7 +532,7 @@ function brailchem_element_move (element, row_increment, col_increment)
         }
     }
     if (target)
-        brailchem_focus (target);
+        brailchem_focus (target, true);
     else
         brailchem_message (brailchem_string ('brailchemPeriodicNoNextElement', 'brailchem-periodic-strings'));
 }
@@ -580,7 +580,7 @@ function brailchem_periodic_go_table (table_node_id, last_element_field, no_erro
             return false;
         }
     }
-    brailchem_focus (g_last_element[last_element_field]);
+    brailchem_focus (g_last_element[last_element_field], true);
     return true;
 }
 
@@ -596,27 +596,27 @@ function brailchem_periodic_go_extra_table ()
 
 function brailchem_periodic_go_settings ()
 {
-    brailchem_focus (document.getElementById ('brailchem-periodic-settings'));
+    brailchem_focus (document.getElementById ('brailchem-setting-filter'));
 }
 
 function brailchem_periodic_go_electronegativity_filter ()
 {
-    brailchem_focus (document.getElementById ('brailchem-setting-filter-electronegativity-row'));
+    brailchem_focus (document.getElementById ('electronegativity-from'));
 }
 
 function brailchem_periodic_go_group_filter ()
 {
-    brailchem_focus (document.getElementById ('brailchem-setting-filter-group-row'));
+    brailchem_focus (document.getElementById ('brailchem-setting-filter-group'));
 }
 
 function brailchem_periodic_go_oxidation_filter ()
 {
-    brailchem_focus (document.getElementById ('brailchem-setting-filter-oxidation-row'));
+    brailchem_focus (document.getElementById ('brailchem-setting-filter-oxidation'));
 }
 
 function brailchem_periodic_go_elements_filter ()
 {
-    brailchem_focus (document.getElementById ('brailchem-custom-elements-filter'));
+    brailchem_focus (document.getElementById ('brailchem-custom-elements-button'));
 }
 
 function brailchem_periodic_show_filtered_elements ()
@@ -660,7 +660,7 @@ function brailchem_periodic_jump_to_element ()
         }
     }
     if (target_node && target_node.getAttribute ('disabled') != 'true')
-        brailchem_focus (target_node);
+        brailchem_focus (target_node, true);
     else if (target_node) {
         brailchem_alert (brailchem_string ('brailchemPeriodicElementFiltered', 'brailchem-periodic-strings'));
         focused_element.focus ();

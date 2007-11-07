@@ -196,13 +196,16 @@ function brailchem_focus_callback ()
     other_document.getElementById ('brailchem-heading').setAttribute ('brailchem-active', 'false');
 }
 
-function brailchem_focus (element)
+function brailchem_focus (element, subtree)
 {
-    // The following seems to move both focus and the caret position in an
-    // acceptable way
-    var dispatcher = document.commandDispatcher;
     element.focus ();
-    dispatcher.advanceFocusIntoSubtree (element);
+    if (subtree) {
+        // The following seems to move both focus and the caret position in an
+        // acceptable way.  Additionally it serves for special cases like
+        // focusing elements inside XBL widgets etc.
+        var dispatcher = document.commandDispatcher;
+        dispatcher.advanceFocusIntoSubtree (element);
+    }
 }
 
 function brailchem_defocus ()
