@@ -61,8 +61,15 @@ class ChemInterface(object):
             element.appendChild(dom.createTextNode(unicode(text)))
         node.appendChild(element)
         return element
-        
+
     # Chemical data processing
+
+    def _make_translator(self, language):
+        if language == '*':
+            selected_language = 'en'
+        else:
+            selected_language = language
+        return brailchem.i18n.GettextTranslator(selected_language, default_domain='brailchem')
         
     def _retrieve_molecule_data(self, smiles):
         session = self._session
@@ -71,9 +78,7 @@ class ChemInterface(object):
 
     def _chem_to_dom(self, data, language):
         dom = self._create_dom()
-        lang = language == "*" and "en" or language
-        tr = brailchem.i18n.GettextTranslator(lang, default_domain='brailchem')
-            
+        translator = self._make_translator(language)
         def add_element(*args, **kwargs):
             return self._add_dom_element(dom, *args, **kwargs)
         def transform(data, node):
@@ -82,10 +87,10 @@ class ChemInterface(object):
             data_type_id = data_type.id()
             description = data_type.description()
             if isinstance(description, brailchem.i18n.TranslatableText):
-                description = description.translate(tr)
+                description = description.translate(translator)
             long_description = data_type.long_description()
             if isinstance(long_description, brailchem.i18n.TranslatableText):
-                long_description = long_description.translate(tr)
+                long_description = long_description.translate(translator)
             attributes = dict(id=id, type=data_type_id, description=description, long=long_description)
             data_node = add_element(node, 'data', attributes=attributes)
             if isinstance(data, LanguageDependentValue):
@@ -121,6 +126,7 @@ class ChemInterface(object):
         return dom
 
     def _make_periodic_table_dom(self, language):
+        translator = self._make_translator(language)
         periodic_table = brailchem.detail_periodic_table.symbol2properties
         info_provider = brailchem.data_types.DataTypeFactory()
         dom = self._create_dom()
