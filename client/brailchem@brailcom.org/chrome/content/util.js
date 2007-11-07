@@ -88,6 +88,10 @@ var BrailchemPage = {
         else {
             brailchem_wait_start ();
             this._frame = document.getElementById ("brailchem-frame");
+            // Clear the frame; it is necessary to clear global data otherwise
+            // weird things may happen in case this is actually a restart of an
+            // already running application.
+            this._frame.setAttribute ('src', '');
             this._frame.setAttribute ('src', this._uri);
         }
         this._after_display_function = after_function;
