@@ -151,13 +151,15 @@ function brailchem_display_pieces (atoms_element, fragments_element, box, refere
     if (atoms.length > 0) {
         brailchem_add_element (box, 'description', {id: 'brailchem-atom-heading', class: 'header', level: 2}, "Atoms");
         for (var i in atom_list) {
-            var atom_box = brailchem_add_element (box, 'vbox', {class: 'brailchem-atom-box', onfocus: 'brailchem_mol_atom_focus(this)'});
+            var atom_box = brailchem_add_element (box, 'vbox', {class: 'brailchem-atom-box'});
             var id = atom_list[i];
             var atom = atom_data[id];
             var label = atom.label+'/'+atom.number;
             var neighbors = atom.neighbors;
             var hbox = brailchem_add_element (atom_box, 'hbox');
-            brailchem_add_element (hbox, 'description', {id: id, class: 'brailchem-atom'}, label);
+            brailchem_add_element (hbox, 'description',
+                                   {id: id, class: 'brailchem-atom', onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'},
+                                   label);
             var terminals = [];
             var nonterminals = [];
             for (var j in neighbors) {
@@ -168,7 +170,9 @@ function brailchem_display_pieces (atoms_element, fragments_element, box, refere
             {
                 var neighbor_data = atom_data[neighbor.id];
                 var label = neighbor_data.label + '/' + neighbor_data.number + '[' + neighbor.bond + ']';
-                brailchem_add_element (hbox, 'brailchemreference', {'brailchem-target': neighbor.id, value: label, class: 'brailchem-reference'});
+                brailchem_add_element (hbox, 'brailchemreference',
+                                       {'brailchem-target': neighbor.id, value: label, class: 'brailchem-reference',
+                                        onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'});
             }
             if (terminals.length > 0) {
                 brailchem_add_element (hbox, 'description', {}, "Attached elements:");
@@ -190,7 +194,6 @@ function brailchem_mol_atom_focus (element)
     var atoms = document.getElementsByAttribute ('brailchem-current', 'true');
     for (var i = 0; i < atoms.length; i++)
         atoms[i].setAttribute ('brailchem-current', 'false');
-    //element.parentNode.parentNode.setAttribute ('brailchem-current', 'true');
     element.setAttribute ('brailchem-current', 'true');
 }
 
