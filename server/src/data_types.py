@@ -1,4 +1,4 @@
-from lcg import i18n
+import i18n
 _ = i18n.TranslatableTextFactory("brailchem")
 
 class DataType:

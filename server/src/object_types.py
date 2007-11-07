@@ -142,7 +142,12 @@ class Part (Data):
                 ret.append(n.text_dump(recursive=False,_level=_level+2))
                 ret.append(n.target().text_dump(recursive=False,_level=_level+3))
         return "\n".join(ret)
-    
+
+    def descendant_generator(self):
+        """see the description in Data"""
+        for ch in super(Part, self).descendant_generator():
+            yield ch
+
 
 ## ------------------------------ Views ------------------------------
 
@@ -167,6 +172,11 @@ class Value(Data):
         if _top_level:
             ret.append(_level*" "+str(self)+", id=%s" % self.id())
         return "\n".join(ret)
+
+    def descendant_generator(self):
+        """see the description in Data"""
+        for ch in super(Value, self).descendant_generator():
+            yield ch
 
 
 
@@ -219,6 +229,10 @@ class LanguageDependentValue(Data):
             ret.append(_level*" "+str(self)+", id=%s" % self.id())
         return "\n".join(ret)
 
+    def descendant_generator(self):
+        """see the description in Data"""
+        for ch in super(LanguageDependentValue, self).descendant_generator():
+            yield ch
 
 
 class Complex (Data):
@@ -289,6 +303,14 @@ class Relation (Data):
         if recursive:
             ret.append(self.target().text_dump(recursive=recursive,_level=_level+1))
         return "\n".join(ret)
+
+    def descendant_generator(self):
+        """see the description in Data"""
+        for ch in super(Relation, self).descendant_generator():
+            yield ch
+        yield self.target()
+        for ch in self.target().descendant_generator():
+            yield ch
 
 
 ### derived classes, they have to be here explicitly because Pyro can't handle them

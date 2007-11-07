@@ -1,3 +1,13 @@
+2007-11-07   Beda Kosata <kosatab@vscht.cz>
+
+	* locale support: data_types have localized value, localization is done using an "ondemand"
+	approach (taken from lcg, http://cvs.freebsoft.org/repository/lcg/)
+
+	* i18n.py: localization support from lcg, small adjustments were made to remove dependency on lcg
+	and to support system-wide installation of po-files.
+	
+	* twisted/server.py: updated to make translation of localizable data on serialization
+	
 2007-10-31   Beda Kosata <kosatab@vscht.cz>
 
 	* detail_periodic_table.py: rework the language dependent descriptions of elements - they are now given as

@@ -4,10 +4,9 @@ from config import Config
 class Session:
     """represents one session""" 
 
-    def __init__(self, session_number, lang="en"):
+    def __init__(self, session_number):
         self._number = session_number
         self._data = None
-        self._lang = lang
 
     def number(self):
         return self._number
