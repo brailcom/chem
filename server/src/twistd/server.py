@@ -34,6 +34,8 @@ import brailchem.chem_reader
 import brailchem.data_types
 import brailchem.detail_periodic_table
 
+from lcg import i18n
+
 ### Chemical server communication
 
 class ChemInterface(object):
@@ -70,6 +72,9 @@ class ChemInterface(object):
 
     def _chem_to_dom(self, data, language):
         dom = self._create_dom()
+        lang = language == "*" and "en" or language
+        tr = i18n.GettextTranslator(lang, default_domain='brailchem', path={"brailchem":"../locale"})
+            
         def add_element(*args, **kwargs):
             return self._add_dom_element(dom, *args, **kwargs)
         def transform(data, node):
@@ -77,7 +82,11 @@ class ChemInterface(object):
             id = data.id()
             data_type_id = data_type.id()
             description = data_type.description()
+            if isinstance(description, i18n.TranslatableText):
+                description = description.translate(tr)
             long_description = data_type.long_description()
+            if isinstance(long_description, i18n.TranslatableText):
+                long_description = long_description.translate(tr)
             attributes = dict(id=id, type=data_type_id, description=description, long=long_description)
             data_node = add_element(node, 'data', attributes=attributes)
             if isinstance(data, LanguageDependentValue):

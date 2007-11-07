@@ -60,6 +60,13 @@ class Data(object):
     def text_dump(self, recursive=False, _level=0, _top_level=True):
         return ""
 
+    def descendant_generator(self):
+        """this is a generator that yields all the child and deeper descendant objects of this object;
+        this is useful to flatten the tree-like structure of data into a flat form, without
+        the need to check for specific 'child' fields of different object"""
+        if False:
+            yield None
+    
 
 class MultiView(Data):
     """MultiView is an object that has multiple views that represent the structure from
@@ -94,6 +101,15 @@ class MultiView(Data):
                 ret.append(view.text_dump(recursive=recursive, _level=_level+2))
         return "\n".join(ret)
 
+    def descendant_generator(self):
+        """see the description in Data"""
+        for ch in super(MultiView, self).descendant_generator():
+            yield ch
+        for view in self.views():
+            yield view
+            for ch in view.descendant_generator():
+                yield ch
+
 
 class Part (Data):
     """Part of some larger entity (see Complex). It provides links
@@ -105,7 +121,7 @@ class Part (Data):
         self._neighbors = []
 
     def add_neighbor(self, rel):
-        """rel is the relation, if not given a default Relation is created"""
+        """rel is the relation"""
         assert isinstance(rel, Relation)
         self._neighbors.append(rel)
 
@@ -236,6 +252,15 @@ class Complex (Data):
             for p in self.parts():
                 ret.append(p.text_dump(recursive=recursive,_level=_level+2))
         return "\n".join(ret)
+
+    def descendant_generator(self):
+        """see the description in Data"""
+        for ch in super(Complex, self).descendant_generator():
+            yield ch
+        for part in self.parts():
+            yield part
+            for ch in part.descendant_generator():
+                yield ch
 
 
 ### -------------------- relation types --------------------

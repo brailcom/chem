@@ -1,3 +1,5 @@
+from lcg import i18n
+_ = i18n.TranslatableTextFactory("brailchem")
 
 class DataType:
     """represents a data type"""
@@ -28,44 +30,44 @@ class DataType:
 class DataTypeFactory:
     """singleton used to conveniently create DataType instances"""
 
-    _data_types = {"NAME": ("Name", "Molecule name", 20),
-                   'MF': ('Molecular formula','Molecular formula', 15),
-                   'SUM': ("Summary formula", "Summary formula", 10),
-                   'SMILES': ('SMILES', 'Molecule encoded in SMILES format', 8),
-                   'MW': ('Molecular weight','Molecular weight', 5),
-                   "FRAGMENTS": ("Fragments", "Molecular fragments", 4),
-                   "ATOMS": ("Atoms", "Atoms", 3),
+    _data_types = {"NAME": (_("Name"), _("Compound name"), 20),
+                   'MF': (_('Molecular formula'),_('Molecular formula'), 15),
+                   'SUM': (_("Summary formula"), _("Summary formula"), 10),
+                   'SMILES': (_('SMILES'), _('Molecule encoded in SMILES format'), 8),
+                   'MW': (_('Molecular weight'), _('Molecular weight'), 5),
+                   "FRAGMENTS": (_("Fragments"), _("Molecular fragments"), 4),
+                   "ATOMS": (_("Atoms"), _("Atoms"), 3),
 
-                   "ATOM": ("Atom", "Atom", 1),
-                   'FRAGMENT': ('Fragment', 'Molecular fragment', 1),
-                   "REACTION": ("Reaction", "Chemical reaction", 1),
-                   "REACTION_COMPONENTS": ("Reaction components", "Components of a chemical reaction", 1),
-                   "MOLECULE": ("Molecule","Molecule", 1),
+                   "ATOM": (_("Atom"), _("Atom"), 1),
+                   'FRAGMENT': (_('Fragment'), _('Molecular fragment'), 1),
+                   "REACTION": (_("Reaction"), _("Chemical reaction"), 1),
+                   "REACTION_COMPONENTS": (_("Reaction components"), _("Components of a chemical reaction"), 1),
+                   "MOLECULE": (_("Molecule"), _("Molecule"), 1),
 
-                   "ATOM_SYMBOL": ("Symbol", "Atom symbol", 20),
-                   "ELEMENT_NAME": ("Element name", "Element name", 19),
-                   "PROTON_NUMBER": ("Proton number", "Proton number", 18),
-                   "PERIODIC_TABLE_COLUMN": ("Column", "Periodic table column", 17),
-                   "PERIODIC_TABLE_ROW": ("Row", "Periodic table row", 16),
-                   "ELEMENT_GROUP": ("Element group", "Element group", 15),
-                   "VAL_ELECTRONS": ("Valence electrons", "Number of valence electrons", 14),
-                   "OX_NUMBERS": ("Oxidation numbers", "Possible oxidation numbers for an atom", 12),
-                   "ORBITALS": ("Electron structure", "Electron structure of occupied orbitals", 10),                   
-                   "ATOM_WEIGHT": ("Atomic weight", "Atomic weight", 8),
-                   "EN": ("Electronegativity", "Electronegativity", 6),
-                   "LATIN_ELEMENT_NAME": ("Latin element name", "Latin element name", 4),
-                   "DESC": ("Description", "Description", 2),
+                   "ATOM_SYMBOL": (_("Symbol"), _("Atom symbol"), 20),
+                   "ELEMENT_NAME": (_("Element name"), _("Element name"), 19),
+                   "PROTON_NUMBER": (_("Proton number"), _("Proton number"), 18),
+                   "PERIODIC_TABLE_COLUMN": (_("Column"), _("Periodic table column"), 17),
+                   "PERIODIC_TABLE_ROW": (_("Row"), _("Periodic table row"), 16),
+                   "ELEMENT_GROUP": (_("Element group"), _("Element group"), 15),
+                   "VAL_ELECTRONS": (_("Valence electrons"), _("Number of valence electrons"), 14),
+                   "OX_NUMBERS": (_("Oxidation numbers"), _("Possible oxidation numbers for an atom"), 12),
+                   "ORBITALS": (_("Electron structure"), _("Electron structure of occupied orbitals"), 10),                   
+                   "ATOM_WEIGHT": (_("Atomic weight"), _("Atomic weight"), 8),
+                   "EN": (_("Electronegativity"), _("Electronegativity"), 6),
+                   "LATIN_ELEMENT_NAME": (_("Latin element name"), _("Latin element name"), 4),
+                   "DESC": (_("Description"), _("Description"), 2),
                    
-                   "REL_REACTANT": ("Reactant","Reactant of a reaction", 1),
-                   "REL_PRODUCT": ("Product","Product of a reaction", 1),
-                   "REL_SINGLE_BOND": ("Single bond", "Single bond", 1),
-                   "REL_DOUBLE_BOND": ("Double bond", "Double bond", 1),
-                   "REL_TRIPLE_BOND": ("Triple bond", "Triple bond", 1),
-                   "REL_AROMATIC_BOND": ("Aromatic bond", "Aromatic bond", 1),
-                   "REL_COMPOSED_FROM": ("Composed from", "Composed from", 1),
-                   "REL_REACTS_WITH": ("Reacts with", "Reacts with", 1),
-                   "REL_PRODUCES": ("Produces", "Produces", 1),
-                   "REL_PRODUCED_FROM": ("Produced from", "Produced from", 1),
+                   "REL_REACTANT": (_("Reactant"), _("Reactant of a reaction"), 1),
+                   "REL_PRODUCT": (_("Product"), _("Product of a reaction"), 1),
+                   "REL_SINGLE_BOND": (_("Single bond"), _("Single bond"), 1),
+                   "REL_DOUBLE_BOND": (_("Double bond"), _("Double bond"), 1),
+                   "REL_TRIPLE_BOND": (_("Triple bond"), _("Triple bond"), 1),
+                   "REL_AROMATIC_BOND": (_("Aromatic bond"), _("Aromatic bond"), 1),
+                   "REL_COMPOSED_FROM": (_("Composed from"), _("Composed from"), 1),
+                   "REL_REACTS_WITH": (_("Reacts with"), _("Reacts with"), 1),
+                   "REL_PRODUCES": (_("Produces"), _("Produces"), 1),
+                   "REL_PRODUCED_FROM": (_("Produced from"), _("Produced from"), 1),
                    }
 
     @classmethod
@@ -77,3 +79,4 @@ class DataTypeFactory:
             return DataType(id, d, long_description=ld, default_priority=def_priority)
         else:
             return None
+

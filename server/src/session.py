@@ -1,11 +1,13 @@
 from config import Config
 
+
 class Session:
     """represents one session""" 
 
-    def __init__(self, session_number):
+    def __init__(self, session_number, lang="en"):
         self._number = session_number
         self._data = None
+        self._lang = lang
 
     def number(self):
         return self._number
@@ -17,3 +19,6 @@ class Session:
 
     def data(self):
         return self._data
+
+    def lang(self):
+        return self._lang

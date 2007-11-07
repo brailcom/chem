@@ -1,0 +1,214 @@
+# Czech localization for the brailchem server
+# Copyright (C) 2007 Bedrich Kosata
+# This file is distributed under the same license as the brailchem package.
+# Bedrich Kosata <kosatab@vscht.cz>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: devel\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-11-07 08:29+0100\n"
+"PO-Revision-Date: 2007-11-07 09:12+0100\n"
+"Last-Translator: Bedrich Kosata <kosatab@vscht.cz>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/data_types.py:33
+msgid "Name"
+msgstr "Jméno"
+
+#: ../src/data_types.py:33
+msgid "Compound name"
+msgstr "Jméno sloučeniny"
+
+#: ../src/data_types.py:34 ../src/data_types.py:85
+msgid "Molecular formula"
+msgstr "Molekulový vzorec"
+
+#: ../src/data_types.py:35
+msgid "Summary formula"
+msgstr "Sumární vzorec"
+
+#: ../src/data_types.py:36
+msgid "SMILES"
+msgstr "SMILES"
+
+#: ../src/data_types.py:36
+msgid "Molecule encoded in SMILES format"
+msgstr "Molekula zapsaná ve formátu SMILES"
+
+#: ../src/data_types.py:37
+msgid "Molecular weight"
+msgstr "Molekulová hmotnost"
+
+#: ../src/data_types.py:38
+msgid "Fragments"
+msgstr "Fragmenty"
+
+#: ../src/data_types.py:38
+msgid "Molecular fragments"
+msgstr "Molekulové fragmenty"
+
+#: ../src/data_types.py:39
+msgid "Atoms"
+msgstr "Atomy"
+
+#: ../src/data_types.py:41
+msgid "Atom"
+msgstr "Atom"
+
+#: ../src/data_types.py:42
+msgid "Fragment"
+msgstr "Fragment"
+
+#: ../src/data_types.py:42
+msgid "Molecular fragment"
+msgstr "Molekulový fragment"
+
+#: ../src/data_types.py:43
+msgid "Reaction"
+msgstr "Reakce"
+
+#: ../src/data_types.py:43
+msgid "Chemical reaction"
+msgstr "Chemická reakce"
+
+#: ../src/data_types.py:44
+msgid "Reaction components"
+msgstr "Reakční složka"
+
+#: ../src/data_types.py:44
+msgid "Components of a chemical reaction"
+msgstr "Složka chemické reakce"
+
+#: ../src/data_types.py:45
+msgid "Molecule"
+msgstr "Molekula"
+
+#: ../src/data_types.py:47
+msgid "Symbol"
+msgstr "Symbol"
+
+#: ../src/data_types.py:47
+msgid "Atom symbol"
+msgstr "Symbol atomu"
+
+#: ../src/data_types.py:48
+msgid "Element name"
+msgstr "Jméno prvku"
+
+#: ../src/data_types.py:49
+msgid "Proton number"
+msgstr "Protonové číslo"
+
+#: ../src/data_types.py:50
+msgid "Column"
+msgstr "Sloupec"
+
+#: ../src/data_types.py:50
+msgid "Periodic table column"
+msgstr "Sloupec periodické tabulky"
+
+#: ../src/data_types.py:51
+msgid "Row"
+msgstr "Řádek"
+
+#: ../src/data_types.py:51
+msgid "Periodic table row"
+msgstr "Řádek periodické tabulky"
+
+#: ../src/data_types.py:52
+msgid "Element group"
+msgstr "Skupina prvků"
+
+#: ../src/data_types.py:53
+msgid "Valence electrons"
+msgstr "Valenční elektrony"
+
+#: ../src/data_types.py:53
+msgid "Number of valence electrons"
+msgstr "Počet valenčních elektronů"
+
+#: ../src/data_types.py:54
+msgid "Oxidation numbers"
+msgstr "Oxidační čísla"
+
+#: ../src/data_types.py:54
+msgid "Possible oxidation numbers for an atom"
+msgstr "Možná oxidační čísla atomu"
+
+#: ../src/data_types.py:55
+msgid "Electron structure"
+msgstr "Elektronová struktura"
+
+#: ../src/data_types.py:55
+msgid "Electron structure of occupied orbitals"
+msgstr "Elektronová struktura obsazených orbitalů"
+
+#: ../src/data_types.py:56
+msgid "Atomic weight"
+msgstr "Atomová hmotnost"
+
+#: ../src/data_types.py:57
+msgid "Electronegativity"
+msgstr "Elektronegativita"
+
+#: ../src/data_types.py:58
+msgid "Latin element name"
+msgstr "Latinské jméno prvku"
+
+#: ../src/data_types.py:59
+msgid "Description"
+msgstr "Popis"
+
+#: ../src/data_types.py:61
+msgid "Reactant"
+msgstr "Reaktant"
+
+#: ../src/data_types.py:61
+msgid "Reactant of a reaction"
+msgstr "Reaktant reakce"
+
+#: ../src/data_types.py:62
+msgid "Product"
+msgstr "Produkt"
+
+#: ../src/data_types.py:62
+msgid "Product of a reaction"
+msgstr "Produkt reakce"
+
+#: ../src/data_types.py:63
+msgid "Single bond"
+msgstr "Jednoduchá vazba"
+
+#: ../src/data_types.py:64
+msgid "Double bond"
+msgstr "Dvojná vazba"
+
+#: ../src/data_types.py:65
+msgid "Triple bond"
+msgstr "Trojná vazba"
+
+#: ../src/data_types.py:66
+msgid "Aromatic bond"
+msgstr "Aromatická vazba"
+
+#: ../src/data_types.py:67
+msgid "Composed from"
+msgstr "Skládá se z"
+
+#: ../src/data_types.py:68
+msgid "Reacts with"
+msgstr "Reaguje s"
+
+#: ../src/data_types.py:69
+msgid "Produces"
+msgstr "Poskytuje"
+
+#: ../src/data_types.py:70
+msgid "Produced from"
+msgstr "Vytvořeno z"
+
+#~ msgid "Molecule name"
+#~ msgstr "Jméno molekuly"
