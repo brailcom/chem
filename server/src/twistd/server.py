@@ -150,8 +150,11 @@ class ChemInterface(object):
                     translated_value = value.get(language, '') or value.get('en', '')
                 else:
                     translated_value = value
+                label = info and info.description() or name
+                if isinstance(label, brailchem.i18n.TranslatableText):
+                    label = label.translate(translator)
                 attributes = {'name': name,
-                              'label': info and info.description() or name,
+                              'label': label,
                               }
                 if not isinstance(translated_value, list):
                     attributes['value'] = translated_value

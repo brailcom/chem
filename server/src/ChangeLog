@@ -1,3 +1,9 @@
+2007-11-08   Beda Kosata <kosatab@vscht.cz>
+
+	* twisted/server.py: labels for periodic table localized, silently ignore unsupported languages
+	and use english instead
+	
+
 2007-11-07   Beda Kosata <kosatab@vscht.cz>
 
 	* locale support: data_types have localized value, localization is done using an "ondemand"
