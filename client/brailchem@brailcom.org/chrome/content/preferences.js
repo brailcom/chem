@@ -54,12 +54,15 @@ function brailchem_set_preferences (close_window)
     // Periodic
     var periodic_walk_over_empty = (document.getElementById ('pref-brailchem-periodic-emptycell').getAttribute ('checked') == 'true' ? 1 : 0);
     brailchem_preferences.set_int ('periodic.walk_over_empty', periodic_walk_over_empty);
-    var periodic_tooltips = [];
     var periodic_tooltip_box = document.getElementById ('pref-brailchem-periodic-tooltips');
-    var tooltip_node_list = periodic_tooltip_box.getElementsByAttribute ('checked', 'true');
-    for (var i = 0; i < tooltip_node_list.length; i++)
-        periodic_tooltips.push (tooltip_node_list[i].getAttribute ('brailchem_property_name'));
-    brailchem_preferences.set_char ('periodic.tooltips', periodic_tooltips.join (':'));
+    var tooltip_node_list = periodic_tooltip_box.getElementsByTagName ('checkbox');
+    if (tooltip_node_list.length > 0) {
+        var periodic_tooltips = [];
+        for (var i = 0; i < tooltip_node_list.length; i++)
+            if (tooltip_node_list[i].getAttribute ('checked') == 'true')
+                periodic_tooltips.push (tooltip_node_list[i].getAttribute ('brailchem_property_name'));
+        brailchem_preferences.set_char ('periodic.tooltips', periodic_tooltips.join (':'));
+    }
     // all done
     if (close_window)
         window.close ();

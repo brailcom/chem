@@ -168,8 +168,8 @@ function brailchem_periodic_init_tooltips ()
 
 function brailchem_periodic_update_tooltip_settings_node (tooltips_node)
 {
-    brailchem_periodic_update_data ();
     brailchem_remove_children (tooltips_node);
+    brailchem_periodic_update_data ();
     var property_names = {};
     for (var symbol in g_element_data) {
         var properties = g_element_data[symbol];
@@ -179,16 +179,22 @@ function brailchem_periodic_update_tooltip_settings_node (tooltips_node)
     var properties_as_list = [];
     for (var p in property_names)
         if (properties[p])
-            properties_as_list.push (properties[p]);    
-    properties_as_list.sort (function (x0, y0) { var x = x0.name, y = y0.name; return (x==y ? 0 : (x<y ? -1 : 1)); });
-    var tooltips = brailchem_preferences.char ('periodic.tooltips').split (':');
-    for (var i = 0; i < properties_as_list.length; i++) {
-        var item = properties_as_list[i];
-        var name = item.name;
-        if (name[0] != '_')
-            brailchem_add_element (tooltips_node, 'checkbox',
-                                   {label: item.label, checked: (tooltips.indexOf (name) != -1), brailchem_property_name: name});
+            properties_as_list.push (properties[p]);
+    if (properties_as_list.length > 0) {
+        properties_as_list.sort (function (x0, y0) { var x = x0.name, y = y0.name; return (x==y ? 0 : (x<y ? -1 : 1)); });
+        var tooltips = brailchem_preferences.char ('periodic.tooltips').split (':');
+        for (var i = 0; i < properties_as_list.length; i++) {
+            var item = properties_as_list[i];
+            var name = item.name;
+            if (name[0] != '_')
+                brailchem_add_element (tooltips_node, 'checkbox',
+                                       {label: item.label, checked: (tooltips.indexOf (name) != -1), brailchem_property_name: name});
+        }
     }
+    else {
+        var text = brailchem_string ('brailchemPeriodicTooltipsUnavailable', 'brailchem-periodic-strings');
+        brailchem_add_element (tooltips_node, 'description', {}, text);
+    }        
 }
 
 function brailchem_periodic_update_element_data ()

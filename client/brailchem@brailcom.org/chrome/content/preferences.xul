@@ -17,6 +17,7 @@
 
   <stringbundleset>
     <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
+    <stringbundle id="brailchem-periodic-strings" src="chrome://brailchem/locale/periodic.properties"/>
     <stringbundle id="brailchem-preferences-strings" src="chrome://brailchem/locale/preferences.properties"/>
   </stringbundleset>
   
