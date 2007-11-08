@@ -11,7 +11,7 @@ all: $(mo_files)
 %.po: brailchem.pot
 	msgmerge -q --update $@ $< && touch $@
 
-%.pot:
+%.pot: $(src_files)
 	xgettext $(src_files) -o $@
 
 clean:

@@ -1,0 +1,9 @@
+This directory contains translations of brailchem server.
+
+You can use 'make' to do several task for you in this directory:
+
+ * to create .mo (compiled translation) files, run 'make',
+ * to prepare a brailchem.pot for new translations, run 'make brailchem.pot' or 'make pot',
+ * to update a specific .po file to include new strings from the source,
+   run 'make brailchem.XX.po', where XX is the language code of the desired language
+ 

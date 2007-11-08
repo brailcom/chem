@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: devel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-07 08:29+0100\n"
+"POT-Creation-Date: 2007-11-08 07:43+0100\n"
 "PO-Revision-Date: 2007-11-07 09:12+0100\n"
 "Last-Translator: Bedrich Kosata <kosatab@vscht.cz>\n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgstr "Jméno"
 msgid "Compound name"
 msgstr "Jméno sloučeniny"
 
-#: ../src/data_types.py:34 ../src/data_types.py:85
+#: ../src/data_types.py:34
 msgid "Molecular formula"
 msgstr "Molekulový vzorec"
 
