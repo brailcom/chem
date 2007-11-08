@@ -600,8 +600,6 @@ class GettextTranslator(Translator):
         paths[-1] = "System_defined_locale_dir"
         msg = "Translation file not found in paths: '%s', lang: '%s', origin: '%s'" % (", ".join(paths), self._lang, origin)
         if self._fallback or self._lang == origin:
-            if self._lang != origin:
-                log(msg)
             return gettext.NullTranslations()
         else:
             raise IOError(msg)

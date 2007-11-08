@@ -69,7 +69,7 @@ class ChemInterface(object):
             selected_language = 'en'
         else:
             selected_language = language
-        return brailchem.i18n.GettextTranslator(selected_language, default_domain='brailchem')
+        return brailchem.i18n.GettextTranslator(selected_language, default_domain='brailchem', fallback=True)
         
     def _retrieve_molecule_data(self, smiles):
         session = self._session
