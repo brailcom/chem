@@ -156,10 +156,13 @@ function brailchem_periodic_update_data ()
 
 function brailchem_periodic_init_tooltips ()
 {
-    var periodic_enabled_tooltips = brailchem_preferences.char ('periodic.tooltips').split (':');
+    var preferences_tooltips = brailchem_preferences.char ('periodic.tooltips');
     tooltips = {};
-    for (var i in periodic_enabled_tooltips)
-        tooltips[periodic_enabled_tooltips[i]] = true;
+    if (preferences_tooltips) {
+        var periodic_enabled_tooltips = preferences_tooltips.split (':');
+        for (var i in periodic_enabled_tooltips)
+            tooltips[periodic_enabled_tooltips[i]] = true;
+    }
     g_tooltips = tooltips;
 }
 
