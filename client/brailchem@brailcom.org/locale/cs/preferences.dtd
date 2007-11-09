@@ -14,3 +14,4 @@
 <!ENTITY preferences.label.primaryview "Výchozí druh náhledu">
 <!ENTITY preferences.periodic.label.emptycells "Procházet přes prázdná políčka">
 <!ENTITY preferences.periodic.label.tooltips "Obsah bublin">
+<!ENTITY preferences.select.nochange "ponechat stávající">

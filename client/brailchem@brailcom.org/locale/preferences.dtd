@@ -14,3 +14,4 @@
 <!ENTITY preferences.label.primaryview "Primary view">
 <!ENTITY preferences.periodic.label.emptycells "Walk over empty cells">
 <!ENTITY preferences.periodic.label.tooltips "Tooltip contents">
+<!ENTITY preferences.select.nochange "leave unchanged">

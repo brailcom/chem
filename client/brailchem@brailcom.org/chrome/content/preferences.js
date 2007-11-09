@@ -38,6 +38,7 @@ function brailchem_update_preferences ()
     replaceable_node.setAttribute ('value', '*');
     replaceable_node.setAttribute ('label', menu_node.getElementsByAttribute ('value', language)[0].getAttribute ('label'));
     replaceable_node.setAttribute ('value', language);
+    menu_node.getElementsByAttribute ('value', language)[0].setAttribute ('selected', 'true');
     // Periodic table
     var periodic_walk_over_empty = (brailchem_preferences.int ('periodic.walk_over_empty') ? 'true' : 'false');
     this.find_element ('pref-brailchem-periodic-emptycell').setAttribute ('checked', periodic_walk_over_empty);
@@ -47,7 +48,9 @@ function brailchem_update_preferences ()
 function brailchem_set_preferences (close_window)
 {
     // General
-    brailchem_preferences.set_char ('language', document.getElementById ('pref-language').value);
+    var language = document.getElementById ('pref-language').value;
+    if (language && language != '*')
+        brailchem_preferences.set_char ('language', language);
     // Server
     brailchem_preferences.set_char ('server.host', document.getElementById ('pref-brailchem-host').value);
     brailchem_preferences.set_int ('server.port', document.getElementById ('pref-brailchem-port').value);

@@ -35,7 +35,7 @@
             <label control="pref-language" value="&preferences.label.language;"/>
             <menulist id="pref-language">
               <menupopup id="pref-language-menu">
-                <menuitem value="*" label="*" selected="true" id="pref-language-first"/>
+                <menuitem value="*" label="&preferences.select.nochange;" id="pref-language-first"/>
                 <menuitem value="ab" label="Abkhazian"/>
                 <menuitem value="aa" label="Afar"/>
                 <menuitem value="af" label="Afrikaans"/>
