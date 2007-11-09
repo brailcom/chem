@@ -111,8 +111,10 @@ class ChemInterface(object):
             if isinstance(data, Part):
                 neighbors_node = add_element(data_node, 'neighbors')
                 for neighbor in data.neighbors():
-                    add_element(neighbors_node, 'link', attributes=dict(id=neighbor.target().id(),
-                                                                        description=neighbor.data_type().description()))
+                    neighbor_description = neighbor.data_type().description()
+                    if isinstance(neighbor_description, brailchem.i18n.TranslatableText):
+                        neighbor_description = neighbor_description.translate(translator)
+                    add_element(neighbors_node, 'link', attributes=dict(id=neighbor.target().id(), description=neighbor_description))
             if isinstance(data, MultiView):
                 views_node = add_element(data_node, 'views')
                 for view in data.views():
