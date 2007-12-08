@@ -1,3 +1,8 @@
+2007-12-08   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: test support for fragments added. It recognizes two types of groups now -
+	aldehydic carbonyl groups and carboxylic acids.
+
 2007-11-08   Beda Kosata <kosatab@vscht.cz>
 
 	* twisted/server.py: labels for periodic table localized, silently ignore unsupported languages

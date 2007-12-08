@@ -83,7 +83,7 @@ class ChemReader:
         mol_data.add_view(mol_data_frags)
         mol_data_atoms = Complex(id2t("ATOMS"))
         mol_data.add_view(mol_data_atoms)
-        _atom_to_a_data = {}
+        _atom_to_a_data = {} # maps oasa atoms to brailchem data
         for atom in mol.atoms:
             a_data = PartMultiView(id2t("ATOM"))
             # element names in diffent languages
@@ -105,6 +105,21 @@ class ChemReader:
             a_data = _atom_to_a_data[atom]
             for e,n in atom.get_neighbor_edge_pairs():
                 a_data.add_neighbor(Relation(id2t(self.bond_order_to_relation[e.order]), _atom_to_a_data[n]))
+        # fragment support - just for testing
+        for (smiles_text,name,compound_type) in [("C(=O)H","carbonyl group","aldehyde"),
+                                                 ("C(=O)OH","carboxyl group","carboxylic acid")]:
+            fragment_mol = oasa.smiles.text_to_mol(smiles_text)
+            for fragment in mol.select_matching_substructures(fragment_mol, implicit_freesites=True):
+                frag_data = PartMultiView(id2t("FRAGMENT"))
+                frag_data.add_view(LanguageDependentValue(id2t("FRAGMENT_NAME"), {"en":name}))
+                frag_data.add_view(LanguageDependentValue(id2t("FRAGMENT_COMPOUND_TYPE"), {"en":compound_type}))
+                frag_data_atoms = Complex(id2t("ATOMS"))
+                frag_data.add_view(frag_data_atoms)
+                for atom in fragment:
+                    frag_data_atoms.add_part(Relation(id2t('REL_COMPOSED_FROM'), _atom_to_a_data[atom]))
+                mol_data_frags.add_part(Relation(id2t('REL_COMPOSED_FROM'), frag_data))
+
+        # // fragment support
         return mol_data
 
 

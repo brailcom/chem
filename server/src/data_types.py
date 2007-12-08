@@ -44,6 +44,9 @@ class DataTypeFactory:
                    "REACTION_COMPONENTS": (_("Reaction components"), _("Components of a chemical reaction"), 1),
                    "MOLECULE": (_("Molecule"), _("Molecule"), 1),
 
+                   'FRAGMENT_NAME': (_('Fragment name'), _('Name of the chemical group this fragment represents'), 20),
+                   'FRAGMENT_COMPOUND_TYPE': (_('Compound type'), _('Type of compound this fragment represents'), 15),
+
                    "ATOM_SYMBOL": (_("Symbol"), _("Atom symbol"), 20),
                    "ELEMENT_NAME": (_("Element name"), _("Element name"), 19),
                    "PROTON_NUMBER": (_("Proton number"), _("Proton number"), 18),
