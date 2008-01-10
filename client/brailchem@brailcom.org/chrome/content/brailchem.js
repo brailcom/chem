@@ -1,4 +1,4 @@
-/* Copyright (C) 2007 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -36,6 +36,17 @@ function brailchem_init ()
 {
     addEventListener ('focus', brailchem_focus_callback, true);
     brailchem_message ('brailchemStarted', 'brailchem-strings');
+    var argument = window.location.search;
+    if (argument) {
+        argument = argument.substring (1);
+        var eq_pos = argument.indexOf ('=');
+        if (eq_pos != -1) {
+            var name = argument.substring (0, eq_pos);
+            var value = argument.substring (eq_pos + 1);
+            if (name == 'smiles')
+                brailchem_molecule (value);
+        }
+    }
 }
 
 // Commands

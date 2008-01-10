@@ -1,4 +1,4 @@
-/* Copyright (C) 2007 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -16,15 +16,24 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function brailchem_molecule ()
+function brailchem_molecule (smiles)
 {
-    brailchem_switch_page ('chrome://brailchem/content/molecule.xul');
+    var after_function = null;
+    if (smiles)
+        after_function = function () { brailchem_browse_on_start (this.document, smiles); };
+    brailchem_switch_page ('chrome://brailchem/content/molecule.xul', 'molecule-textbox', after_function);
+}
+
+function brailchem_browse_on_start (document, smiles)
+{
+    document.getElementById ('molecule-textbox').setAttribute ('value', smiles);
+    brailchem_display_molecule (document, smiles);
 }
 
 function brailchem_browse_molecule ()
 {
     var smiles = document.getElementById ('molecule-textbox').value;
-    brailchem_display_molecule (smiles);
+    brailchem_display_molecule (document, smiles);
 }
 
 function brailchem_mol_element_text (element) {
@@ -56,7 +65,7 @@ function brailchem_mol_element_value (element)
     return null;
 }
 
-function brailchem_display_molecule (smiles)
+function brailchem_display_molecule (document, smiles)
 {
     brailchem_wait_start ();
     // Fetch data
@@ -75,7 +84,7 @@ function brailchem_display_molecule (smiles)
         var summary = brailchem_display_molecule_summary (element, top_box);
         if (summary) {
             var atoms = summary[0], fragments = summary[1];
-            brailchem_display_pieces (atoms, fragments, top_box, references, labels);
+            brailchem_display_molecule_pieces (atoms, fragments, top_box, references, labels);
             var name_node = document.getElementById ('brailchem-molecule-heading');
             brailchem_focus (name_node);
         }
@@ -85,6 +94,7 @@ function brailchem_display_molecule (smiles)
 
 function brailchem_display_molecule_summary (element, top_box)
 {
+    var document = top_box.ownerDocument;
     var molecule_element = element;
     var name = "Unknown molecule";
     var properties = [];
@@ -121,10 +131,11 @@ function brailchem_display_molecule_summary (element, top_box)
     return [atoms, fragments];
 }
 
-function brailchem_display_pieces (atoms_element, fragments_element, box, references, labels)
+function brailchem_display_molecule_pieces (atoms_element, fragments_element, box, references, labels)
 {
     if (! atoms_element)
         return;
+    var document = box.ownerDocument;
     var atom_data = {};
     var atom_list = [];
     var atom_numbers = {};
