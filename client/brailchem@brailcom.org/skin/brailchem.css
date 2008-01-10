@@ -1,4 +1,4 @@
-/* Copyright (C) 2007 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -40,7 +40,7 @@ description.header[level="5"]
 #brailchem-window
 {
   min-width: 940px;
-  min-height: 820px;
+  min-height: 700px;
 }
 
 #brailchem-preferences-window
