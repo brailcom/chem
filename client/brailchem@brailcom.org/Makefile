@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Brailcom, o.p.s.
+# Copyright (C) 2007, 2008 Brailcom, o.p.s.
 #
 # COPYRIGHT NOTICE
 #
@@ -20,7 +20,9 @@ xpiarchive = ../brailchem.xpi
 all: version application.ini
 	$(MAKE) -C components
 	rm -f $(xpiarchive)
-	zip -r $(xpiarchive) *
+# 	Installing prefs.js causes Brailchem window popus on startup in
+# 	Firefox.
+	zip -r $(xpiarchive) * -x defaults/preferences/prefs.js
 
 clean:
 	rm -f $(xpiarchive) application.ini chrome/content/VERSION
