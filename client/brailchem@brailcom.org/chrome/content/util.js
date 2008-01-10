@@ -1,4 +1,4 @@
-/* Copyright (C) 2007 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -47,7 +47,7 @@ function brailchem_add_element (parent, tag, attributes, text)
             child.setAttribute (name, attributes[name]);
     }
     if (text != undefined) {
-        child.appendChild (document.createCDATASection (text))
+        child.appendChild (child.ownerDocument.createCDATASection (text))
     }
     parent.appendChild (child);
     return child;
@@ -56,7 +56,7 @@ function brailchem_add_element (parent, tag, attributes, text)
 function brailchem_set_element_text (node, text)
 {
     brailchem_remove_children (node);
-    node.appendChild (document.createCDATASection (text));
+    node.appendChild (node.ownerDocument.createCDATASection (text));
 }
 
 function brailchem_remove_children (node, condition)
@@ -89,7 +89,6 @@ var BrailchemPage = {
     {
         if (window_name) {
             this._window = open (this._uri, window_name, 'chrome');
-            
         }
         else {
             brailchem_wait_start ();
