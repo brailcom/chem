@@ -257,13 +257,14 @@ function brailchem_periodic_update_tooltips (doc_node)
         var element_node = element_nodes[i];
         var element = element_data[element_node.getAttribute ('brailchem-element-symbol')];
         var tooltip = '';
-        var first_item = true;
         for (var j in tooltips)
             if (tooltips[j]) {
                 var property = element[j];
                 if (property) {
-                    tooltip = tooltip + (first_item ? '' : '\n') + element[j].label + ': ' + element[j].value;
-                    first_item = false;
+                    if (tooltip)
+                        tooltip = tooltip + '\n' + element[j].label + ': ' + element[j].value;
+                    else
+                        tooltip = element[j].value;
                 }
             }
         element_node.setAttribute ('tooltiptext', tooltip);
