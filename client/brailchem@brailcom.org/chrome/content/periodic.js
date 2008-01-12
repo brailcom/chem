@@ -1,4 +1,4 @@
-/* Copyright (C) 2007 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -260,8 +260,11 @@ function brailchem_periodic_update_tooltips (doc_node)
         var first_item = true;
         for (var j in tooltips)
             if (tooltips[j]) {
-                tooltip = tooltip + (first_item ? '' : '\n') + element[j].label + ': ' + element[j].value;
-                first_item = false;
+                var property = element[j];
+                if (property) {
+                    tooltip = tooltip + (first_item ? '' : '\n') + element[j].label + ': ' + element[j].value;
+                    first_item = false;
+                }
             }
         element_node.setAttribute ('tooltiptext', tooltip);
     }
