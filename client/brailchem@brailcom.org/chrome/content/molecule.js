@@ -133,68 +133,97 @@ function brailchem_display_molecule_summary (element, top_box)
 
 function brailchem_display_molecule_pieces (atoms_element, fragments_element, box, references, labels)
 {
-    if (! atoms_element)
+    if (! atoms_element && ! fragments_element)
         return;
     var document = box.ownerDocument;
-    var atom_data = {};
-    var atom_list = [];
-    var atom_numbers = {};
-    var atoms = atoms_element.getElementsByTagName ('parts')[0].childNodes;
-    for (var i = 0; i < atoms.length; i++) {
-        var atom = atoms[i];
-        if (atom.tagName != 'data')
-            continue;
-        var id = atom.getAttribute ('id');
-        var label = brailchem_mol_element_value (atom.getElementsByTagName ('data')[0]);
-        var number = (atom_numbers[label] || 0) + 1;
-        atom_numbers[label] = number;
-        var neighbors = [];
-        atom_data[id] = {id: id, label: label, number: number, neighbors: neighbors};
-        atom_list.push (id);
-        var neighbor_elements = atom.getElementsByTagName ('link');
-        for (var j = 0; j < neighbor_elements.length; j++) {
-            var link = neighbor_elements[j];
-            var bond = link.getAttribute ('description');
-            var target = link.getAttribute ('id');
-            neighbors.push ({bond: bond, id: target});
+    // Prepare data
+    var item_data = {};
+    var item_numbers = {};
+    var fragment_items = {};
+    function process_items (element, list, separator)
+    {
+        var is_fragment = (element.getAttribute ('type') == 'FRAGMENTS');
+        var items = element.getElementsByTagName ('parts')[0].childNodes;
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            if (item.tagName != 'data')
+                continue;
+            var id = item.getAttribute ('id');
+            var label = brailchem_mol_element_value (item.getElementsByTagName ('data')[0]);
+            var number = (item_numbers[label] || 0) + 1;
+            item_numbers[label] = number;
+            var neighbors = [];
+            item_data[id] = {id: id, label: label, number: number, neighbors: neighbors, separator: separator};
+            var neighbor_elements = item.getElementsByTagName ('link');
+            for (var j = 0; j < neighbor_elements.length; j++) {
+                var link = neighbor_elements[j];
+                var bond = link.getAttribute ('description');
+                var target = link.getAttribute ('id');
+                neighbors.push ({bond: bond, id: target});
+            }
+            if (! fragment_items[id])
+                list.push (id);
+            if (is_fragment) {
+                var inner_atoms = item.getElementsByTagName ('data');
+                for (var j = 0; j < inner_atoms.length; j++) {
+                    var candidate = inner_atoms[j];
+                    if (candidate.getAttribute ('type') == 'ATOM')
+                        fragment_items[inner_atoms[j].getAttribute ('id')] = id;
+                }
+            }
         }
     }
-    if (atoms.length > 0) {
-        brailchem_add_element (box, 'description', {id: 'brailchem-atom-heading', class: 'header', level: 2}, "Atoms");
-        for (var i in atom_list) {
-            var atom_box = brailchem_add_element (box, 'vbox', {class: 'brailchem-atom-box'});
-            var id = atom_list[i];
-            var atom = atom_data[id];
-            var label = atom.label+'/'+atom.number;
-            var neighbors = atom.neighbors;
-            var hbox = brailchem_add_element (atom_box, 'hbox');
-            brailchem_add_element (hbox, 'description',
-                                   {id: id, class: 'brailchem-atom', onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'},
-                                   label);
-            var terminals = [];
-            var nonterminals = [];
-            for (var j in neighbors) {
-                neighbor = neighbors[j];
-                (atom_data[neighbor.id].neighbors.length > 1 ? nonterminals : terminals).push (neighbor);
-            }
-            function add_reference (neighbor)
+    var fragment_list = [];
+    process_items (fragments_element, fragment_list, ' /');
+    var atom_list = [];
+    process_items (atoms_element, atom_list, '/');
+    // Render data
+    if (atom_list.length > 0 || fragment_list.length > 0) {
+        brailchem_add_element (box, 'description', {id: 'brailchem-heading', class: 'header', level: 2}, "Parts");
+        function render_items (kind, list)
+        {
+            function add_reference (neighbor, hbox)
             {
-                var neighbor_data = atom_data[neighbor.id];
-                var label = neighbor_data.label + '/' + neighbor_data.number + '[' + neighbor.bond + ']';
+                var neighbor_id = neighbor.id;
+                var item_id = fragment_items[neighbor_id];
+                var neighbor_data = item_data[item_id ? item_id : neighbor_id];
+                var label = neighbor_data.label + neighbor_data.separator + neighbor_data.number + '[' + neighbor.bond + ']';
                 brailchem_add_element (hbox, 'brailchemreference',
-                                       {'brailchem-target': neighbor.id, value: label, class: 'brailchem-reference',
+                                       {'brailchem-target': neighbor_data.id, value: label, class: 'brailchem-reference',
                                         onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'});
             }
-            if (terminals.length > 0) {
-                brailchem_add_element (hbox, 'description', {}, "Attached elements:");
-                for (var j in terminals)
-                    add_reference (terminals[j]);
+            box_class = 'brailchem-' + kind + '-box';
+            item_class = 'brailchem-' + kind;
+            for (var i in list) {
+                var item_box = brailchem_add_element (box, 'vbox', {class: box_class});
+                var id = list[i];
+                var item = item_data[id];
+                var label = item.label + item.separator + item.number;
+                var neighbors = item.neighbors;
+                var hbox = brailchem_add_element (item_box, 'hbox');
+                brailchem_add_element (hbox, 'description',
+                                       {id: id, class: item_class, onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'},
+                                       label);
+                var terminals = [];
+                var nonterminals = [];
+                for (var j in neighbors) {
+                    var neighbor = neighbors[j];
+                    if (fragment_items[neighbor.id] != id)
+                        (item_data[neighbor.id].neighbors.length > 1 ? nonterminals : terminals).push (neighbor);
+                }
+                if (terminals.length > 0) {
+                    brailchem_add_element (hbox, 'description', {}, "Attached elements:");
+                    for (var j in terminals)
+                        add_reference (terminals[j], hbox);
+                }
+                var hbox = brailchem_add_element (item_box, 'hbox');
+                brailchem_add_element (hbox, 'description', {}, "Neighbors:");
+                for (var j in nonterminals)
+                    add_reference (nonterminals[j], hbox);
             }
-            var hbox = brailchem_add_element (atom_box, 'hbox');
-            brailchem_add_element (hbox, 'description', {}, "Neighbors:");
-            for (var j in nonterminals)
-                add_reference (nonterminals[j]);
         }
+        render_items ('fragment', fragment_list);
+        render_items ('atom', atom_list);
     }
 }
 
