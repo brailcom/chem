@@ -16,6 +16,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+var brailchem_mol_display_fragments = true;
+
 function brailchem_molecule (smiles)
 {
     var after_function = null;
@@ -68,6 +70,7 @@ function brailchem_mol_element_value (element)
 function brailchem_display_molecule (document, smiles)
 {
     brailchem_wait_start ();
+    brailchem_mol_display_fragments = true;
     // Fetch data
     var doc = brailchem_call_server ('smiles', smiles);
     if (doc == null)
@@ -153,7 +156,7 @@ function brailchem_display_molecule_pieces (atoms_element, fragments_element, bo
             var number = (item_numbers[label] || 0) + 1;
             item_numbers[label] = number;
             var neighbors = [];
-            item_data[id] = {id: id, label: label, number: number, neighbors: neighbors, separator: separator};
+            item_data[id] = {id: id, label: label, number: number, neighbors: neighbors, separator: separator, in_fragment: false};
             var neighbor_elements = item.getElementsByTagName ('link');
             for (var j = 0; j < neighbor_elements.length; j++) {
                 var link = neighbor_elements[j];
@@ -161,8 +164,9 @@ function brailchem_display_molecule_pieces (atoms_element, fragments_element, bo
                 var target = link.getAttribute ('id');
                 neighbors.push ({bond: bond, id: target});
             }
-            if (! fragment_items[id])
-                list.push (id);
+            list.push (id);
+            if (fragment_items[id])
+                item_data[id].in_fragment = true;
             if (is_fragment) {
                 var inner_atoms = item.getElementsByTagName ('data');
                 for (var j = 0; j < inner_atoms.length; j++) {
@@ -192,12 +196,19 @@ function brailchem_display_molecule_pieces (atoms_element, fragments_element, bo
                                        {'brailchem-target': neighbor_data.id, value: label, class: 'brailchem-reference',
                                         onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'});
             }
-            box_class = 'brailchem-' + kind + '-box';
-            item_class = 'brailchem-' + kind;
+            var box_class = 'brailchem-' + kind + '-box';
+            var item_class = 'brailchem-' + kind;
+            var box_hidden = (! brailchem_mol_display_fragments && kind == 'fragment' ? 'true' : 'false');
             for (var i in list) {
-                var item_box = brailchem_add_element (box, 'vbox', {class: box_class});
+                var item_box = brailchem_add_element (box, 'vbox', {class: box_class, hidden: box_hidden});
+                if (kind == 'fragment')
+                    item_box.setAttribute ('brailchem-ghost-akin', kind);
                 var id = list[i];
                 var item = item_data[id];
+                if (item.in_fragment && kind == 'atom') {
+                    item_box.setAttribute ('brailchem-ghost-akin', kind);
+                    item_box.setAttribute ('hidden', 'true');
+                }
                 var label = item.label + item.separator + item.number;
                 var neighbors = item.neighbors;
                 var hbox = brailchem_add_element (item_box, 'hbox');
@@ -224,6 +235,11 @@ function brailchem_display_molecule_pieces (atoms_element, fragments_element, bo
         }
         render_items ('fragment', fragment_list);
         render_items ('atom', atom_list);
+        // Fragment display switch
+        if (fragment_list.length > 0)
+            brailchem_add_element (box, 'checkbox', {id: 'brailchem-mol-fragment-switch', label: "Display atom groups",
+                                                     checked: brailchem_mol_display_fragments,
+                                                     oncommand: 'brailchem_mol_toggle_fragments(this)'});
     }
 }
 
@@ -235,6 +251,19 @@ function brailchem_mol_atom_focus (element)
     for (var i = 0; i < atoms.length; i++)
         atoms[i].setAttribute ('brailchem-current', 'false');
     element.setAttribute ('brailchem-current', 'true');
+}
+
+function brailchem_mol_toggle_fragments (element)
+{
+    brailchem_mol_display_fragments = ! brailchem_mol_display_fragments;
+    var hiding_akin = (brailchem_mol_display_fragments ? 'atom' : 'fragment');
+    var showing_akin = (brailchem_mol_display_fragments ? 'fragment' : 'atom'); 
+    var to_hide = document.getElementsByAttribute ('brailchem-ghost-akin', hiding_akin);
+    for (var i = 0; i < to_hide.length; i++)
+        to_hide[i].setAttribute ('hidden', 'true');
+    var to_show = document.getElementsByAttribute ('brailchem-ghost-akin', showing_akin);
+    for (var i = 0; i < to_show.length; i++)
+        to_show[i].setAttribute ('hidden', '0');
 }
 
 // Commands
