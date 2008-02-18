@@ -21,6 +21,7 @@ import copy
 import grp
 import pwd
 import xml.dom.minidom
+from sets import Set
 
 import twisted.application.internet
 import twisted.application.service
@@ -79,46 +80,52 @@ class ChemInterface(object):
     def _chem_to_dom(self, data, language):
         dom = self._create_dom()
         translator = self._make_translator(language)
+        already_serialized = Set()
         def add_element(*args, **kwargs):
             return self._add_dom_element(dom, *args, **kwargs)
         def transform(data, node):
             data_type = data.data_type()
             id = data.id()
-            data_type_id = data_type.id()
-            description = data_type.description()
-            if isinstance(description, brailchem.i18n.TranslatableText):
-                description = description.translate(translator)
-            long_description = data_type.long_description()
-            if isinstance(long_description, brailchem.i18n.TranslatableText):
-                long_description = long_description.translate(translator)
-            attributes = dict(id=id, type=data_type_id, description=description, long=long_description)
-            data_node = add_element(node, 'data', attributes=attributes)
-            if isinstance(data, LanguageDependentValue):
-                value = data.value(language)[1]
-                add_element(data_node, 'value', text=value, attributes=dict(priority=data.priority()))
-            elif isinstance(data, Value):
-                value = data.value()
-                if isinstance(value, list):
-                    list_node = add_element(data_node, 'listvalue', attributes=dict(priority=data.priority()))
-                    for list_item in value:
-                        add_element(list_node, 'value', text=list_item)
-                else:
+            # serialize only once, make references later
+            if id in already_serialized:
+                add_element(node,"ref", attributes=dict(id=id))
+            else:
+                already_serialized.add(id)
+                data_type_id = data_type.id()
+                description = data_type.description()
+                if isinstance(description, brailchem.i18n.TranslatableText):
+                    description = description.translate(translator)
+                long_description = data_type.long_description()
+                if isinstance(long_description, brailchem.i18n.TranslatableText):
+                    long_description = long_description.translate(translator)
+                attributes = dict(id=id, type=data_type_id, description=description, long=long_description)
+                data_node = add_element(node, 'data', attributes=attributes)
+                if isinstance(data, LanguageDependentValue):
+                    value = data.value(language)[1]
                     add_element(data_node, 'value', text=value, attributes=dict(priority=data.priority()))
-            if isinstance(data, Complex):
-                parts_node = add_element(data_node, 'parts')
-                for part in data.parts():
-                    transform(part.target(), parts_node)
-            if isinstance(data, Part):
-                neighbors_node = add_element(data_node, 'neighbors')
-                for neighbor in data.neighbors():
-                    neighbor_description = neighbor.data_type().description()
-                    if isinstance(neighbor_description, brailchem.i18n.TranslatableText):
-                        neighbor_description = neighbor_description.translate(translator)
-                    add_element(neighbors_node, 'link', attributes=dict(id=neighbor.target().id(), description=neighbor_description))
-            if isinstance(data, MultiView):
-                views_node = add_element(data_node, 'views')
-                for view in data.views():
-                    transform(view, views_node)
+                elif isinstance(data, Value):
+                    value = data.value()
+                    if isinstance(value, list):
+                        list_node = add_element(data_node, 'listvalue', attributes=dict(priority=data.priority()))
+                        for list_item in value:
+                            add_element(list_node, 'value', text=list_item)
+                    else:
+                        add_element(data_node, 'value', text=value, attributes=dict(priority=data.priority()))
+                if isinstance(data, Complex):
+                    parts_node = add_element(data_node, 'parts')
+                    for part in data.parts():
+                        transform(part.target(), parts_node)
+                if isinstance(data, Part):
+                    neighbors_node = add_element(data_node, 'neighbors')
+                    for neighbor in data.neighbors():
+                        neighbor_description = neighbor.data_type().description()
+                        if isinstance(neighbor_description, brailchem.i18n.TranslatableText):
+                            neighbor_description = neighbor_description.translate(translator)
+                        add_element(neighbors_node, 'link', attributes=dict(id=neighbor.target().id(), description=neighbor_description))
+                if isinstance(data, MultiView):
+                    views_node = add_element(data_node, 'views')
+                    for view in data.views():
+                        transform(view, views_node)
         transform(data, dom)
         return dom
 

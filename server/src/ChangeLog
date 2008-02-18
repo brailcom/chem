@@ -1,3 +1,9 @@
+2008-02-18   Beda Kosata <kosatab@vscht.cz>
+
+	* twistd/server.py: serialization of data that appear more than one time in the result changed.
+	<ref id="XXX"/> may appear anywhere in the serialized XML to refer to previously serialized data
+	with id XXX.
+
 2007-12-08   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: test support for fragments added. It recognizes two types of groups now -
