@@ -30,7 +30,9 @@ class DataType:
 class DataTypeFactory:
     """singleton used to conveniently create DataType instances"""
 
-    _data_types = {"NAME": (_("Name"), _("Compound name"), 20),
+    _data_types = {"RESULT": (_("Result"), _("Result"), 1),  # result is the uppermost node in the hierarchy
+
+                   "NAME": (_("Name"), _("Compound name"), 20),
                    'MF': (_('Molecular formula'),_('Molecular formula'), 15),
                    'SUM': (_("Summary formula"), _("Summary formula"), 10),
                    'SMILES': (_('SMILES'), _('Molecule encoded in SMILES format'), 8),
@@ -41,6 +43,9 @@ class DataTypeFactory:
                    "ATOM": (_("Atom"), _("Atom"), 1),
                    'FRAGMENT': (_('Fragment'), _('Molecular fragment'), 1),
                    "REACTION": (_("Reaction"), _("Chemical reaction"), 1),
+                   "REACTANTS": (_("Reactants"), _("Starting compounds of a reaction"), 1),
+                   "REAGENTS": (_("Reagents"), _("Additional components of a reaction - solvent, catalyst, etc."), 1),
+                   "PRODUCTS": (_("Products"), _("Products of a chemical reaction"), 1),
                    "REACTION_COMPONENTS": (_("Reaction components"), _("Components of a chemical reaction"), 1),
                    "MOLECULE": (_("Molecule"), _("Molecule"), 1),
 

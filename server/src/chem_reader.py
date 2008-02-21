@@ -52,19 +52,27 @@ class ChemReader:
     @classmethod
     def process_string(self, text, format="SMILES"):
         """this is the main method used to process chemical data in a string format to
-        the internal representation;
-        At present it is only a proxy to process_molecule_string as there is no support
-        for reactions yet. After this support is added, it will hopefully be able to
-        guess the right kind of data and pass it to the corresponding method."""
-        return self.process_molecule_string(text, format=format)
-
-    @classmethod
-    def process_molecule_string(self, text, format="SMILES"):
+        the internal representation;"""
         # check if the format is supported
         if format in self.formats:
-            mol = getattr(self,self.formats[format])(text)
+            chem_objects = getattr(self,self.formats[format])(text)
         else:
             raise ChemReaderException("unknown format: "+format)
+        # shortcut
+        id2t = DataTypeFactory.data_type_from_id
+        result = Complex(id2t("RESULT"))
+        for chem_object in chem_objects:
+            if chem_object.__class__.__name__ == "molecule":
+                chem_data = self.process_molecule(chem_object)
+            elif chem_object.__class__.__name__ == "reaction":
+                chem_data = self.process_reaction(chem_object)
+            else:
+                raise ChemReaderException("unsupported chem_object class: "+chem_object.__class__.__name__)
+            result.add_part(Relation(id2t('REL_COMPOSED_FROM'), chem_data))
+        return result
+
+    @classmethod
+    def process_molecule(self, mol):
         # shortcut
         id2t = DataTypeFactory.data_type_from_id
         # the molecule
@@ -122,19 +130,38 @@ class ChemReader:
         # // fragment support
         return mol_data
 
+    @classmethod
+    def process_reaction(self, react):
+        def add_reaction_components_to_reaction(data_type, comps):
+            if len(comps) > 0:
+                top = Complex(id2t(data_type))
+                r_component_data.add_part(Relation(id2t("REL_COMPOSED_FROM"), top))
+                for comp in comps:
+                    mol_data = self.process_molecule(comp.molecule)
+                    top.add_part(Relation(id2t("REL_COMPOSED_FROM"), mol_data))
+        # shortcut
+        id2t = DataTypeFactory.data_type_from_id
+        # the molecule
+        r_data = MultiView(id2t("REACTION"))
+        r_component_data = Complex(id2t("REACTION_COMPONENTS"))
+        r_data.add_view(r_component_data)
+        add_reaction_components_to_reaction( "REACTANTS", react.reactants)
+        add_reaction_components_to_reaction( "REAGENTS", react.reagents)
+        add_reaction_components_to_reaction( "PRODUCTS", react.products)
+        return r_data
 
     ## ---------- private methods ----------
         
     # reader methods for different formats
     @classmethod
     def _read_smiles(self, text):
-        mol = oasa.smiles.text_to_mol(text)
-        return mol
+        converter = oasa.smiles.converter()
+        return converter.read_text(text)
 
     @classmethod
     def _read_molfile(self, text):
         mol = oasa.molfile.text_to_mol(text)
-        return mol
+        return [mol]
 
     @classmethod
     def _read_summary_formula(self, text):
@@ -145,7 +172,7 @@ class ChemReader:
                 a = oasa.atom(symbol)
                 a.valency = 0
                 mol.add_vertex(a)
-        return mol
+        return [mol]
     #// reader methods for different formats
 
     #// ---------- private methods ----------

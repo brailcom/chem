@@ -1,3 +1,9 @@
+2008-02-21   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: support for reactions added (only SMILES could produce reactions for now);
+	because molecule is not always the top-level node of the structure anymore, "RESULT" was added
+	as the top-level with molecules and reactions as its children.
+
 2008-02-18   Beda Kosata <kosatab@vscht.cz>
 
 	* twistd/server.py: serialization of data that appear more than one time in the result changed.
