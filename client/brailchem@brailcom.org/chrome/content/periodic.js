@@ -107,7 +107,10 @@ function brailchem_periodic_display (page)
                                                                brailchem_row: row, brailchem_column: col});
                 if (element) {
                     var symbol = element['ATOM_SYMBOL'].value;
-                    dom_element_node.setAttribute ('label', symbol);
+                    var xsymbol = symbol;
+                    if (symbol.length > 1)
+                        xsymbol = symbol.substring(0,1)+'\u200B'+symbol.substring (1);
+                    dom_element_node.setAttribute ('label', xsymbol);
                     dom_element_node.setAttribute ('brailchem-element-symbol', symbol);
                     dom_element_node.setAttribute ('style', '-moz-appearance: none; background-color: ' + element['_color'].value);
                 }
