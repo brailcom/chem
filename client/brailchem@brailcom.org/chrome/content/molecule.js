@@ -87,7 +87,7 @@ function brailchem_display_molecule (document, smiles)
         var summary = brailchem_display_molecule_summary (element, top_box);
         if (summary) {
             var atoms = summary[0], fragments = summary[1];
-            brailchem_display_molecule_pieces (atoms, fragments, top_box, references, labels);
+            brailchem_display_molecule_pieces (element, atoms, fragments, top_box, references, labels);
             var name_node = document.getElementById ('brailchem-molecule-heading');
             brailchem_focus (name_node);
         }
@@ -134,7 +134,7 @@ function brailchem_display_molecule_summary (element, top_box)
     return [atoms, fragments];
 }
 
-function brailchem_display_molecule_pieces (atoms_element, fragments_element, box, references, labels)
+function brailchem_display_molecule_pieces (document_element, atoms_element, fragments_element, box, references, labels)
 {
     if (! atoms_element && ! fragments_element)
         return;
@@ -143,38 +143,56 @@ function brailchem_display_molecule_pieces (atoms_element, fragments_element, bo
     var item_data = {};
     var item_numbers = {};
     var fragment_items = {};
+    var items = document_element.getElementsByTagName ('data');
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        var item_type = item.getAttribute ('type');
+        if (item_type != 'ATOM' && item_type != 'FRAGMENT')
+            continue;
+        var id = item.getAttribute ('id');
+        var label = brailchem_mol_element_value (item.getElementsByTagName ('data')[0]);
+        var number = (item_numbers[label] || 0) + 1;
+        item_numbers[label] = number;
+        var neighbors = [];
+        item_data[id] = {id: id, label: label, number: number, neighbors: neighbors, in_fragment: false};
+        var neighbor_elements = item.getElementsByTagName ('link');
+        for (var j = 0; j < neighbor_elements.length; j++) {
+            var link = neighbor_elements[j];
+            var bond = link.getAttribute ('description');
+            var target = link.getAttribute ('id');
+            neighbors.push ({bond: bond, id: target});
+        }
+    }    
+    var items = fragments_element.getElementsByTagName ('parts')[0].childNodes;
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        if (item.tagName != 'data')
+            continue;
+        var id = item.getAttribute ('id');
+        var inner_atoms = item.getElementsByTagName ('data');
+        for (var j = 0; j < inner_atoms.length; j++) {
+            var candidate = inner_atoms[j];
+            if (candidate.getAttribute ('type') == 'ATOM')
+                fragment_items[inner_atoms[j].getAttribute ('id')] = id;
+        }
+        var inner_atoms = item.getElementsByTagName ('ref');
+        for (var j = 0; j < inner_atoms.length; j++) {
+            fragment_items[inner_atoms[j].getAttribute ('id')] = id;
+        }
+    }
     function process_items (element, list, separator)
     {
-        var is_fragment = (element.getAttribute ('type') == 'FRAGMENTS');
         var items = element.getElementsByTagName ('parts')[0].childNodes;
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
-            if (item.tagName != 'data')
+            var tag = item.tagName;
+            if (tag != 'data' && tag != 'ref')
                 continue;
             var id = item.getAttribute ('id');
-            var label = brailchem_mol_element_value (item.getElementsByTagName ('data')[0]);
-            var number = (item_numbers[label] || 0) + 1;
-            item_numbers[label] = number;
-            var neighbors = [];
-            item_data[id] = {id: id, label: label, number: number, neighbors: neighbors, separator: separator, in_fragment: false};
-            var neighbor_elements = item.getElementsByTagName ('link');
-            for (var j = 0; j < neighbor_elements.length; j++) {
-                var link = neighbor_elements[j];
-                var bond = link.getAttribute ('description');
-                var target = link.getAttribute ('id');
-                neighbors.push ({bond: bond, id: target});
-            }
             list.push (id);
+            item_data[id].separator = separator;
             if (fragment_items[id])
                 item_data[id].in_fragment = true;
-            if (is_fragment) {
-                var inner_atoms = item.getElementsByTagName ('data');
-                for (var j = 0; j < inner_atoms.length; j++) {
-                    var candidate = inner_atoms[j];
-                    if (candidate.getAttribute ('type') == 'ATOM')
-                        fragment_items[inner_atoms[j].getAttribute ('id')] = id;
-                }
-            }
         }
     }
     var fragment_list = [];
