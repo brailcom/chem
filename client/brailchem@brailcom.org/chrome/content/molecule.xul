@@ -23,9 +23,12 @@
   </stringbundleset>
   
   <keyset>
-    <key id="brailchem-molecule-test" modifiers="control" key="A" oncommand="brailchem_mol_go_atoms()"/>
-    <key id="brailchem-molecule-test" modifiers="control" key="N" oncommand="brailchem_mol_next_atom()"/>
-    <key id="brailchem-molecule-test" modifiers="control" key="P" oncommand="brailchem_mol_previous_atom()"/>
+    <key id="brailchem-molecule-atoms" modifiers="control" key="A" oncommand="brailchem_mol_go_atoms()"/>
+    <key id="brailchem-molecule-next-atom" modifiers="control" key="N" oncommand="brailchem_mol_next_atom()"/>
+    <key id="brailchem-molecule-previous-atom" modifiers="control" key="P" oncommand="brailchem_mol_previous_atom()"/>
+    <key id="brailchem-molecule-reaction-review" modifiers="control" key="T" oncommand="brailchem_mol_go_reaction()"/>
+    <key id="brailchem-molecule-next-molecule" modifiers="shift" keycode="VK_DOWN" oncommand="brailchem_mol_next_molecule()"/>
+    <key id="brailchem-molecule-previous-molecule" modifiers="shift" keycode="VK_UP" oncommand="brailchem_mol_previous_molecule()"/>
   </keyset>
 
   <hbox><description id="brailchem-heading" class="brailchem-heading" flex="1" value="&molecule.header;"/></hbox>
