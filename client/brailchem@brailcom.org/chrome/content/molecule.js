@@ -204,15 +204,27 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         brailchem_add_element (box, 'description', {id: 'brailchem-heading', class: 'header', level: 2}, "Parts");
         function render_items (kind, list)
         {
-            function add_reference (neighbor, hbox)
+            function add_reference (neighbor, hbox, is_exposed_fragment_item)
             {
                 var neighbor_id = neighbor.id;
-                var item_id = fragment_items[neighbor_id];
-                var neighbor_data = item_data[item_id ? item_id : neighbor_id];
+                var item_id = (((! is_exposed_fragment_item) && fragment_items[neighbor_id]) || neighbor_id);                
+                var neighbor_data = item_data[item_id];
                 var label = neighbor_data.label + neighbor_data.separator + neighbor_data.number + '[' + neighbor.bond + ']';
-                brailchem_add_element (hbox, 'brailchemreference',
-                                       {'brailchem-target': neighbor_data.id, value: label, class: 'brailchem-reference',
-                                        onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'});
+                var attributes = {'brailchem-target': neighbor_data.id,
+                                  value: label,
+                                  'class': 'brailchem-reference',
+                                  onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'};
+                if (neighbor_id != item_id)
+                    attributes['brailchem-ghost-akin'] = 'fragment';
+                brailchem_add_element (hbox, 'brailchemreference', attributes);
+                if (neighbor_id != item_id) {
+                    neighbor_data = item_data[neighbor_id];
+                    attributes['brailchem-target'] = neighbor_data.id;
+                    attributes['value'] = neighbor_data.label + neighbor_data.separator + neighbor_data.number + '[' + neighbor.bond + ']';
+                    attributes['brailchem-ghost-akin'] = 'atom';
+                    attributes['hidden'] = 'true';
+                    brailchem_add_element (hbox, 'brailchemreference', attributes);
+                }                
             }
             var box_class = 'brailchem-' + kind + '-box';
             var item_class = 'brailchem-' + kind;
@@ -223,7 +235,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                     item_box.setAttribute ('brailchem-ghost-akin', kind);
                 var id = list[i];
                 var item = item_data[id];
-                if (item.in_fragment && kind == 'atom') {
+                var is_exposed_fragment_item = (item.in_fragment && kind == 'atom');
+                if (is_exposed_fragment_item) {
                     item_box.setAttribute ('brailchem-ghost-akin', kind);
                     item_box.setAttribute ('hidden', 'true');
                 }
@@ -243,12 +256,12 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 if (terminals.length > 0) {
                     brailchem_add_element (hbox, 'description', {}, "Attached elements:");
                     for (var j in terminals)
-                        add_reference (terminals[j], hbox);
+                        add_reference (terminals[j], hbox, is_exposed_fragment_item);
                 }
                 var hbox = brailchem_add_element (item_box, 'hbox');
                 brailchem_add_element (hbox, 'description', {}, "Neighbors:");
                 for (var j in nonterminals)
-                    add_reference (nonterminals[j], hbox);
+                    add_reference (nonterminals[j], hbox, is_exposed_fragment_item);
             }
         }
         render_items ('fragment', fragment_list);
