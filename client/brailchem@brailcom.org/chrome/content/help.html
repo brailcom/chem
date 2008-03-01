@@ -9,8 +9,8 @@
     <ul>
       <li><a href="#what-is-brailchem">What is Brailchem</a></li>
       <li><a href="#usage">Usage</a></li>
-      <li><a href="#periodic-table">Periodic Table Application</a></li>
       <li><a href="#molecule-browser">Molecule Browser Application</a></li>
+      <li><a href="#periodic-table">Periodic Table Application</a></li>
       <li><a href="#keys">Overview of Keyboard Commands</a></li>
     </ul>
     
@@ -45,12 +45,12 @@
       the <em>File / New Window</em> menu.
     </p>
 
-    <p>Brailchem is an internet oriented application.  It consists of two
+    <p>Brailchem is an Internet oriented application.  It consists of two
       parts: a client and a server.  The server, basically invisible to the
       user, provides all chemical data to the client.  The client is dumb and
       does not know anything about chemical elements or molecule structures, it
       is just a presentation tool of data retrieved from the server.  So in
-      order to work the client must be connected to internet and have access to
+      order to work the client must be connected to Internet and have access to
       a Brailchem server.  One such server is already preset in the application
       and it is used by default; if you would like to use another one, you can
       set it in the client preferences dialog.</p>
@@ -73,16 +73,82 @@
 
     <p>The following sections describe the Brailchem subapplications.</p>
     
+    <a name="molecule-browser">
+      <h2>Molecule Browser Application</h2>
+    </a>
+
+    <p>Molecule browser is capable of inspecting molecule structures and
+      chemical reactions given in SMILES notation.  The molecule or reaction is
+      written into the input box in the application and by pressing the
+      attached button the given molecule or a chemical reaction consisting of
+      several molecules is inserted in a browsable expanded form.</p>
+
+    <p>The application works by connecting to the server part of Brailchem and
+      asking it for information represented by the given SMILES string.  The
+      server tries to identify molecule names and to expand molecules into
+      sequences of atoms and <em>fragments</em> connected by bonds.  Fragments
+      are well known groups of atoms identified by the server (e.g. carboxyl
+      group) which can be represented by a single item rather than an
+      unnecessarily complex list of single atoms.</p>
+
+    <p>When a molecule is inspected (for instance <em>acetic acid</em> is
+      written as <code>CC(=O)O</code> in SMILES notation), its name, list of
+      basic properties (such as summary formula or molecular weight) and
+      sequence of atoms and fragments are displayed.  Each atom or fragment
+      displays all items connected to it through bonds.  These items can be of
+      two kinds: <em>attached elements</em> which connect just to this atom and
+      nothing else (so there is no need to jump to them from here to explore
+      the molecule structure) and <em>neighbors</em> which can be connected to
+      multiple atoms.</p>
+
+    <p>You can navigate through the items by using the
+      standard <code>TAB</code> and <code>Shift+TAB</code> Firefox navigational
+      keys or by using one of the special application keys:</p>
+
+    <table>
+      <tr><td><code>Control+A</code></td><td>jump to molecule atoms; using
+          this key you can jump from the molecule name directly to the list of
+          atoms and fragments without walking through the molecule
+          properties</td></tr>
+      <tr><td><code>Control+N</code></td><td>go to the next atom</td></tr>
+      <tr><td><code>Control+P</code></td><td>go to the previous atom</td></tr>
+    </table>
+
+    <p>Additionally when pressing <code>Enter</code> on any of the attached
+      elements or neighbor names, the focus jumps to the referenced
+      element.</p>
+
+    <p>If a displayed molecule contains any fragments, a check box is added at
+      the end.  This check box can switch between atom groups view, displaying
+      fragments instead of certain groups of atoms, and simple atom view,
+      displaying just all atoms and no fragments.</p>
+
+    <p>When inspecting a whole chemical reaction rather than a single molecule
+      (for instance <code>CC(=O)O.CCO>[H+]>CC(=O)OCC.O</code> in SMILES
+      notation), the view is a bit more complex.  First in the page a summary
+      of reactants, reagents and products is displayed.  You can
+      press <code>Enter</code> on any of the reaction component names to jump
+      to the corresponding molecule view.  Then molecules are displayed in the
+      same way as when inspecting a single molecule.</p>
+
+    <p>The same command keys are available as in single molecule browsing.  The
+      atom movement keys restrict movement just to a current molecule.
+      Additional keys are defined to move across the molecules:</p>
+    
+    <table>
+      <tr><td><code>Control+Arrow Down</code></td><td>go to the next displayed molecule</td></tr>
+      <tr><td><code>Control+Arrow Up</code></td><td>go to the previous displayed molecule</td></tr>
+      <tr><td><code>Control+T</code></td><td>jump back to reaction summary</td></tr>
+    </table>
+    
     <a name="periodic-table">
       <h2>Periodic Table Application</h2>
     </a>
 
-    <p>
-      Periodic table provides information about elements, their properties and
+    <p>Periodic table provides information about elements, their properties and
       relations.  You can navigate through it using arrow keys while pressing
       the Shift modifier.  Pressing an element button using the Enter key shows
-      complete information about the given element.
-    </p>
+      complete information about the given element. </p>
 
     <p>For the purpose of easier orientation the periodic table is split
       according to the traditional presentation style in two parts: The main
@@ -107,8 +173,7 @@
       specify more than one filter, only those elements which satisfy all the
       given conditions are present in the resulting filtered set.  Defined
       filters can be disabled or enabled using the check box in the filters
-      box.
-    </p>
+      box.</p>
 
     <p>You can use the following keyboard shortcuts to work with filters:</p>
 
@@ -134,16 +199,8 @@
     <table>
       <tr><td><code>Control+S dot</code></td><td>finish element selection and activate it</td></tr>
       <tr><td><code>Control+S A</code></td><td>select all currently active elements</td></tr>
-      <tr><td><code>Control+S N</code></td><td>deselect all elements</td></tr>
+      <tr><td><code>Control+S N</code></td><td>unselect all elements</td></tr>
     </table>
-    
-    <a name="molecule-browser">
-      <h2>Molecule Browser Application</h2>
-    </a>
-
-    <p>Right now this application serves mostly as a proof of concept of
-      communication between the client and the server.  This application is in
-      development and will change significantly.</p>
 
     <a name="keys">
       <h2>Overview of Keyboard Commands</h2>
@@ -153,6 +210,18 @@
 
     <table>
       <tr><td><code>Control+Q</code></td><td>Close Brailchem window</td></tr>
+    </table>
+
+    <h3>Molecule Browser</h3>
+
+    <table>
+      <tr><td><code>Enter</code></td><td>follow reference</td></tr>
+      <tr><td><code>Control+A</code></td><td>jump to molecule atoms</td></tr>
+      <tr><td><code>Control+N</code></td><td>go to the next atom within a molecule</td></tr>
+      <tr><td><code>Control+P</code></td><td>go to the previous atom within a molecule</td></tr>
+      <tr><td><code>Control+Arrow Down</code></td><td>go to the next displayed molecule</td></tr>
+      <tr><td><code>Control+Arrow Up</code></td><td>go to the previous displayed molecule</td></tr>
+      <tr><td><code>Control+T</code></td><td>jump back to reaction summary</td></tr>
     </table>
     
     <h3>Periodic Table</h3>
@@ -170,8 +239,7 @@
       <tr><td><code>Control+F ?</code></td><td>show currently filtered elements</td></tr>
       <tr><td><code>Control+S dot</code></td><td>finish element selection and activate it</td></tr>
       <tr><td><code>Control+S A</code></td><td>select all currently active elements</td></tr>
-      <tr><td><code>Control+S N</code></td><td>deselect all elements</td></tr>
+      <tr><td><code>Control+S N</code></td><td>unselect all elements</td></tr>
     </table>
-    
   </body>
 </html>
