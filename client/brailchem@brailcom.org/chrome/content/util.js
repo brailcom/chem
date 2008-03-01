@@ -39,6 +39,16 @@ function brailchem_filter_element (func, element)
     return children;
 }
 
+function brailchem_elements_by_attribute (element, tag, attribute, value)
+{
+    var nodes = element.getElementsByTagName (tag);
+    var result_nodes = [];
+    for (var i = 0; i < nodes.length; i++)
+        if (nodes[i].getAttribute (attribute) == value)
+            result_nodes.push (nodes[i]);
+    return result_nodes;
+}
+
 function brailchem_add_element (parent, tag, attributes, text)
 {
     var child = parent.ownerDocument.createElement (tag);
@@ -203,6 +213,11 @@ function brailchem_focus_callback ()
     var iframe = document.getElementById ('brailchem-frame');
     var other_document = (iframe ? iframe.contentDocument : parent.document);
     other_document.getElementById ('brailchem-heading').setAttribute ('brailchem-active', 'false');
+}
+
+function brailchem_focus_id (id)
+{
+    brailchem_focus (document.getElementById (id));
 }
 
 function brailchem_focus (element, subtree)

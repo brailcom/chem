@@ -19,6 +19,7 @@
 
   <stringbundleset>
     <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
+    <stringbundle id="brailchem-molecule-strings" src="chrome://brailchem/locale/molecule.properties"/>
   </stringbundleset>
   
   <keyset>
@@ -32,8 +33,8 @@
   <description id="brailchem-primary">&molecule.text.intro;</description>
   <hbox id="molecule-input-box">
     <label control="molecule-textbox">&molecule.label.smiles;</label>
-    <textbox id="molecule-textbox" value="Oc1ccccc1C" accesskey="M"/>
-    <button id="molecule-button" label="&molecule.button.smiles;" oncommand="brailchem_browse_molecule();"/>
+    <textbox id="molecule-textbox" value="CC(=O)O.CCO>[H+]>CC(=O)OCC.O" accesskey="M"/>
+    <button id="molecule-button" label="&molecule.button.smiles;" oncommand="brailchem_browse_smiles();"/>
   </hbox>
 
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
