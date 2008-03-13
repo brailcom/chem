@@ -4,6 +4,9 @@ import oasa
 import os, sys
 from error_logger import ErrorLogger
 from detail_periodic_table import symbol2properties
+import i18n
+_ = i18n.TranslatableTextFactory("brailchem")
+
 
 class ChemReaderException (Exception):
 
@@ -28,6 +31,7 @@ class ChemReader:
     formats = { "SMILES": "_read_smiles",
                 "Molfile": "_read_molfile",
                 "summary": "_read_summary_formula",
+                "name": "_read_name",
                 }
 
     table_key_to_data_type = {'ATOM_SYMBOL':'ATOM_SYMBOL',
@@ -79,12 +83,12 @@ class ChemReader:
         mol_data = MultiView(id2t("MOLECULE"))
         # add different views
         try:
-            name = oasa.name_database.name_molecule(mol, database_file=os.path.join(sys.path[0],"oasa","oasa","names.db"))
+            names = oasa.structure_database.find_molecule_in_database(mol, database_file=os.path.join(sys.path[0],"oasa","oasa","structures.db"))
         except oasa.oasa_exceptions.oasa_inchi_error, e:
             ErrorLogger.warning("InChI program not properly installed, InChI and name generation won't work. Read README.setup for more info.")
         else:
-            if name:
-                mol_data.add_view(LanguageDependentValue(id2t("NAME"), {'en':name['name']}))
+            if names:
+                mol_data.add_view(LanguageDependentValue(id2t("NAME"), {'en':names[0][1]}))
         mol_data.add_view(Value(id2t("MW"), mol.weight))
         mol_data.add_view(Value(id2t("SUM"), str(mol.get_formula_dict())))
         mol_data_frags = Complex(id2t("FRAGMENTS"))
@@ -113,21 +117,35 @@ class ChemReader:
             a_data = _atom_to_a_data[atom]
             for e,n in atom.get_neighbor_edge_pairs():
                 a_data.add_neighbor(Relation(id2t(self.bond_order_to_relation[e.order]), _atom_to_a_data[n]))
-        # fragment support - just for testing
-        for (smiles_text,name,compound_type) in [("C(=O)H","carbonyl group","aldehyde"),
-                                                 ("C(=O)OH","carboxyl group","carboxylic acid")]:
-            fragment_mol = oasa.smiles.text_to_mol(smiles_text)
-            for fragment in mol.select_matching_substructures(fragment_mol, implicit_freesites=True):
-                frag_data = PartMultiView(id2t("FRAGMENT"))
-                frag_data.add_view(LanguageDependentValue(id2t("FRAGMENT_NAME"), {"en":name}))
-                frag_data.add_view(LanguageDependentValue(id2t("FRAGMENT_COMPOUND_TYPE"), {"en":compound_type}))
-                frag_data_atoms = Complex(id2t("ATOMS"))
-                frag_data.add_view(frag_data_atoms)
-                for atom in fragment:
-                    frag_data_atoms.add_part(Relation(id2t('REL_COMPOSED_FROM'), _atom_to_a_data[atom]))
-                mol_data_frags.add_part(Relation(id2t('REL_COMPOSED_FROM'), frag_data))
-
-        # // fragment support
+        # fragment support
+        ssm = oasa.subsearch.substructure_search_manager()
+        hits = ssm.find_substructures_in_mol(mol)
+        rings = [h for h in hits if isinstance(h, oasa.subsearch.ring_match)]
+        _hit_to_data = {}
+        for hit in hits:
+            frag_data = PartMultiView(id2t("FRAGMENT"))
+            _hit_to_data[hit] = frag_data
+            frag_data.add_view(LanguageDependentValue(id2t("FRAGMENT_NAME"), {"en":hit.substructure.name}))
+            frag_data.add_view(LanguageDependentValue(id2t("FRAGMENT_COMPOUND_TYPE"), {"en":hit.substructure.compound_type}))
+            frag_data_atoms = Complex(id2t("ATOMS"))
+            frag_data.add_view(frag_data_atoms)
+            for atom in hit.get_significant_atoms():
+                frag_data_atoms.add_part(Relation(id2t('REL_COMPOSED_FROM'), _atom_to_a_data[atom]))
+            mol_data_frags.add_part(Relation(id2t('REL_COMPOSED_FROM'), frag_data))
+        # add relations between rings
+        for i,ring1 in enumerate(rings):
+            for ring2 in rings[i+1:]:
+                common_atoms = set( ring1.get_significant_atoms()) & set( ring2.get_significant_atoms())
+                if common_atoms:
+                    d1 = _hit_to_data[ring1]
+                    d2 = _hit_to_data[ring2]
+                    count = len( common_atoms)
+                    data_type = DataType("SHARED_ATOMS",
+                                         _("%d shared atoms")%count,
+                                         _("The ring shares %d atoms with the neighbor ring"%count))
+                    d1.add_neighbor(Relation(data_type, d2))
+                    d2.add_neighbor(Relation(data_type, d1))
+                    # // fragment support
         return mol_data
 
     @classmethod
@@ -173,6 +191,19 @@ class ChemReader:
                 a.valency = 0
                 mol.add_vertex(a)
         return [mol]
+
+    @classmethod
+    def _read_name(self, text):
+        res = oasa.structure_database.get_compounds_from_database( name=text)
+        def _key(hit):
+            return len(hit[3])
+        # find the hit with shortest smiles - this should be appropriate in most cases
+        res.sort(key=_key)
+        if res:
+            converter = oasa.smiles.converter()
+            return converter.read_text(res[0][3])
+        return []
+
     #// reader methods for different formats
 
     #// ---------- private methods ----------

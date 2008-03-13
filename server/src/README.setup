@@ -70,3 +70,26 @@ to point to the executable InChI program you just unpacked, e.g.:
     oasa_inchi_binary_path = "/usr/local/bin/cInChI-1"
 --
 
+pysqlite
+--------------------------------------------------
+Because the name database is stored using the SQLite database engine, you also
+need to install the pysqlite library.
+Before the first use, it is also needed to create the SQLite database out of raw
+data. To do this you have to run:
+
+>> cd oasa/oasa
+>> python structure_database.py structures.txt.gz
+
+This should create the database file structures.db in the oasa/oasa directory.
+This should be enough to have the database setup. To test it you could run
+
+>> python structure_database.py
+
+in the same directory. It should not crash and should print out a few test results
+
+
+mhash
+--------------------------------------------------
+For a complete setup it is also good to have the python mhash library installed.
+It is only required for some operations (like querying the name database using
+InChI), but when installed, it ensures maximum compatibility with the OASA library.

@@ -1,3 +1,16 @@
+2008-03-13   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: added support for querying structures by name;
+	added support for fragments;
+	name support was changed and uses structure_database instead of
+	name_database. This new database is based on pysqlite.
+	Setup of this database is described in README.setup
+
+	* twistd/server.py: added support for querying structures by name -
+	using address /name/XXX structure with name XXX will be retrieved.
+	This functionality requires newest oasa + pysqlite installed
+	
+	
 2008-02-21   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: support for reactions added (only SMILES could produce reactions for now);

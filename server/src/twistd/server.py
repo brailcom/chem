@@ -72,9 +72,9 @@ class ChemInterface(object):
             selected_language = language
         return brailchem.i18n.GettextTranslator(selected_language, default_domain='brailchem', fallback=True)
         
-    def _retrieve_molecule_data(self, smiles):
+    def _retrieve_molecule_data(self, chem_text, format="SMILES"):
         session = self._session
-        data = session.process_string(smiles, format="SMILES")
+        data = session.process_string(chem_text, format=format)
         return data
 
     def _chem_to_dom(self, data, language):
@@ -129,8 +129,8 @@ class ChemInterface(object):
         transform(data, dom)
         return dom
 
-    def _molecule_dom(self, smiles, language):
-        data = self._retrieve_molecule_data(smiles)
+    def _molecule_dom(self, chem_text, format, language):
+        data = self._retrieve_molecule_data(chem_text, format=format)
         dom = self._chem_to_dom(data, language)
         return dom
 
@@ -176,7 +176,7 @@ class ChemInterface(object):
 
     # Public methods
 
-    def molecule_details(self, smiles, language):
+    def molecule_details(self, chem_text, format, language):
         """Return information about the given molecule as a DOM object.
 
         Arguments:
@@ -184,10 +184,10 @@ class ChemInterface(object):
           smiles -- molecule name as a string in the SMILES notation
 
         """
-        dom = self._molecule_dom(smiles, language)
+        dom = self._molecule_dom(chem_text, format, language)
         return dom
     
-    def molecule_details_xml(self, smiles, language):
+    def molecule_details_xml(self, chem_text, format, language):
         """Return information about the given molecule as an XML unicode.
 
         Arguments:
@@ -195,7 +195,7 @@ class ChemInterface(object):
           smiles -- molecule name as a string in the SMILES notation
 
         """
-        dom = self._molecule_dom(smiles, language)
+        dom = self._molecule_dom(chem_text, format, language)
         xml = dom.toprettyxml(' ')
         return xml
 
@@ -217,6 +217,7 @@ class WebTree(twisted.web.resource.Resource):
         twisted.web.resource.Resource.__init__(self)
         self._service = service
         self.putChild('smiles', SmilesWebResource(service))
+        self.putChild('name', NameWebResource(service))
         self.putChild('periodic', PeriodicWebResource(service))
 
 class XMLWebResource(twisted.web.resource.Resource):
@@ -245,7 +246,7 @@ class SmilesWebResource(XMLWebResource):
         else:
             smiles = self._default_smiles
         language = request.args.get('language', ['en'])[0]
-        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(smiles, language))
+        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(smiles, "SMILES", language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
 
@@ -259,6 +260,24 @@ class PeriodicWebResource(XMLWebResource):
         defer = twisted.internet.defer.succeed(self._service.periodic_table_xml(language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
+
+class NameWebResource(XMLWebResource):
+    """Name request web handler."""
+
+    isLeaf = True
+
+    _default_name = 'benzene'
+
+    def render_GET(self, request):
+        if request.postpath:
+            name = request.postpath[0]
+        else:
+            name = self._default_name
+        language = request.args.get('language', ['en'])[0]
+        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(name, "name", language))
+        defer.addCallback(self._cb_render_GET, request)
+        return twisted.web.server.NOT_DONE_YET
+
 
 ### Application setup
 
