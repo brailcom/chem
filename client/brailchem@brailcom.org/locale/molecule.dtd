@@ -1,4 +1,5 @@
 <!ENTITY molecule.header "Molecule Browser">
-<!ENTITY molecule.text.intro "Write a molecule or a reaction in the SMILES notation to the input box and press the following button to inspect the molecule.">
-<!ENTITY molecule.label.smiles "Molecule or reaction in SMILES">
-<!ENTITY molecule.button.smiles "Inspect molecule or reaction">
+<!ENTITY molecule.text.intro "Write a molecule name or a molecule/reaction in the SMILES notation to the input box and press one of the following buttons to inspect the molecule.">
+<!ENTITY molecule.label.smiles "Molecule or reaction">
+<!ENTITY molecule.button.smiles "Inspect molecule or reaction as SMILES">
+<!ENTITY molecule.button.name "Inspect molecule by name">

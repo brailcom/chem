@@ -30,13 +30,19 @@ function brailchem_molecule (smiles)
 function brailchem_browse_on_start (document, smiles)
 {
     document.getElementById ('molecule-textbox').setAttribute ('value', smiles);
-    brailchem_display_smiles (document, smiles);
+    brailchem_display_object (document, smiles, 'smiles');
 }
 
 function brailchem_browse_smiles ()
 {
     var smiles = document.getElementById ('molecule-textbox').value;
-    brailchem_display_smiles (document, smiles);
+    brailchem_display_object (document, smiles, 'smiles');
+}
+
+function brailchem_browse_name ()
+{
+    var name = document.getElementById ('molecule-textbox').value;
+    brailchem_display_object (document, name, 'name');
 }
 
 function brailchem_mol_element_text (element) {
@@ -68,13 +74,13 @@ function brailchem_mol_element_value (element)
     return null;
 }
 
-function brailchem_display_smiles (document, smiles)
+function brailchem_display_object (document, input_value, format)
 {
     brailchem_wait_start ();
     brailchem_mol_display_fragments = true;
     brailchem_mol_last_reaction_element = null;
     // Fetch data
-    var data = brailchem_call_server ('smiles', smiles);
+    var data = brailchem_call_server (format, input_value);
     if (data == null)
         return;
     // Remove old contents

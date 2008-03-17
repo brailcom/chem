@@ -38,6 +38,7 @@
     <label control="molecule-textbox">&molecule.label.smiles;</label>
     <textbox id="molecule-textbox" value="CC(=O)O.CCO>[H+]>CC(=O)OCC.O" accesskey="M"/>
     <button id="molecule-button" label="&molecule.button.smiles;" oncommand="brailchem_browse_smiles();"/>
+    <button id="molecule-button" label="&molecule.button.name;" oncommand="brailchem_browse_name();"/>
   </hbox>
 
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
