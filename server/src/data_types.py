@@ -32,6 +32,7 @@ class DataTypeFactory:
 
     _data_types = {"RESULT": (_("Result"), _("Result"), 1),  # result is the uppermost node in the hierarchy
 
+                   "MOL_PICTURE": (_("Picture"), _("Picture of the molecule"), 25),
                    "NAME": (_("Name"), _("Compound name"), 20),
                    'MF': (_('Molecular formula'),_('Molecular formula'), 15),
                    'SUM': (_("Summary formula"), _("Summary formula"), 10),

@@ -145,7 +145,13 @@ class ChemReader:
                                          _("The ring shares %d atoms with the neighbor ring"%count))
                     d1.add_neighbor(Relation(data_type, d2))
                     d2.add_neighbor(Relation(data_type, d1))
-                    # // fragment support
+        # // fragment support
+        # svg picture support
+        for (atom,data) in _atom_to_a_data.iteritems():
+            atom.properties_['svg_id'] = str(data.id())
+        svg_xml = self._generate_svg(mol)
+        mol_data.add_view(Value(id2t("MOL_PICTURE"), svg_xml))
+        # // svg picture support
         return mol_data
 
     @classmethod
@@ -169,6 +175,27 @@ class ChemReader:
         return r_data
 
     ## ---------- private methods ----------
+
+    @classmethod
+    def _generate_svg(self, mol):
+        def add_circles( self):
+          for v in self.molecule.vertices:
+            if 'svg_id' in v.properties_:
+              id = "h-" + v.properties_['svg_id']
+            else:
+              id = ""
+            self._draw_circle( self.top,
+                               self.transformer.transform_xy(v.x,v.y),
+                               radius=8,
+                               fill_color="#f00",
+                               stroke_color="#000",
+                               id=id)
+        from oasa import svg_out
+        svg_out = svg_out.svg_out()
+        mol.normalize_bond_length( 30)
+        svg = svg_out.mol_to_svg(mol, after=add_circles)
+        return svg.toxml()
+
         
     # reader methods for different formats
     @classmethod

@@ -1,3 +1,8 @@
+2008-04-01   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: added support for SVG generation.
+
+	
 2008-03-13   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: added support for querying structures by name;
