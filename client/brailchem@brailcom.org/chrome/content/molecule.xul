@@ -42,7 +42,7 @@
     <button id="molecule-button" label="&molecule.button.name;" oncommand="brailchem_browse_name();"/>
   </hbox>
 
-  <hbox>
+  <hbox flex="1">
     <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
       <box id="molecule-display-box" orient="vertical" style="-moz-user-focus: normal">
         <description id="brailchem-molecule-heading" class="header" level="1"/>
