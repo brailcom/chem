@@ -353,8 +353,6 @@ function brailchem_display_molecule_image (image)
         for (var i = 0; i < children.length; i++)
             set_namespace (children[i]);
     }
-    image_element.setAttribute ('width', '200');
-    image_element.setAttribute ('height', '200');
     image_element.setAttribute ('id', 'brailchem-molecule-image');
     image_box.replaceChild (image_element, image_node);
     brailchem_mol_highlighted_image_element = null;
