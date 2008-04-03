@@ -9,6 +9,7 @@
         flex="1"
         style="-moz-user-focus: normal;"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:svg="http://www.w3.org/2000/svg"
         xmlns:html="http://www.w3.org/1999/xhtml">
   <script src="util.js"/>
   <script src="error.js"/>
@@ -41,10 +42,15 @@
     <button id="molecule-button" label="&molecule.button.name;" oncommand="brailchem_browse_name();"/>
   </hbox>
 
-  <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
-    <box id="molecule-display-box" orient="vertical" style="-moz-user-focus: normal">
-      <description id="brailchem-molecule-heading" class="header" level="1"/>
-      <box id="molecule-display-inner-box" orient="vertical"/>
+  <hbox>
+    <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
+      <box id="molecule-display-box" orient="vertical" style="-moz-user-focus: normal">
+        <description id="brailchem-molecule-heading" class="header" level="1"/>
+        <box id="molecule-display-inner-box" orient="vertical"/>
+      </box>
+    </scrollbox>
+    <box id="brailchem-molecule-image-box" width="200px" height="200px">
+      <svg:svg id="brailchem-molecule-image" version="1.0" xmlns="http://www.w3.org/2000/svg" width="500" height="500"/>
     </box>
-  </scrollbox>
+  </hbox>
 </window>

@@ -18,6 +18,7 @@
 
 var brailchem_mol_display_fragments = true;
 var brailchem_mol_last_reaction_element = true;
+var brailchem_mol_highlighted_image_element = null;
 
 function brailchem_molecule (smiles)
 {
@@ -122,7 +123,7 @@ function brailchem_display_reaction (element, document, top_box)
             var name_node = brailchem_add_element (molecule_subbox, 'description',
                                                    {id: target_id, 'brailchem-mol-id': target_id, 'brailchem-mol-name': true,
                                                     class: 'header', level: 3, 'brailchem-current': 'false',
-                                                    onfocus: 'brailchem_mol_atom_focus(this)'});
+                                                    onfocus: 'brailchem_mol_atom_focus(this, this)'});
             var name = brailchem_display_molecule (molecules[i], document, molecule_subbox, name_node, target_id);
             var attributes = {'brailchem-target': target_id, class: 'brailchem-reference',
                               onfocus: 'brailchem_mol_last_reaction_element=this'};
@@ -142,11 +143,11 @@ function brailchem_display_molecule (element, document, top_box, start_node, mol
     var name = '';
     var summary = brailchem_display_molecule_summary (element, top_box, name_node);
     if (summary) {
-        var atoms = summary[0], fragments = summary[1];
-        name = summary[2];
+        var atoms = summary[0], fragments = summary[1], name = summary[2], image = summary[3];
         brailchem_display_molecule_pieces (element, atoms, fragments, top_box, references, labels, mol_id);
         if (! mol_id)
             brailchem_focus (name_node);
+        brailchem_display_molecule_image (image);
     }
     return name;
 }
@@ -160,6 +161,7 @@ function brailchem_display_molecule_summary (element, top_box, name_node)
     var atoms = null;
     var fragments = null;
     var children = element.getElementsByTagName ('views')[0].childNodes;
+    var image = null;
     for (var i = 0; i < children.length; i++) {
         var child = children[i];
         if (child.tagName != 'data')
@@ -169,6 +171,11 @@ function brailchem_display_molecule_summary (element, top_box, name_node)
             fragments = child;
         else if (type == 'ATOMS')
             atoms = child;
+        else if (child.getAttribute ('type') == 'MOL_PICTURE') {
+            var xml_image = brailchem_mol_element_value (child);
+            var parser = new DOMParser();
+            image = parser.parseFromString (xml_image, "text/xml");
+        }
         else {
             var property_name = child.getAttribute ('description');
             var property_value = brailchem_mol_element_value (child);
@@ -186,7 +193,7 @@ function brailchem_display_molecule_summary (element, top_box, name_node)
         brailchem_add_element (row, 'description', {value: property.name});
         brailchem_add_element (row, 'description', {}, property.value);
     }
-    return [atoms, fragments, name];
+    return [atoms, fragments, name, image];
 }
 
 function brailchem_display_molecule_pieces (document_element, atoms_element, fragments_element, box, references, labels, mol_id)
@@ -270,7 +277,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 var attributes = {'brailchem-target': neighbor_data.id,
                                   value: label,
                                   'class': 'brailchem-reference',
-                                  onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'};
+                                  onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode, this)'};
                 if (neighbor_id != item_id)
                     attributes['brailchem-ghost-akin'] = 'fragment';
                 brailchem_add_element (hbox, 'brailchemreference', attributes);
@@ -301,7 +308,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 var neighbors = item.neighbors;
                 var hbox = brailchem_add_element (item_box, 'hbox');
                 brailchem_add_element (hbox, 'description',
-                                       {id: id, class: item_class, onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode)'},
+                                       {id: id, class: item_class, onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode, this)'},
                                        label);
                 var terminals = [];
                 var nonterminals = [];
@@ -331,14 +338,62 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
     }
 }
 
+function brailchem_display_molecule_image (image)
+{
+    var image_box = document.getElementById ('brailchem-molecule-image-box');
+    var image_node = document.getElementById ('brailchem-molecule-image');
+    var image_element = image.documentElement;
+    function set_namespace (element) 
+    {
+        var tag = element.tagName;
+        if (! tag)
+            return;
+        element.prefix = 'svg';
+        var children = element.children;
+        for (var i = 0; i < children.length; i++)
+            set_namespace (children[i]);
+    }
+    image_element.setAttribute ('width', '200');
+    image_element.setAttribute ('height', '200');
+    image_element.setAttribute ('id', 'brailchem-molecule-image');
+    image_box.replaceChild (image_element, image_node);
+    brailchem_mol_highlighted_image_element = null;
+}
+
+function brailchem_highlight_molecule_image (element)
+{
+    var id = element.id;
+    if (! id)
+        return;
+    var element_to_highlight = document.getElementById ('h-'+id);
+    if (element_to_highlight) {
+        element_to_highlight.setAttribute ('stroke', '#800');
+        element_to_highlight.setAttribute ('stroke-opacity', 1);
+        element_to_highlight.setAttribute ('fill-opacity', 0.5);
+    }
+    if (brailchem_mol_highlighted_image_element && brailchem_mol_highlighted_image_element != element_to_highlight) {
+        brailchem_mol_highlighted_image_element.setAttribute ('stroke-opacity', 0);
+        brailchem_mol_highlighted_image_element.setAttribute ('fill-opacity', 0);
+        brailchem_mol_highlighted_image_element = null;
+    }
+    brailchem_mol_highlighted_image_element = element_to_highlight;
+}
+
+function brailchem_mol_focus (element)
+{
+    brailchem_highlight_molecule_image (element);
+    brailchem_focus (element);
+}
+
 // Callbacks
 
-function brailchem_mol_atom_focus (element)
+function brailchem_mol_atom_focus (element, image_element)
 {
     var atoms = document.getElementsByAttribute ('brailchem-current', 'true');
     for (var i = 0; i < atoms.length; i++)
         atoms[i].setAttribute ('brailchem-current', 'false');
     element.setAttribute ('brailchem-current', 'true');
+    brailchem_highlight_molecule_image (image_element);
 }
 
 function brailchem_mol_toggle_fragments (element)
@@ -403,7 +458,7 @@ function brailchem_mol_move_object (forward, kind)
         brailchem_message ('brailchemMoleculeNoNextAtom', 'brailchem-molecule-strings');
         return;
     }
-    brailchem_focus (elements[index], true);
+    brailchem_mol_focus (elements[index], true);
 }
 
 function brailchem_mol_move_atom (forward)
@@ -439,12 +494,12 @@ function brailchem_mol_previous_molecule ()
 function brailchem_mol_go_reaction ()
 {
     if (brailchem_mol_last_reaction_element)
-        brailchem_focus (brailchem_mol_last_reaction_element);
+        brailchem_mol_focus (brailchem_mol_last_reaction_element);
 }
 
 function brailchem_follow_reference (element)
 {
     var id = element.getAttribute ('brailchem-target');
     var target = document.getElementById (id);
-    brailchem_focus (target);
+    brailchem_mol_focus (target);
 }
