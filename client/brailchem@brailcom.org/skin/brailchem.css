@@ -66,7 +66,7 @@ description.header[level="5"]
   -moz-binding: url('chrome://brailchem/content/brailchem.xml#reference');
 }
 
-.brailchem-atom-box *:focus, .brailchem-fragment-box *:focus, .brailchem-reaction-box *:focus, #brailchem-element-details-box *:focus
+.brailchem-atom-box *:focus, .brailchem-fragment-box *:focus, .brailchem-reaction-box *:focus, #brailchem-element-details-box *:focus, *:focus
 {
   border: 1px dotted black;
 }
