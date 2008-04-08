@@ -98,7 +98,7 @@ class ChemInterface(object):
                 long_description = data_type.long_description()
                 if isinstance(long_description, brailchem.i18n.TranslatableText):
                     long_description = long_description.translate(translator)
-                attributes = dict(id=id, type=data_type_id, description=description, long=long_description)
+                attributes = dict(id=id, type=data_type_id, description=description, long=long_description, priority=data.priority())
                 data_node = add_element(node, 'data', attributes=attributes)
                 if isinstance(data, LanguageDependentValue):
                     value = data.value(language)[1]

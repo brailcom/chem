@@ -91,6 +91,7 @@ class ChemReader:
                 mol_data.add_view(LanguageDependentValue(id2t("NAME"), {'en':names[0][1]}))
         mol_data.add_view(Value(id2t("MW"), mol.weight))
         mol_data.add_view(Value(id2t("SUM"), str(mol.get_formula_dict())))
+        mol_data.add_view(Value(id2t("MOL_CHARGE"), mol.charge))
         mol_data_frags = Complex(id2t("FRAGMENTS"))
         mol_data.add_view(mol_data_frags)
         mol_data_atoms = Complex(id2t("ATOMS"))
@@ -98,6 +99,8 @@ class ChemReader:
         _atom_to_a_data = {} # maps oasa atoms to brailchem data
         for atom in mol.atoms:
             a_data = PartMultiView(id2t("ATOM"))
+            # charge
+            a_data.add_view(Value(id2t("ATOM_CHARGE"), atom.charge))
             # element names in diffent languages
             a_data.add_view(LanguageDependentValue(id2t("ELEMENT_NAME"), symbol2properties[atom.symbol]['NAMES']))
             # description is also langugage dependent
