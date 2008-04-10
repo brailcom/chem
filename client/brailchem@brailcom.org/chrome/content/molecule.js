@@ -333,7 +333,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         // Fragment display switch
         if (fragment_list.length > 0)
             brailchem_add_element (box, 'checkbox', {id: 'brailchem-mol-fragment-switch', label: "Display atom groups",
-                                                     checked: brailchem_mol_display_fragments,
+                                                     checked: brailchem_mol_display_fragments, accesskey: 'F',
                                                      oncommand: 'brailchem_mol_toggle_fragments(this)'});
     }
 }
