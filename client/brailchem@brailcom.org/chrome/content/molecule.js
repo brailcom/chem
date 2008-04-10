@@ -334,7 +334,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         if (fragment_list.length > 0)
             brailchem_add_element (box, 'checkbox', {id: 'brailchem-mol-fragment-switch',
                                                      label: brailchem_string ('brailchemMoleculeDisplayGroups', 'brailchem-molecule-strings'),
-                                                     checked: brailchem_mol_display_fragments, accesskey: 'F',
+                                                     checked: brailchem_mol_display_fragments, accesskey: 'G',
                                                      oncommand: 'brailchem_mol_toggle_fragments(this)'});
     }
 }
