@@ -156,7 +156,7 @@ function brailchem_display_molecule_summary (element, top_box, name_node)
 {
     var document = top_box.ownerDocument;
     var molecule_element = element;
-    var name = "Unknown molecule";
+    var name = brailchem_string ('brailchemMoleculeUnknown', 'brailchem-molecule-strings');
     var properties = [];
     var atoms = null;
     var fragments = null;
@@ -323,7 +323,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                         add_reference (terminals[j], hbox, is_exposed_fragment_item);
                 }
                 var hbox = brailchem_add_element (item_box, 'hbox');
-                brailchem_add_element (hbox, 'description', {}, "Neighbors:");
+                brailchem_add_element (hbox, 'description', {}, brailchem_string ('brailchemMoleculeNeighbors', 'brailchem-molecule-strings'));
                 for (var j in nonterminals)
                     add_reference (nonterminals[j], hbox, is_exposed_fragment_item);
             }
@@ -332,7 +332,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         render_items ('atom', atom_list);
         // Fragment display switch
         if (fragment_list.length > 0)
-            brailchem_add_element (box, 'checkbox', {id: 'brailchem-mol-fragment-switch', label: "Display atom groups",
+            brailchem_add_element (box, 'checkbox', {id: 'brailchem-mol-fragment-switch',
+                                                     label: brailchem_string ('brailchemMoleculeDisplayGroups', 'brailchem-molecule-strings'),
                                                      checked: brailchem_mol_display_fragments, accesskey: 'F',
                                                      oncommand: 'brailchem_mol_toggle_fragments(this)'});
     }
