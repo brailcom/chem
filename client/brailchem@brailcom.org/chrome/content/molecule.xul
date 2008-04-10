@@ -4,7 +4,6 @@
 <!DOCTYPE window SYSTEM "chrome://brailchem/locale/molecule.dtd">
 
 <window id="brailchem-molecule-window"
-        title="Brailchem molecule viewer window"
         orient="vertical"
         flex="1"
         style="-moz-user-focus: normal;"

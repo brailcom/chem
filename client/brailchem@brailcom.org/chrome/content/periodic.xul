@@ -4,7 +4,6 @@
 <!DOCTYPE window SYSTEM "chrome://brailchem/locale/periodic.dtd">
 
 <window id="brailchem-periodic-window"
-        title="Brailchem periodic table window"
         orient="vertical"
         style="-moz-user-focus: normal;"
         onkeypress="brailchem_process_key(event)"
