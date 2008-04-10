@@ -358,6 +358,11 @@ function brailchem_alert (message)
     brailchem_report (brailchem_string ('brailchemErrorWindow', 'brailchem-strings'), message);
 }
 
+function brailchem_info (message)
+{
+    brailchem_report (brailchem_string ('brailchemMessageWindow', 'brailchem-strings'), message);
+}
+
 function brailchem_report (title, message)
 {
     var prompt_service = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService (Components.interfaces.nsIPromptService);

@@ -63,5 +63,5 @@ function brailchem_upgrade ()
     if (version == null || version < remote_version)
         open ('http://www.freebsoft.org/pub/projects/brailchem/brailchem.xpi');
     else
-        brailchem_alert (brailchem_string ('brailchemNewestVersion', 'brailchem-strings'));
+        brailchem_info (brailchem_string ('brailchemNewestVersion', 'brailchem-strings'));
 }
