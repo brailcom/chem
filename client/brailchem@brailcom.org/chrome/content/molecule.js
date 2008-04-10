@@ -317,15 +317,23 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                     if (fragment_items[neighbor.id] != id)
                         (item_data[neighbor.id].neighbors.length > 1 ? nonterminals : terminals).push (neighbor);
                 }
-                if (terminals.length > 0) {
-                    brailchem_add_element (hbox, 'description', {}, attached_elements_string);
-                    for (var j in terminals)
-                        add_reference (terminals[j], hbox, is_exposed_fragment_item);
-                }
+                var number_of_neighbors = nonterminals.length + terminals.length;
                 var hbox = brailchem_add_element (item_box, 'hbox');
-                brailchem_add_element (hbox, 'description', {}, brailchem_string ('brailchemMoleculeNeighbors', 'brailchem-molecule-strings'));
+                var neighbors_string = (number_of_neighbors == 1 ? 'brailchemMoleculeNeighbor1' :
+                                        number_of_neighbors == 2 ? 'brailchemMoleculeNeighbor2' :
+                                        number_of_neighbors == 3 ? 'brailchemMoleculeNeighbor3' :
+                                        number_of_neighbors == 4 ? 'brailchemMoleculeNeighbor4' :
+                                        'brailchemMoleculeNeighbors');
+                var neighbors_label = number_of_neighbors + ' ' + brailchem_string (neighbors_string, 'brailchem-molecule-strings');
+                var hbox = brailchem_add_element (item_box, 'hbox');
+                brailchem_add_element (hbox, 'description', {}, neighbors_label);
                 for (var j in nonterminals)
                     add_reference (nonterminals[j], hbox, is_exposed_fragment_item);
+                if (terminals.length > 0) {
+                    brailchem_add_element (hbox, 'description', {}, ' * ');
+                    for (var j in terminals)
+                        add_reference (terminals[j], hbox, is_exposed_fragment_item);
+                }                
             }
         }
         render_items ('fragment', fragment_list);
