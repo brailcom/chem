@@ -1,3 +1,8 @@
+2008-04-11   Beda Kosata <kosatab@vscht.cz>
+	
+	* twistd/server.py: priority information was removed from value element
+
+	
 2008-04-08   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: added charge information on molecule and atoms

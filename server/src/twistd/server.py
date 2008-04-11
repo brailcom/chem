@@ -102,15 +102,15 @@ class ChemInterface(object):
                 data_node = add_element(node, 'data', attributes=attributes)
                 if isinstance(data, LanguageDependentValue):
                     value = data.value(language)[1]
-                    add_element(data_node, 'value', text=value, attributes=dict(priority=data.priority()))
+                    add_element(data_node, 'value', text=value)
                 elif isinstance(data, Value):
                     value = data.value()
                     if isinstance(value, list):
-                        list_node = add_element(data_node, 'listvalue', attributes=dict(priority=data.priority()))
+                        list_node = add_element(data_node, 'listvalue')
                         for list_item in value:
                             add_element(list_node, 'value', text=list_item)
                     else:
-                        add_element(data_node, 'value', text=value, attributes=dict(priority=data.priority()))
+                        add_element(data_node, 'value', text=value)
                 if isinstance(data, Complex):
                     parts_node = add_element(data_node, 'parts')
                     for part in data.parts():
