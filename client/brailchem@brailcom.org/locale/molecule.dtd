@@ -3,3 +3,4 @@
 <!ENTITY molecule.label.smiles "Molecule or reaction">
 <!ENTITY molecule.button.smiles "Inspect molecule or reaction as SMILES">
 <!ENTITY molecule.button.name "Inspect molecule by name">
+<!ENTITY molecule.display-groups "Display atom groups">

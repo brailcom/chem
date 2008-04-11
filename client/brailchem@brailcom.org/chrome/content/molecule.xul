@@ -47,6 +47,11 @@
         <description id="brailchem-molecule-heading" class="header" level="1"/>
         <box id="molecule-display-inner-box" orient="vertical"/>
       </box>
+      <checkbox id="brailchem-mol-fragment-switch"
+                label="&molecule.display-groups;"
+                accesskey="G"
+                oncommand="brailchem_mol_toggle_fragments(this)"
+                hidden="true"/>
     </scrollbox>
     <box id="brailchem-molecule-image-box" width="200px" height="200px">
       <svg:svg id="brailchem-molecule-image" version="1.0" xmlns="http://www.w3.org/2000/svg" width="500" height="500"/>

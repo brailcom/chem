@@ -91,10 +91,15 @@ function brailchem_display_object (document, input_value, format)
     var top_element = data.documentElement;
     if (top_element.nodeName == 'inputerror')
         brailchem_display_error (top_element.childNodes[0].nodeValue);
-    if (brailchem_elements_by_attribute (top_element, 'data', 'type', 'REACTION').length > 0)
-        brailchem_display_reaction (top_element, document, top_box);
-    else
-        brailchem_display_molecule (top_element, document, top_box);
+    else {
+        var fragment_checkbox = document.getElementById ('brailchem-mol-fragment-switch');
+        fragment_checkbox.setAttribute ('hidden', 'true');
+        fragment_checkbox.setAttribute ('checked', brailchem_mol_display_fragments);
+        if (brailchem_elements_by_attribute (top_element, 'data', 'type', 'REACTION').length > 0)
+            brailchem_display_reaction (top_element, document, top_box);
+        else
+            brailchem_display_molecule (top_element, document, top_box);
+    }
     brailchem_wait_end ();
 }
 
@@ -357,10 +362,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         render_items ('atom', atom_list);
         // Fragment display switch
         if (fragment_list.length > 0)
-            brailchem_add_element (box, 'checkbox', {id: 'brailchem-mol-fragment-switch',
-                                                     label: brailchem_string ('brailchemMoleculeDisplayGroups', 'brailchem-molecule-strings'),
-                                                     checked: brailchem_mol_display_fragments, accesskey: 'G',
-                                                     oncommand: 'brailchem_mol_toggle_fragments(this)'});
+            document.getElementById ('brailchem-mol-fragment-switch').setAttribute ('hidden', 'false');
     }
 }
 

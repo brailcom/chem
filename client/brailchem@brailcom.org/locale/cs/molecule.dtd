@@ -3,3 +3,4 @@
 <!ENTITY molecule.label.smiles "Molekula nebo reakce">
 <!ENTITY molecule.button.smiles "Zobrazit molekulu nebo reakci ve SMILES">
 <!ENTITY molecule.button.smiles "Zobrazit pojmenovanou molekulu">
+<!ENTITY molecule.display-groups "Zobrazovat skupiny atomů">
