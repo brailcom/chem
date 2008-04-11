@@ -123,7 +123,7 @@ function brailchem_display_reaction (element, document, top_box)
             var name_node = brailchem_add_element (molecule_subbox, 'description',
                                                    {id: target_id, 'brailchem-mol-id': target_id, 'brailchem-mol-name': true,
                                                     class: 'header', level: 3, 'brailchem-current': 'false',
-                                                    onfocus: 'brailchem_mol_atom_focus(this, this)'});
+                                                    onfocus: 'brailchem_mol_atom_focus(this,'+target_id+')'});
             var name = brailchem_display_molecule (molecules[i], document, molecule_subbox, name_node, target_id);
             var attributes = {'brailchem-target': target_id, class: 'brailchem-reference', value: name,
                               onfocus: 'brailchem_mol_last_reaction_element=this'};
@@ -268,7 +268,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         brailchem_add_element (box, 'description', {id: 'brailchem-heading', class: 'header', level: 4}, heading);
         function render_items (kind, list)
         {
-            function add_reference (neighbor, hbox, is_exposed_fragment_item)
+            function add_reference (neighbor, hbox, is_exposed_fragment_item, image_element_id)
             {
                 var neighbor_id = neighbor.id;
                 var item_id = (((! is_exposed_fragment_item) && fragment_items[neighbor_id]) || neighbor_id);                
@@ -277,7 +277,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 var attributes = {'brailchem-target': neighbor_data.id,
                                   value: label,
                                   'class': 'brailchem-reference',
-                                  onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode, this)'};
+                                  onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode, '+image_element_id+')'};
                 if (neighbor_id != item_id)
                     attributes['brailchem-ghost-akin'] = 'fragment';
                 brailchem_add_element (hbox, 'brailchemreference', attributes);
@@ -323,7 +323,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 var neighbors = item.neighbors;
                 var hbox = brailchem_add_element (item_box, 'hbox');
                 brailchem_add_element (hbox, 'description',
-                                       {id: id, class: item_class, onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode, this)'},
+                                       {id: id, class: item_class,
+                                        onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode,'+id+')'},
                                        label);
                 var terminals = [];
                 var nonterminals = [];
@@ -341,13 +342,14 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                                         'brailchemMoleculeNeighbors');
                 var neighbors_label = number_of_neighbors + ' ' + brailchem_string (neighbors_string, 'brailchem-molecule-strings');
                 var hbox = brailchem_add_element (item_box, 'hbox');
-                brailchem_add_element (hbox, 'description', {}, neighbors_label);
+                var box_element_attributes = {onfocus: 'brailchem_highlight_molecule_image('+id+')'};
+                brailchem_add_element (hbox, 'description', box_element_attributes, neighbors_label);
                 for (var j in nonterminals)
-                    add_reference (nonterminals[j], hbox, is_exposed_fragment_item);
+                    add_reference (nonterminals[j], hbox, is_exposed_fragment_item, id);
                 if (terminals.length > 0) {
-                    brailchem_add_element (hbox, 'description', {}, ' * ');
+                    brailchem_add_element (hbox, 'description', box_element_attributes, ' * ');
                     for (var j in terminals)
-                        add_reference (terminals[j], hbox, is_exposed_fragment_item);
+                        add_reference (terminals[j], hbox, is_exposed_fragment_item, id);
                 }                
             }
         }
@@ -382,9 +384,8 @@ function brailchem_display_molecule_image (image)
     brailchem_mol_highlighted_image_element = null;
 }
 
-function brailchem_highlight_molecule_image (element)
+function brailchem_highlight_molecule_image (id)
 {
-    var id = element.id;
     if (! id)
         return;
     var element_to_highlight = document.getElementById ('h-'+id);
@@ -403,19 +404,19 @@ function brailchem_highlight_molecule_image (element)
 
 function brailchem_mol_focus (element)
 {
-    brailchem_highlight_molecule_image (element);
+    brailchem_highlight_molecule_image (element.id);
     brailchem_focus (element);
 }
 
 // Callbacks
 
-function brailchem_mol_atom_focus (element, image_element)
+function brailchem_mol_atom_focus (element, image_element_id)
 {
     var atoms = document.getElementsByAttribute ('brailchem-current', 'true');
     for (var i = 0; i < atoms.length; i++)
         atoms[i].setAttribute ('brailchem-current', 'false');
     element.setAttribute ('brailchem-current', 'true');
-    brailchem_highlight_molecule_image (image_element);
+    brailchem_highlight_molecule_image (image_element_id);
 }
 
 function brailchem_mol_toggle_fragments (element)
