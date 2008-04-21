@@ -28,10 +28,10 @@ class ChemReader:
                               4: 'REL_AROMATIC_BOND'}
 
     # known formats
-    formats = { "SMILES": "_read_smiles",
-                "Molfile": "_read_molfile",
-                "summary": "_read_summary_formula",
-                "name": "_read_name",
+    formats = { "SMILES": ("_read_smiles", _("SMILES")),
+                "Molfile": ("_read_molfile", _("Molfile")),
+                "summary": ("_read_summary_formula", _("Summary formula")),
+                "name": ("_read_name", _("Name")),
                 }
 
     table_key_to_data_type = {'ATOM_SYMBOL':'ATOM_SYMBOL',
@@ -54,12 +54,23 @@ class ChemReader:
         return self.formats.keys()
 
     @classmethod
+    def know_format_names(self):
+        """returns a list of tuples of currently supported formats and their descriptions."""
+        keys = self.formats.keys()
+        keys.sort()
+        return [(key,self.formats[key][1]) for key in keys]
+
+    @classmethod
     def process_string(self, text, format="SMILES"):
         """this is the main method used to process chemical data in a string format to
         the internal representation;"""
         # check if the format is supported
         if format in self.formats:
-            chem_objects = getattr(self,self.formats[format])(text)
+            method,name = self.formats[format]
+            if callable(method):
+                chem_objects = method(text)
+            else:
+                chem_objects = getattr(self,method)(text)
         else:
             raise ChemReaderException("unknown format: "+format)
         # shortcut
@@ -204,7 +215,10 @@ class ChemReader:
     @classmethod
     def _read_smiles(self, text):
         converter = oasa.smiles.converter()
-        return converter.read_text(text)
+        mols = []
+        for line in text.splitlines():
+            mols += converter.read_text(line)
+        return mols
 
     @classmethod
     def _read_molfile(self, text):
@@ -213,27 +227,56 @@ class ChemReader:
 
     @classmethod
     def _read_summary_formula(self, text):
-        sum_dict = oasa.periodic_table.formula_dict(text)
-        mol = oasa.molecule()
-        for (symbol,count) in sum_dict.iteritems():
-            for i in range(count):
-                a = oasa.atom(symbol)
-                a.valency = 0
-                mol.add_vertex(a)
-        return [mol]
+        mols = []
+        for line in text.splitlines():
+            sum_dict = oasa.periodic_table.formula_dict(line)
+            mol = oasa.molecule()
+            for (symbol,count) in sum_dict.iteritems():
+                for i in range(count):
+                    a = oasa.atom(symbol)
+                    a.valency = 0
+                    mol.add_vertex(a)
+            mols.append(mol)
+        return mols
 
     @classmethod
     def _read_name(self, text):
-        res = oasa.structure_database.get_compounds_from_database( name=text)
         def _key(hit):
             return len(hit[3])
-        # find the hit with shortest smiles - this should be appropriate in most cases
-        res.sort(key=_key)
-        if res:
-            converter = oasa.smiles.converter()
-            return converter.read_text(res[0][3])
-        return []
+        mols = []
+        for line in text.splitlines():
+            res = oasa.structure_database.get_compounds_from_database(name=line)
+            # find the hit with shortest smiles - this should be appropriate in most cases
+            res.sort(key=_key)
+            if res:
+                converter = oasa.smiles.converter()
+                mols.append(converter.read_text(res[0][3]))
+        return mols
+
+    @classmethod
+    def _read_pybel_text(self, format, text):
+        conv = oasa.pybel_bridge.PybelConverter
+        mols = conv.read_text(format, text)
+        for mol in mols:
+            if len([1 for a in mol.vertices if a.x==0 and a.y==0]) == len(mol.vertices):
+                # coordinates are not present (everything is zero)
+                for a in mol.vertices:
+                    a.x, a.y, a.z = None, None, None
+                cg = oasa.coords_generator.coords_generator()
+                cg.calculate_coords(mol)
+        return mols
 
     #// reader methods for different formats
 
     #// ---------- private methods ----------
+
+
+# some setup
+
+if hasattr(oasa, 'pybel_bridge'):
+    import pybel
+    def create_read_func( format):
+        return lambda text: ChemReader._read_pybel_text(format, text)
+    for format,name in pybel.informats.iteritems():
+        ChemReader.formats[format] = (create_read_func(format), name)
+

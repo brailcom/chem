@@ -219,6 +219,7 @@ class WebTree(twisted.web.resource.Resource):
         self.putChild('smiles', SmilesWebResource(service))
         self.putChild('name', NameWebResource(service))
         self.putChild('periodic', PeriodicWebResource(service))
+        self.putChild('chemfile', ChemFileWebResource(service))
 
 class XMLWebResource(twisted.web.resource.Resource):
 
@@ -275,6 +276,20 @@ class NameWebResource(XMLWebResource):
             name = self._default_name
         language = request.args.get('language', ['en'])[0]
         defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(name, "name", language))
+        defer.addCallback(self._cb_render_GET, request)
+        return twisted.web.server.NOT_DONE_YET
+
+
+class ChemFileWebResource(XMLWebResource):
+    """request web handler for chemical files."""
+
+    isLeaf = True
+
+    def render_POST(self, request):
+        text = request.args.get('uploaded_file',[""])[0]
+        format = request.args.get('format',['mol'])[0]
+        language = request.args.get('language', ['en'])[0]
+        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(text, format, language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
 

@@ -1,3 +1,9 @@
+2008-04-21   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: support for openbabel added to the reader
+	* twistd/server.py: upload of files implemented using POST method
+
+	
 2008-04-11   Beda Kosata <kosatab@vscht.cz>
 	
 	* twistd/server.py: priority information was removed from value element
