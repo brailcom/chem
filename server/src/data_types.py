@@ -71,14 +71,16 @@ class DataTypeFactory:
                    
                    "REL_REACTANT": (_("Reactant"), _("Reactant of a reaction"), 1),
                    "REL_PRODUCT": (_("Product"), _("Product of a reaction"), 1),
-                   "REL_SINGLE_BOND": (_("Single bond"), _("Single bond"), 1),
-                   "REL_DOUBLE_BOND": (_("Double bond"), _("Double bond"), 1),
-                   "REL_TRIPLE_BOND": (_("Triple bond"), _("Triple bond"), 1),
+                   "REL_SINGLE_BOND": (_("Single bond"), _("Single bond"), 10),
+                   "REL_DOUBLE_BOND": (_("Double bond"), _("Double bond"), 10),
+                   "REL_TRIPLE_BOND": (_("Triple bond"), _("Triple bond"), 10),
                    "REL_AROMATIC_BOND": (_("Aromatic bond"), _("Aromatic bond"), 1),
                    "REL_COMPOSED_FROM": (_("Composed from"), _("Composed from"), 1),
                    "REL_REACTS_WITH": (_("Reacts with"), _("Reacts with"), 1),
                    "REL_PRODUCES": (_("Produces"), _("Produces"), 1),
                    "REL_PRODUCED_FROM": (_("Produced from"), _("Produced from"), 1),
+                   "REL_OPPOSITE_SIDE": (_("Opposite to"), _("Atom is on opposite side relative to the referenced atom"), 1),
+                   "REL_SAME_SIDE": (_("On same side as"), _("Atom is on the same side relative to the referenced atom"), 1),
                    }
 
     @classmethod

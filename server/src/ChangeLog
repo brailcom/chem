@@ -1,3 +1,8 @@
+2008-05-27   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: support for cis-trans stereochemistry on double bonds added
+	* twistd/server.py: type information added to neighbors/link
+
 2008-04-21   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: support for openbabel added to the reader

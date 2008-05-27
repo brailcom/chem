@@ -27,6 +27,11 @@ class ChemReader:
                               3: 'REL_TRIPLE_BOND',
                               4: 'REL_AROMATIC_BOND'}
 
+    stereochemistry_to_relation = {
+        oasa.stereochemistry.cis_trans_stereochemistry.OPPOSITE_SIDE: "REL_OPPOSITE_SIDE",
+        oasa.stereochemistry.cis_trans_stereochemistry.SAME_SIDE: "REL_SAME_SIDE",
+        }
+
     # known formats
     formats = { "SMILES": ("_read_smiles", _("SMILES")),
                 "Molfile": ("_read_molfile", _("Molfile")),
@@ -131,6 +136,16 @@ class ChemReader:
             a_data = _atom_to_a_data[atom]
             for e,n in atom.get_neighbor_edge_pairs():
                 a_data.add_neighbor(Relation(id2t(self.bond_order_to_relation[e.order]), _atom_to_a_data[n]))
+        # stereochemistry support
+        for stereo in mol.stereochemistry:
+            if stereo.__class__.__name__ == "cis_trans_stereochemistry":
+                atom1 = stereo.references[0]
+                atom2 = stereo.references[-1]
+                a_data1 = _atom_to_a_data[atom1]
+                a_data2 = _atom_to_a_data[atom2]
+                relation_name = self.stereochemistry_to_relation[stereo.value]
+                a_data1.add_neighbor(Relation(id2t(relation_name), a_data2))
+                a_data2.add_neighbor(Relation(id2t(relation_name), a_data1))                                     
         # fragment support
         ssm = oasa.subsearch.substructure_search_manager()
         hits = ssm.find_substructures_in_mol(mol)
@@ -153,7 +168,7 @@ class ChemReader:
                 if common_atoms:
                     d1 = _hit_to_data[ring1]
                     d2 = _hit_to_data[ring2]
-                    count = len( common_atoms)
+                    count = len(common_atoms)
                     data_type = DataType("SHARED_ATOMS",
                                          _("%d shared atoms")%count,
                                          _("The ring shares %d atoms with the neighbor ring"%count))
@@ -223,6 +238,7 @@ class ChemReader:
     @classmethod
     def _read_molfile(self, text):
         mol = oasa.molfile.text_to_mol(text)
+        mol.detect_stereochemistry_from_coords()
         return [mol]
 
     @classmethod
@@ -264,6 +280,8 @@ class ChemReader:
                     a.x, a.y, a.z = None, None, None
                 cg = oasa.coords_generator.coords_generator()
                 cg.calculate_coords(mol)
+            else:
+                mol.detect_stereochemistry_from_coords()
         return mols
 
     #// reader methods for different formats
