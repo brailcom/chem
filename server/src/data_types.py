@@ -80,7 +80,7 @@ class DataTypeFactory:
                    "REL_PRODUCES": (_("Produces"), _("Produces"), 1),
                    "REL_PRODUCED_FROM": (_("Produced from"), _("Produced from"), 1),
                    "REL_OPPOSITE_SIDE": (_("Opposite to"), _("Atom is on opposite side relative to the referenced atom"), 1),
-                   "REL_SAME_SIDE": (_("On same side as"), _("Atom is on the same side relative to the referenced atom"), 1),
+                   "REL_SAME_SIDE": (_("On the same side as"), _("Atom is on the same side relative to the referenced atom"), 1),
                    }
 
     @classmethod
