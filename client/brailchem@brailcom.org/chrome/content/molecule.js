@@ -165,7 +165,12 @@ function brailchem_display_molecule_summary (element, top_box, name_node)
     var properties = [];
     var atoms = null;
     var fragments = null;
-    var children = element.getElementsByTagName ('views')[0].childNodes;
+    var views = element.getElementsByTagName ('views')[0];
+    if (! views) {
+        brailchem_alert (brailchem_string ('brailchemEmptyResponse', 'brailchem-strings'));
+        return null;
+    }
+    var children = views.childNodes;
     var image = null;
     for (var i = 0; i < children.length; i++) {
         var child = children[i];
