@@ -266,7 +266,7 @@ class ChemReader:
             res.sort(key=_key)
             if res:
                 converter = oasa.smiles.converter()
-                mols.append(converter.read_text(res[0][3]))
+                mols += converter.read_text(res[0][3])
         return mols
 
     @classmethod
