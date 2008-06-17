@@ -1,5 +1,11 @@
 2008-06-17  Milan Zamazal  <pdm@brailcom.org>
 
+	* client/orca/README:
+	* client/orca/orca-scripts/brailchem.py:
+	Tweaks in Orca scripts.
+
+2008-06-17  Milan Zamazal  <pdm@brailcom.org>
+
 	* ev/null:
 	README for Orca scripts added.
 
