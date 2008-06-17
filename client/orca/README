@@ -1,7 +1,1 @@
 Copy `orca-scripts' to ~/.orca.
-
-If you obtained the package via CVS, switch to ~/.orca/orca-scripts/ and do the
-following symbolic links to make sure the script is found:
-
-  ln -s Mozilla.py Firefox.py
-  ln -s Mozilla.py Iceweasel.py
