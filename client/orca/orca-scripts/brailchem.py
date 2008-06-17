@@ -1,6 +1,6 @@
 import pyatspi
 
-import orca.script
+import orca.scripts.toolkits.Gecko
 
 
 def is_brailchem_object(object):
@@ -11,12 +11,13 @@ def is_brailchem_object(object):
     return False
 
 
-class SpeechGenerator(orca.Gecko.SpeechGenerator):
+class SpeechGenerator(orca.scripts.toolkits.Gecko.SpeechGenerator):
 
     def _getSpeechForObjectRole(self, obj, role=None):
-        if is_brailchem_object(obj) and obj.getRole() == pyatspi.ROLE_PUSH_BUTTON and obj.parent.name == 'Brailchem periodic table window':
+        print '!!!yes:', obj, is_brailchem_object(obj), obj.getRole() == pyatspi.ROLE_PUSH_BUTTON, obj.parent.name
+        if is_brailchem_object(obj) and obj.getRole() == pyatspi.ROLE_PUSH_BUTTON and obj.parent.name == 'chrome://brailchem/content/periodic.xul':
             return []
-        return orca.Gecko.SpeechGenerator._getSpeechForObjectRole(self, obj, role)
+        return orca.scripts.toolkits.Gecko.SpeechGenerator._getSpeechForObjectRole(self, obj, role)
 
 class BrailchemScript(orca.script.Script):
 
