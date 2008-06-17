@@ -1,3 +1,11 @@
+2008-06-17  Milan Zamazal  <pdm@brailcom.org>
+
+	* ev/null:
+	* ev/null:
+	* client/orca/orca-scripts/Mozilla.py:
+	* client/orca/orca-scripts/brailchem.py:
+	Orca scripts updated for current version of Orca.
+
 2008-05-27   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: support for cis-trans stereochemistry on double bonds added
