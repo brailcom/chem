@@ -486,10 +486,8 @@ function brailchem_element_info (element, hold_focus)
     var properties = g_element_data[symbol];
     for (var name in properties)
         if (name[0] != '_') {
-            var row = brailchem_add_element (top_node, 'row');
             var info = properties[name];
-            brailchem_add_element (row, 'description', {value: info.label});
-            brailchem_add_element (row, 'description', {}, info.value);
+            brailchem_add_element (top_node, 'description', {}, info.label+': '+info.value);
         }
     document.getElementById ('brailchem-element-details-box').setAttribute ('hidden', 'false');
     if (! hold_focus)

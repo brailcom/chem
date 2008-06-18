@@ -93,9 +93,9 @@
          on the first button press when it gets visible for the first time. -->
     <groupbox id="brailchem-element-details-box">
       <caption label="&periodic.label.details;"/>
-      <grid>
-        <rows id="brailchem-element-details"><description value="&periodic.element-info;"/></rows>
-      </grid>
+      <vbox id="brailchem-element-details">
+        <description value="&periodic.element-info;"/>
+      </vbox>
     </groupbox>
     </hbox>
     
