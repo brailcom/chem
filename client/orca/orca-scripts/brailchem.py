@@ -14,9 +14,11 @@ def is_brailchem_object(object):
 class SpeechGenerator(orca.scripts.toolkits.Gecko.SpeechGenerator):
 
     def _getSpeechForObjectRole(self, obj, role=None):
-        if (is_brailchem_object(obj) and obj.getRole() == pyatspi.ROLE_PUSH_BUTTON and
-            (obj.parent.name == 'chrome://brailchem/content/periodic.xul' or
-             obj.parent.parent.name == 'chrome://brailchem/content/periodic.xul')):
+        if (is_brailchem_object(obj) and
+            ((obj.getRole() == pyatspi.ROLE_PUSH_BUTTON and
+              (obj.parent.name == 'chrome://brailchem/content/periodic.xul' or
+               obj.parent.parent.name == 'chrome://brailchem/content/periodic.xul'))
+             or (obj.getRole() == pyatspi.ROLE_LABEL))):
             return []
         return orca.scripts.toolkits.Gecko.SpeechGenerator._getSpeechForObjectRole(self, obj, role)
 
