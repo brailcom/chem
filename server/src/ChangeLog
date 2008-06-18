@@ -1,3 +1,9 @@
+2008-06-18  Milan Zamazal  <pdm@brailcom.org>
+
+	* client/brailchem@brailcom.org/chrome/content/periodic.js:
+	* client/brailchem@brailcom.org/chrome/content/periodic.xul:
+	XUL client: Present element properties in a simple vbox instead of a grid.
+
 2008-06-17  Milan Zamazal  <pdm@brailcom.org>
 
 	* client/orca/README:
