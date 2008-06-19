@@ -1,3 +1,8 @@
+2008-06-19   Beda Kosata <kosatab@vscht.cz>
+
+	* detail_periodic_table.py: element group names were localized to czech
+	* czech translation was updated
+	
 2008-06-18  Milan Zamazal  <pdm@brailcom.org>
 
 	* client/orca/orca-scripts/brailchem.py:

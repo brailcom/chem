@@ -148,7 +148,7 @@ class ChemInterface(object):
         for symbol, properties in periodic_table.items():
             element = add_element(root, 'element', attributes={'symbol': symbol})
             properties = copy.copy(properties)
-            properties['_color'] = brailchem.detail_periodic_table.group2color[properties['group']]
+            properties['_color'] = brailchem.detail_periodic_table.group2color[properties['group']['en']]
             property_ids = [brailchem.chem_reader.ChemReader.table_key_to_data_type.get(name, name) for name in properties.keys()]
             property_labels = [(id, (info_provider.data_type_from_id(name) or brailchem.data_types.DataType(name, name)),)
                                for id, name in zip (properties.keys(), property_ids)]
