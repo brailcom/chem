@@ -399,6 +399,17 @@ function brailchem_read_url (url)
     return text;
 }
 
+function brailchem_play_sound (url)
+{
+    var sound = Components.classes["@mozilla.org/sound;1"].createInstance();
+    if (! sound)
+        return;
+    sound.QueryInterface(Components.interfaces.nsISound);
+    var io_service = Components.classes["@mozilla.org/network/io-service;1"].getService (Components.interfaces.nsIIOService);
+    var ns_url = io_service.newURI(url, null, null);
+    sound.play(ns_url);
+}
+
 // Miscelaneous
 
 function brailchem_string (string, string_element)
@@ -426,9 +437,11 @@ function brailchem_check_float_input (element)
 function brailchem_wait_start ()
 {
     brailchem_message ('brailchemGlobalPleaseWait', 'brailchem-strings');
+    brailchem_play_sound("chrome://brailchem/content/wait.wav");
 }
 
 function brailchem_wait_end ()
 {
     brailchem_message ('brailchemGlobalDone', 'brailchem-strings');
+    brailchem_play_sound("chrome://brailchem/content/ready.wav");
 }
