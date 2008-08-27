@@ -544,4 +544,5 @@ function brailchem_follow_reference (element)
     var id = element.getAttribute ('brailchem-target');
     var target = document.getElementById (id);
     brailchem_mol_focus (target);
+    brailchem_mol_atom_focus (target);
 }
