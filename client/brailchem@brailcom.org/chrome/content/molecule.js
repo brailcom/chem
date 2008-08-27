@@ -319,7 +319,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
             }
             list.sort (sort_atoms);
             for (var i in list) {
-                var item_box = brailchem_add_element (box, 'vbox', {class: box_class, hidden: box_hidden, 'brailchem-mol-id': mol_id});
+                var item_box = brailchem_add_element (box, 'vbox', {class: box_class, hidden: box_hidden,
+                                                                    'brailchem-atom-or-fragment': true, 'brailchem-mol-id': mol_id});
                 if (kind == 'fragment')
                     item_box.setAttribute ('brailchem-ghost-akin', kind);
                 var id = list[i];
@@ -443,14 +444,14 @@ function brailchem_mol_toggle_fragments (element)
 
 function brailchem_mol_go_atoms ()
 {
-    brailchem_mol_move_object (true, 'atoms');
+    brailchem_mol_move_object (null, 'atoms');
 }
 
 function brailchem_mol_move_object (forward, kind)
 {
     var current_list = document.getElementsByAttribute ('brailchem-current', 'true');
     if (current_list.length == 0)
-        return;
+        current_list = document.getElementsByAttribute ('brailchem-atom-or-fragment', 'true');
     var current = current_list[0];
     var current_class = current.getAttribute ('class');
     var current_is_atom = (current_class == 'brailchem-atom-box' || current_class == 'brailchem-fragment-box');
@@ -477,7 +478,7 @@ function brailchem_mol_move_object (forward, kind)
     var index = 0;
     for (var i = 0; i < elements.length; i++)
         if (elements[i] == current) {
-            index = i + (forward ? 1 : -1);
+            index = i + (forward == null ? 0 : forward ? 1 : -1);
             break;
         }
     if (index < 0) {
