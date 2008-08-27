@@ -424,7 +424,8 @@ function brailchem_mol_atom_focus (element, image_element_id)
     for (var i = 0; i < atoms.length; i++)
         atoms[i].setAttribute ('brailchem-current', 'false');
     element.setAttribute ('brailchem-current', 'true');
-    brailchem_highlight_molecule_image (image_element_id);
+    if (image_element_id)
+        brailchem_highlight_molecule_image (image_element_id);
 }
 
 function brailchem_mol_toggle_fragments (element)
@@ -450,9 +451,12 @@ function brailchem_mol_go_atoms ()
 function brailchem_mol_move_object (forward, kind)
 {
     brailchem_clear_message ();
+    var first_move = false;
     var current_list = document.getElementsByAttribute ('brailchem-current', 'true');
-    if (current_list.length == 0)
+    if (current_list.length == 0) {
         current_list = document.getElementsByAttribute ('brailchem-atom-or-fragment', 'true');
+        first_move = true;
+    }
     var current = current_list[0];
     var current_class = current.getAttribute ('class');
     var current_is_atom = (current_class == 'brailchem-atom-box' || current_class == 'brailchem-fragment-box');
@@ -469,30 +473,34 @@ function brailchem_mol_move_object (forward, kind)
     }
     else if (kind == 'molecules') {
         var elements = document.getElementsByAttribute ('brailchem-mol-name', 'true');
-        if (current_is_atom)
+        if (current_is_atom && ! first_move)
             current = document.getElementById (current.getAttribute ('brailchem-mol-id'));
     }
     else {
         alert ("Invalid move kind: " + kind);
         return;
     }
-    var index = 0;
+    var index = 0;    
     for (var i = 0; i < elements.length; i++)
         if (elements[i] == current) {
             index = i + (forward == null ? 0 : forward ? 1 : -1);
             break;
         }
     if (index < 0) {
-        brailchem_message ('brailchemMoleculeNoPreviousAtom', 'brailchem-molecule-strings');
+        message_id = (kind == 'molecules' ? 'brailchemMoleculeNoPreviousMolecule' : 'brailchemMoleculeNoPreviousAtom');
+        brailchem_message (message_id, 'brailchem-molecule-strings');
         return;
     }
     if (index >= elements.length) {
-        brailchem_message ('brailchemMoleculeNoNextAtom', 'brailchem-molecule-strings');
+        message_id = (kind == 'molecules' ? 'brailchemMoleculeNoNextMolecule' : 'brailchemMoleculeNoNextAtom');
+        brailchem_message (message_id, 'brailchem-molecule-strings');
         return;
     }
     brailchem_mol_focus (elements[index], true);
     if (kind == 'atoms')
         brailchem_focus(elements[index], true);
+    else
+        brailchem_mol_atom_focus(elements[index]);
 }
 
 function brailchem_mol_move_atom (forward)
