@@ -449,6 +449,7 @@ function brailchem_mol_go_atoms ()
 
 function brailchem_mol_move_object (forward, kind)
 {
+    brailchem_clear_message ();
     var current_list = document.getElementsByAttribute ('brailchem-current', 'true');
     if (current_list.length == 0)
         current_list = document.getElementsByAttribute ('brailchem-atom-or-fragment', 'true');
