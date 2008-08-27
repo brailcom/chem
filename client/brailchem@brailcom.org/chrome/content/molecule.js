@@ -130,7 +130,7 @@ function brailchem_display_reaction (element, document, top_box)
                                                     class: 'header', level: 3, 'brailchem-current': 'false',
                                                     onfocus: 'brailchem_mol_atom_focus(this,'+target_id+')'});
             var name = brailchem_display_molecule (molecules[i], document, molecule_subbox, name_node, target_id);
-            var attributes = {'brailchem-target': target_id, class: 'brailchem-reference', value: name,
+            var attributes = {'brailchem-target': target_id, class: 'brailchem-reference', value: 'go '+name,
                               onfocus: 'brailchem_mol_last_reaction_element=this'};
             brailchem_add_element (summary_subbox, 'brailchemreference', attributes);
         }
