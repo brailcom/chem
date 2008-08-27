@@ -535,8 +535,10 @@ function brailchem_mol_previous_molecule ()
 
 function brailchem_mol_go_reaction ()
 {
-    if (brailchem_mol_last_reaction_element)
+    if (brailchem_mol_last_reaction_element) {
         brailchem_mol_focus (brailchem_mol_last_reaction_element);
+        brailchem_focus (brailchem_mol_last_reaction_element, true);
+    }
 }
 
 function brailchem_follow_reference (element)
