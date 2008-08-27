@@ -489,6 +489,8 @@ function brailchem_mol_move_object (forward, kind)
         return;
     }
     brailchem_mol_focus (elements[index], true);
+    if (kind == 'atoms')
+        brailchem_focus(elements[index], true);
 }
 
 function brailchem_mol_move_atom (forward)
