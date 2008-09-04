@@ -262,6 +262,7 @@ class ChemReader:
         mols = []
         for line in text.splitlines():
             res = oasa.structure_database.get_compounds_from_database(name=line)
+            res += oasa.structure_database.get_compounds_from_database(synonym=line) 
             # find the hit with shortest smiles - this should be appropriate in most cases
             res.sort(key=_key)
             if res:
