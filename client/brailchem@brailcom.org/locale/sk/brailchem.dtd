@@ -1,0 +1,34 @@
+<!ENTITY main.menu.file "Soubor">
+<!ENTITY main.menu.file-key "S">
+<!ENTITY main.menu.applications "Aplikace">
+<!ENTITY main.menu.applications-key "A">
+<!ENTITY main.menu.help "Nápověda">
+<!ENTITY main.menu.help-key "N">
+
+<!ENTITY main.menu.file.window "Nové okno">
+<!ENTITY main.menu.file.window-key "O">
+<!ENTITY main.menu.file.settings "Nastavení">
+<!ENTITY main.menu.file.settings-key "N">
+<!ENTITY main.menu.file.upgrade "Upgrade Brailchemu">
+<!ENTITY main.menu.file.upgrade-key "U">
+<!ENTITY main.menu.file.quit "Konec">
+<!ENTITY main.menu.file.quit-key "K">
+
+<!ENTITY main.menu.applications.molecule "Prohlížeč molekul">
+<!ENTITY main.menu.applications.molecule-key "M">
+<!ENTITY main.menu.applications.periodic "Periodická tabulka">
+<!ENTITY main.menu.applications.periodic-key "P">
+
+<!ENTITY main.menu.help.introduction "Úvod">
+<!ENTITY main.menu.help.introduction-key "V">
+<!ENTITY main.menu.help.keys "Klávesové příkazy">
+<!ENTITY main.menu.help.keys-key "K">
+<!ENTITY main.menu.help.homepage "Domovská stránka Brailchemu">
+<!ENTITY main.menu.help.homepage-key "D">
+<!ENTITY main.menu.help.about "O Brailchemu">
+<!ENTITY main.menu.help.about-key "O">
+
+<!ENTITY main.intro.message "Vítejte v Brailchemu.
+Aplikaci můžete ovládat s pomocí menu.
+Základní informace o aplikaci naleznete v menu Nápověda.
+">

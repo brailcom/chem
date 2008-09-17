@@ -1,0 +1,17 @@
+<!ENTITY preferences.button.ok "OK">
+<!ENTITY preferences.button.ok.key "O">
+<!ENTITY preferences.button.apply "Apply">
+<!ENTITY preferences.button.apply.key "A">
+<!ENTITY preferences.button.cancel "Cancel">
+<!ENTITY preferences.button.cancel.key "C">
+<!ENTITY preferences.caption.general "General">
+<!ENTITY preferences.caption.server "Brailchem server">
+<!ENTITY preferences.caption.periodic "Periodic table">
+<!ENTITY preferences.label.preferences "Preferences">
+<!ENTITY preferences.label.host "Host">
+<!ENTITY preferences.label.port "Port">
+<!ENTITY preferences.label.language "Language of chemical names">
+<!ENTITY preferences.label.primaryview "Primary view">
+<!ENTITY preferences.periodic.label.emptycells "Walk over empty cells">
+<!ENTITY preferences.periodic.label.tooltips "Tooltip contents">
+<!ENTITY preferences.select.nochange "leave unchanged">
