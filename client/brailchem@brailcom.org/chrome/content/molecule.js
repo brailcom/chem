@@ -222,7 +222,24 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         if (item_type != 'ATOM' && item_type != 'FRAGMENT')
             continue;
         var id = item.getAttribute ('id');
-        var label = brailchem_mol_element_value (item.getElementsByTagName ('data')[0]);
+        var node_data = item.getElementsByTagName ('data');
+        var label = '';
+        var charge = 0;
+        for (var j = 0; j < node_data.length; j++) {
+            var node_data_j = node_data[j];
+            var node_data_type = node_data_j.getAttribute ('type');
+            if (node_data_type == 'ATOM_SYMBOL' || node_data_type == 'FRAGMENT_NAME')
+                label = brailchem_mol_element_value (node_data_j);
+            else if (node_data_type == 'ATOM_CHARGE')
+                charge = brailchem_mol_element_value (node_data_j);
+        }
+        if (charge != '0') {
+            var charge_label = (charge == '1' ? '+' :
+                                charge == '-1' ? '-' :
+                                charge > 0 ? '+' + charge :
+                                charge);
+            label = label + charge_label;
+        }
         var number = (item_numbers[label] || 0) + 1;
         item_numbers[label] = number;
         var neighbors = [];
