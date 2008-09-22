@@ -39,6 +39,10 @@ class ChemReader:
                 "name": ("_read_name", _("Name")),
                 }
 
+    # the following is a list of most important supported formats (when openbabel is available)
+    # this is mainly here for the client to be able to suggest most common formats
+    important_formats = ["SMILES","Molfile","name","cdx","cdxml","cml","inchi","pdb","sdf"]
+
     table_key_to_data_type = {'ATOM_SYMBOL':'ATOM_SYMBOL',
                               'VAL_ELECTRONS':'VAL_ELECTRONS',
                               'EN':'EN',
@@ -59,7 +63,7 @@ class ChemReader:
         return self.formats.keys()
 
     @classmethod
-    def know_format_names(self):
+    def known_format_names(self):
         """returns a list of tuples of currently supported formats and their descriptions."""
         keys = self.formats.keys()
         keys.sort()

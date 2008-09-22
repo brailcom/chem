@@ -1,3 +1,8 @@
+2008-09-22   Beda Kosata <kosatab@vscht.cz>
+
+	* twistd/server.py: list of supported formats in server on "/formats" URL.
+	* chem_reader.py: list of important_formats was added
+	 
 2008-09-19   Beda Kosata <kosatab@vscht.cz>
 
 	* detail_periodic_table.py: added pt translation for element names

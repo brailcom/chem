@@ -211,6 +211,27 @@ class ChemInterface(object):
             self._periodic_table_xml[language] = xml
         return self._periodic_table_xml[language]
 
+    def supported_formats_xml(self, language):
+        """Returns an XML document describing chemical formats
+        supported by the chem_reader
+        """
+        doc = self._create_dom()
+        root = doc.createElement("formats")
+        doc.appendChild(root)
+        for name,desc in brailchem.chem_reader.ChemReader.known_format_names():
+            elem = doc.createElement("format")
+            if name in brailchem.chem_reader.ChemReader.important_formats:
+                elem.setAttribute('common','True')
+            root.appendChild(elem)
+            name_el = doc.createElement("name")
+            name_el.appendChild(doc.createTextNode(name))
+            elem.appendChild(name_el)
+            desc_el = doc.createElement("description")
+            desc_el.appendChild(doc.createTextNode(desc))
+            elem.appendChild(desc_el)
+        xml = doc.toxml()
+        return xml
+            
 ### HTTP output interface
 
 class WebTree(twisted.web.resource.Resource):
@@ -223,6 +244,7 @@ class WebTree(twisted.web.resource.Resource):
         self.putChild('name', NameWebResource(service))
         self.putChild('periodic', PeriodicWebResource(service))
         self.putChild('chemfile', ChemFileWebResource(service))
+        self.putChild('formats', FormatsWebResource(service))
 
 class XMLWebResource(twisted.web.resource.Resource):
 
@@ -293,6 +315,17 @@ class ChemFileWebResource(XMLWebResource):
         format = request.args.get('format',['mol'])[0]
         language = request.args.get('language', ['en'])[0]
         defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(text, format, language))
+        defer.addCallback(self._cb_render_GET, request)
+        return twisted.web.server.NOT_DONE_YET
+
+class FormatsWebResource(XMLWebResource):
+    """request web handler for chemical files."""
+
+    isLeaf = True
+
+    def render_GET(self, request):
+        language = request.args.get('language', ['en'])[0]
+        defer = twisted.internet.defer.succeed(self._service.supported_formats_xml(language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
 
