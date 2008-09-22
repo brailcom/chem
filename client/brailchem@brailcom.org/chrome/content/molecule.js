@@ -228,7 +228,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         for (var j = 0; j < node_data.length; j++) {
             var node_data_j = node_data[j];
             var node_data_type = node_data_j.getAttribute ('type');
-            if (node_data_type == 'ATOM_SYMBOL' || node_data_type == 'FRAGMENT_NAME')
+            if (node_data_type == 'FRAGMENT_NAME' || (node_data_type == 'ATOM_SYMBOL' && label == ''))
                 label = brailchem_mol_element_value (node_data_j);
             else if (node_data_type == 'ATOM_CHARGE')
                 charge = brailchem_mol_element_value (node_data_j);
