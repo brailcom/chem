@@ -23,10 +23,27 @@ var brailchem_mol_fragment_atoms = {};
 
 function brailchem_molecule (smiles)
 {
-    var after_function = null;
+    var after_function = function () { brailchem_molecule_formats (this); }
     if (smiles)
         after_function = function () { brailchem_browse_on_start (this.document, smiles); };
     brailchem_switch_page ('chrome://brailchem/content/molecule.xul', 'molecule-textbox', after_function);
+}
+
+function brailchem_molecule_formats (page)
+{
+    var data = brailchem_call_server ('formats');
+    if (data == null)
+        return;
+    var menu = page.find_element ('molecule-format-menu');
+    var formats = data.getElementsByTagName ('format');
+    for (var i = 0; i < formats.length; i++) {
+        var format = formats[i];
+        if (format.getAttribute ('common')) {
+            var name = brailchem_mol_element_text (format.getElementsByTagName ('name')[0]);
+            var description = brailchem_mol_element_text (format.getElementsByTagName ('description')[0]);
+            brailchem_add_element (menu, 'menuitem', {value: name, label: description});
+        }
+    }
 }
 
 function brailchem_browse_on_start (document, smiles)
@@ -35,10 +52,13 @@ function brailchem_browse_on_start (document, smiles)
     brailchem_display_object (document, smiles, 'SMILES');
 }
 
-function brailchem_browse_smiles ()
+function brailchem_browse_molecule ()
 {
-    var smiles = document.getElementById ('molecule-textbox').value;
-    brailchem_display_object (document, smiles, 'smiles');
+    var format = document.getElementById ('molecule-format').value;
+    if (format == 'name')
+        return brailchem_browse_name ();
+    var molecule = document.getElementById ('molecule-textbox').value;
+    brailchem_display_object (document, molecule, format);
 }
 
 function brailchem_browse_name ()

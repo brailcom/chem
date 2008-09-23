@@ -34,12 +34,21 @@
   <hbox><description id="brailchem-heading" class="brailchem-heading" flex="1" value="&molecule.header;"/></hbox>
 
   <description id="brailchem-primary">&molecule.text.intro;</description>
-  <hbox id="molecule-input-box">
-    <label control="molecule-textbox">&molecule.label.smiles;</label>
-    <textbox id="molecule-textbox" value="CC(=O)O.CCO>[H+]>CC(=O)OCC.O" accesskey="M"/>
-    <button id="molecule-button" label="&molecule.button.smiles;" oncommand="brailchem_browse_smiles();"/>
-    <button id="molecule-button" label="&molecule.button.name;" oncommand="brailchem_browse_name();"/>
-  </hbox>
+  <vbox id="molecule-input-box">
+    <hbox>
+      <label control="molecule-textbox">&molecule.label.smiles;</label>
+      <textbox id="molecule-textbox" multiline="true" rows="3" accesskey="M"/>
+    </hbox>
+    <hbox>
+      <label control="molecule-format">&molecule.label.format;</label>
+      <menulist id="molecule-format">
+        <menupopup id="molecule-format-menu">
+          <menuitem value="name" label="&molecule.label.molname;" selected="true"/>
+        </menupopup>
+      </menulist>
+      <button id="molecule-button" label="&molecule.button.browse;" oncommand="brailchem_browse_molecule();"/>
+    </hbox>
+  </vbox>
 
   <hbox flex="1">
     <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
