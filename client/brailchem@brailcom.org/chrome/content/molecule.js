@@ -21,11 +21,12 @@ var brailchem_mol_last_reaction_element = true;
 var brailchem_mol_highlighted_image_elements = [];
 var brailchem_mol_fragment_atoms = {};
 
-function brailchem_molecule (smiles)
+function brailchem_molecule (value, format)
 {
     var after_function = function () { brailchem_molecule_formats (this); }
-    if (smiles)
-        after_function = function () { brailchem_browse_on_start (this.document, smiles); };
+    if (format)
+        after_function = function () { brailchem_molecule_formats (this);
+                                       brailchem_browse_on_start (this.document, value, format); };
     brailchem_switch_page ('chrome://brailchem/content/molecule.xul', 'molecule-textbox', after_function);
 }
 
@@ -41,15 +42,25 @@ function brailchem_molecule_formats (page)
         if (format.getAttribute ('common')) {
             var name = brailchem_mol_element_text (format.getElementsByTagName ('name')[0]);
             var description = brailchem_mol_element_text (format.getElementsByTagName ('description')[0]);
-            brailchem_add_element (menu, 'menuitem', {value: name, label: description});
+            attributes = {value: name, label: description};
+            brailchem_add_element (menu, 'menuitem', attributes);
         }
     }
 }
 
-function brailchem_browse_on_start (document, smiles)
+function brailchem_browse_on_start (document, value, format)
 {
-    document.getElementById ('molecule-textbox').setAttribute ('value', smiles);
-    brailchem_display_object (document, smiles, 'SMILES');
+    document.getElementById ('molecule-textbox').setAttribute ('value', value);
+    // We try to set the format in the format combo box.
+    // It doesn't work, but it remains here for reference.
+    var menu = document.getElementById ('molecule-format-menu');
+    var selected_nodes = menu.getElementsByAttribute ('selected', 'true');
+    for (var i = 0; i < selected_nodes.length; i++)
+        selected_nodes[i].setAttribute ('selected', 'false');
+    var menu_item = menu.getElementsByAttribute ('value', format)[0];
+    if (menu_item)
+        menu_item.setAttribute ('selected', 'true');
+    brailchem_display_object (document, value, format);
 }
 
 function brailchem_browse_molecule ()
@@ -185,7 +196,7 @@ function brailchem_display_molecule (element, document, top_box, start_node, mol
         brailchem_display_molecule_pieces (element, atoms, fragments, top_box, references, labels, mol_id);
         if (! mol_id)
             brailchem_focus (name_node);
-        brailchem_display_molecule_image (image);
+        brailchem_display_molecule_image (document, image);
     }
     return name;
 }
@@ -429,7 +440,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
     }
 }
 
-function brailchem_display_molecule_image (image)
+function brailchem_display_molecule_image (document, image)
 {
     var image_box = document.getElementById ('brailchem-molecule-image-box');
     var image_node = document.getElementById ('brailchem-molecule-image');

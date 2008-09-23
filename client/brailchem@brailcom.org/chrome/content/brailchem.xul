@@ -23,6 +23,7 @@
 <stringbundleset>
   <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
   <stringbundle id="brailchem-periodic-strings" src="chrome://brailchem/locale/periodic.properties"/>
+  <stringbundle id="brailchem-molecule-strings" src="chrome://brailchem/locale/molecule.properties"/>
 </stringbundleset>
 
 <commandset>
