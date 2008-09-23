@@ -1,4 +1,4 @@
-/* Copyright (C) 2007 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -16,16 +16,50 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function brailchem_call_server (func, argument)
+function BrailchemComponent () {}
+
+BrailchemComponent.prototype = {
+
+    error_string: null,
+    get error_message () { return this.error_string; },
+    
+    fetch_xml: function (host, port, function_name, arguments) {
+        this.error_string = null;
+        var uri = 'http://' + host + ':' + port + '/' + function_name;
+        var data = '';
+        for (var i = 0; i < arguments.length; i++) {
+            var argument = arguments[i];
+            if (data != '')
+                data = data + '&';
+            data = data + argument.name + '=' + encodeURIComponent (argument.value);
+        }
+        var req  = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance (Components.interfaces.nsIXMLHttpRequest);
+        try {
+            req.open ('POST', uri, false);
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.send (data);
+        }
+        catch (e) {
+            this.error_string = 'Connection to the Brailchem HTTP server failed'
+            return null;
+        }
+        if (req.status != 200)
+            {
+                this.error_string = 'Brailchem HTTP server returned error status ' + req.status;
+                return null;
+            }
+        return req.responseXML;
+    }
+};
+
+function brailchem_call_server (func, arguments)
 {
     netscape.security.PrivilegeManager.enablePrivilege ("UniversalXPConnect");
-    var brailchem = Components.classes["@brailcom.org/brailchem/brailchem;1"].createInstance (Components.interfaces.nsIBrailchem);
-    if (! brailchem) {
-        brailchem_alert ("Brailchem server interface component not found");
-        return null;
-    }
-    var doc = brailchem.fetch_xml (brailchem_preferences.char ('server.host'), brailchem_preferences.int ('server.port'), func, argument,
-                                   brailchem_preferences.char ('language'));
+    var brailchem = new BrailchemComponent ();
+    if (! arguments)
+        arguments = [];
+    arguments.push ({name: 'language', value: brailchem_preferences.char ('language')});
+    var doc = brailchem.fetch_xml (brailchem_preferences.char ('server.host'), brailchem_preferences.int ('server.port'), func, arguments);
     if (doc == null) {
         alert (brailchem.error_message);
     }

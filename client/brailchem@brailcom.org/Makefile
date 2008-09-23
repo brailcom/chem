@@ -18,7 +18,6 @@
 xpiarchive = ../brailchem.xpi
 
 all: version application.ini
-	$(MAKE) -C components
 	rm -f $(xpiarchive)
 # 	Installing prefs.js causes Brailchem window popus on startup in
 # 	Firefox.

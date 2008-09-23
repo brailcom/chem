@@ -32,7 +32,7 @@ function brailchem_molecule (smiles)
 function brailchem_browse_on_start (document, smiles)
 {
     document.getElementById ('molecule-textbox').setAttribute ('value', smiles);
-    brailchem_display_object (document, smiles, 'smiles');
+    brailchem_display_object (document, smiles, 'SMILES');
 }
 
 function brailchem_browse_smiles ()
@@ -83,7 +83,8 @@ function brailchem_display_object (document, input_value, format)
     brailchem_mol_last_reaction_element = null;
     brailchem_mol_fragment_atoms = {};
     // Fetch data
-    var data = brailchem_call_server (format, input_value);
+    var data = brailchem_call_server ('chemfile', [{name: 'format', value: format},
+                                                   {name: 'uploaded_file', value: input_value}]);
     if (data == null)
         return;
     // Remove old contents
