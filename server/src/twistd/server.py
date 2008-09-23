@@ -1,4 +1,4 @@
-# Copyright (C) 2007 Brailcom, o.p.s.
+# Copyright (C) 2007, 2008 Brailcom, o.p.s.
 #
 # COPYRIGHT NOTICE
 #
@@ -258,6 +258,9 @@ class XMLWebResource(twisted.web.resource.Resource):
         request.setHeader("content-length", str(len(data)))
         request.write(data)
         request.finish()
+    
+    def render_POST(self, request):
+        return self.render_GET(request)
 
 class SmilesWebResource(XMLWebResource):
     """SMILES request web handler."""
@@ -303,7 +306,6 @@ class NameWebResource(XMLWebResource):
         defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(name, "name", language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
-
 
 class ChemFileWebResource(XMLWebResource):
     """request web handler for chemical files."""
