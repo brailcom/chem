@@ -67,6 +67,16 @@ function brailchem_browse_name ()
     brailchem_display_object (document, name, 'name');
 }
 
+function brailchem_mol_insert_file ()
+{
+    var file = brailchem_select_file ();
+    if (! file)
+        return;
+    var url = 'file:' + file.path;
+    text = brailchem_read_url (url);
+    document.getElementById ('molecule-textbox').value = text;
+}
+    
 function brailchem_mol_element_text (element) {
     var text = element.childNodes[0].nodeValue;
     for (var i = 0; i < text.length; i++) {

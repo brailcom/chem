@@ -379,6 +379,16 @@ function brailchem_prompt (title, label)
 
 // IO
 
+function brailchem_select_file ()
+{
+    var nsIFilePicker = Components.interfaces.nsIFilePicker;
+    var file_picker = Components.classes["@mozilla.org/filepicker;1"].createInstance (nsIFilePicker);
+    file_picker.init (window, brailchem_string ('brailchemSelectFile', 'brailchem-strings'), nsIFilePicker.modeOpen);
+    var result_code = file_picker.show ();
+    result = (result_code == nsIFilePicker.returnCancel ? null : file_picker.file);
+    return result;
+}
+
 function brailchem_read_url (url)
 {
     try {

@@ -4,4 +4,5 @@
 <!ENTITY molecule.label.format "Notation format">
 <!ENTITY molecule.label.molname "Molecule name">
 <!ENTITY molecule.button.browse "Inspect molecule or reaction">
+<!ENTITY molecule.button.insert-file "From file...">
 <!ENTITY molecule.display-groups "Display atom groups">

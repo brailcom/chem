@@ -4,4 +4,5 @@
 <!ENTITY molecule.label.format "Formát zápisu">
 <!ENTITY molecule.label.molname "Název molekuly">
 <!ENTITY molecule.button.browse "Zobrazit molekulu nebo reakci">
+<!ENTITY molecule.button.insert-file "Ze souboru...">
 <!ENTITY molecule.display-groups "Zobrazovat skupiny atomů">

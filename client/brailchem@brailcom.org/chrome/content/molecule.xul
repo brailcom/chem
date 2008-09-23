@@ -37,7 +37,8 @@
   <vbox id="molecule-input-box">
     <hbox>
       <label control="molecule-textbox">&molecule.label.smiles;</label>
-      <textbox id="molecule-textbox" multiline="true" rows="3" accesskey="M"/>
+      <textbox id="molecule-textbox" accesskey="M"/>
+      <button id="molecule-file" label="&molecule.button.insert-file;" oncommand="brailchem_mol_insert_file()"/>
     </hbox>
     <hbox>
       <label control="molecule-format">&molecule.label.format;</label>
@@ -46,7 +47,9 @@
           <menuitem value="name" label="&molecule.label.molname;" selected="true"/>
         </menupopup>
       </menulist>
-      <button id="molecule-button" label="&molecule.button.browse;" oncommand="brailchem_browse_molecule();"/>
+    </hbox>
+    <hbox>
+      <button id="molecule-button" label="&molecule.button.browse;" oncommand="brailchem_browse_molecule()"/>
     </hbox>
   </vbox>
 
