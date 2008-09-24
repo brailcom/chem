@@ -1,8 +1,8 @@
-<!ENTITY molecule.header "Prohlížeč molekul">
-<!ENTITY molecule.text.intro "Pro prohlížení molekuly nebo reakce zapište do vstupního políčka jméno molekuly nebo molekulu či reakci ve formátu SMILES a stiskněte některé z následujících tlačítek.">
-<!ENTITY molecule.label.smiles "Molekula nebo reakce">
+<!ENTITY molecule.header "Prehliadač molekúl">
+<!ENTITY molecule.text.intro "Pre prehliadanie molekuly alebo reakcie zapíšte do vstupného políčka meno molekuly alebo molekulu či reakciu vo formáte SMILES a stlačte niekteré z následujúcich tlačítok.">
+<!ENTITY molecule.label.smiles "Molekula alebo reakcia">
 <!ENTITY molecule.label.format "Formát zápisu">
-<!ENTITY molecule.label.molname "Název molekuly">
-<!ENTITY molecule.button.browse "Zobrazit molekulu nebo reakci">
-<!ENTITY molecule.button.insert-file "Ze souboru...">
-<!ENTITY molecule.display-groups "Zobrazovat skupiny atomů">
+<!ENTITY molecule.label.molname "Meno molekuly">
+<!ENTITY molecule.button.browse "Zobraziť molekulu alebo reakciu">
+<!ENTITY molecule.button.insert-file "Zo súboru...">
+<!ENTITY molecule.display-groups "Zobrazovať skupiny atómov">

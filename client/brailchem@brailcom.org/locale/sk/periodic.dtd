@@ -1,14 +1,14 @@
-<!ENTITY periodic.header "Periodická tabulka">
-<!ENTITY periodic.element-info "Pro prohlížení detailů o prvku stiskněte některé z tlačítek periodické tabulky.">
+﻿<!ENTITY periodic.header "Periodická tabuľka">
+<!ENTITY periodic.element-info "Pre prezeranie detailov o prvku stlačte niektoré z tlačítok periodickej tabuľky.">
 <!ENTITY periodic.filters.from "od">
 <!ENTITY periodic.filters.to "do">
-<!ENTITY periodic.filters.enable "Zapnout filtry">
-<!ENTITY periodic.filters.label "Filtry">
+<!ENTITY periodic.filters.enable "Zapnúť filtre">
+<!ENTITY periodic.filters.label "Filtre">
 <!ENTITY periodic.filters.group "Skupiny">
 <!ENTITY periodic.filters.electronegativity "Elektronegativita">
-<!ENTITY periodic.filters.oxidation "Oxidační čísla">
-<!ENTITY periodic.filters.selected-elements "Množina prvků">
-<!ENTITY periodic.filters.select-elements "Změnit">
-<!ENTITY periodic.label.table "Periodická tabulka">
+<!ENTITY periodic.filters.oxidation "Oxidačné čísla">
+<!ENTITY periodic.filters.selected-elements "Množina prvkov">
+<!ENTITY periodic.filters.select-elements "Zmeniť">
+<!ENTITY periodic.label.table "Periodická tabuľka">
 <!ENTITY periodic.label.details "Detaily o prvku">
-<!ENTITY periodic.filters.all "vše">
+<!ENTITY periodic.filters.all "všetko">

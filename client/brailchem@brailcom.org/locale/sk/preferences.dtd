@@ -1,17 +1,17 @@
-<!ENTITY preferences.button.ok "OK">
+﻿<!ENTITY preferences.button.ok "OK">
 <!ENTITY preferences.button.ok.key "O">
-<!ENTITY preferences.button.apply "Provést">
-<!ENTITY preferences.button.apply.key "P">
-<!ENTITY preferences.button.cancel "Zrušit">
+<!ENTITY preferences.button.apply "Vykonať">
+<!ENTITY preferences.button.apply.key "V">
+<!ENTITY preferences.button.cancel "Zrušiť">
 <!ENTITY preferences.button.cancel.key "Z">
-<!ENTITY preferences.caption.general "Obecná nastavení">
+<!ENTITY preferences.caption.general "Obecné nastavenia">
 <!ENTITY preferences.caption.server "Server Brailchemu">
-<!ENTITY preferences.caption.periodic "Periodická tabulka">
-<!ENTITY preferences.label.preferences "Nastavení">
-<!ENTITY preferences.label.host "Jméno stroje">
+<!ENTITY preferences.caption.periodic "Periodická tabuľka">
+<!ENTITY preferences.label.preferences "Nastavenia">
+<!ENTITY preferences.label.host "Meno stroja">
 <!ENTITY preferences.label.port "Port">
-<!ENTITY preferences.label.language "Jazyk chemického názvosloví">
-<!ENTITY preferences.label.primaryview "Výchozí druh náhledu">
-<!ENTITY preferences.periodic.label.emptycells "Procházet přes prázdná políčka">
-<!ENTITY preferences.periodic.label.tooltips "Obsah bublin">
-<!ENTITY preferences.select.nochange "ponechat stávající">
+<!ENTITY preferences.label.language "Jazyk chemického názvoslovia">
+<!ENTITY preferences.label.primaryview "Východzí druh náhľadu">
+<!ENTITY preferences.periodic.label.emptycells "Prechádzať cez prázdne políčka">
+<!ENTITY preferences.periodic.label.tooltips "Obsah bublín">
+<!ENTITY preferences.select.nochange "ponechať existujúce">
