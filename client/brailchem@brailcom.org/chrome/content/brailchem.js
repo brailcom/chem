@@ -36,24 +36,16 @@ function brailchem_init ()
 {
     addEventListener ('focus', brailchem_focus_callback, true);
     brailchem_message ('brailchemStarted', 'brailchem-strings');
-    var argument = window.location.search;
+    var uri = window.location.href;
+    var argument = uri.substring (uri.indexOf (':') + 1);
     if (argument) {
-        argument = argument.substring (1);
         var eq_pos = argument.indexOf ('=');
         if (eq_pos != -1) {
-            var name = argument.substring (0, eq_pos);
+            var format = argument.substring (0, eq_pos);
             var value = argument.substring (eq_pos + 1);
-            if (name == 'smiles')
-                brailchem_molecule (value, 'SMILES');
-            else if (name == 'file') {
-                eq_pos = value.indexOf ('=');
-                if (eq_pos != -1) {
-                    var format = value.substring (0, eq_pos);
-                    var url = value.substring (eq_pos + 1);
-                    var molecule = brailchem_read_url (url);
-                    brailchem_molecule (molecule, format);
-                }
-            }
+            if (value.substring (0, 5) == 'http:')
+                value = brailchem_read_url (value);
+            brailchem_molecule (value, format);
         }
     }
 }

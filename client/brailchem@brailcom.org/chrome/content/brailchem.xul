@@ -11,14 +11,14 @@
         onload="brailchem_init()"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         xmlns:html="http://www.w3.org/1999/xhtml">
-<script src="util.js"/>
-<script src="error.js"/>
-<script src="server.js"/>
-<script src="molecule.js"/>
-<script src="periodic.js"/>
-<script src="preferences.js"/>
-<script src="help.js"/>
-<script src="brailchem.js"/>
+<script src="chrome://brailchem/content/util.js"/>
+<script src="chrome://brailchem/content/error.js"/>
+<script src="chrome://brailchem/content/server.js"/>
+<script src="chrome://brailchem/content/molecule.js"/>
+<script src="chrome://brailchem/content/periodic.js"/>
+<script src="chrome://brailchem/content/preferences.js"/>
+<script src="chrome://brailchem/content/help.js"/>
+<script src="chrome://brailchem/content/brailchem.js"/>
   
 <stringbundleset>
   <stringbundle id="brailchem-strings" src="chrome://brailchem/locale/brailchem.properties"/>
