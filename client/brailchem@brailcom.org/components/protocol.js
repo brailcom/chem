@@ -112,8 +112,6 @@ Protocol.prototype =
         var uri = aURI.spec;
         var argument = uri.substring (uri.indexOf (':') + 1);        
         var ios = Components.classes[kIOSERVICE_CONTRACTID].getService (nsIIOService);
-            //return ios.newChannel('javascript:open("chrome://brailchem/content/brailchem.xul?"'+argument+',"brailchem","chrome")', null, null);
-            //return ios.newChannel('javascript:document.location="chrome://brailchem/content/brailchem.xul?"'+argument+')', null, null);
         var channel = ios.newChannel('chrome://brailchem/content/brailchem.xul?'+argument, null, null);
         return channel;
     },
