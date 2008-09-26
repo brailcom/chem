@@ -3,3 +3,6 @@ content brailchem chrome/content/
 skin brailchem default skin/
 locale brailchem en-US locale/
 locale brailchem cs locale/cs/
+locale brailchem no locale/no/
+locale brailchem pt locale/pt/
+locale brailchem sk locale/sk/
