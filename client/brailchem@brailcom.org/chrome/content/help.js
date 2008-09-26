@@ -1,4 +1,4 @@
-/* Copyright (C) 2007 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -20,7 +20,7 @@ var VERSION = '0.1';
 
 function brailchem_help (section)
 {
-    var url = 'chrome://brailchem/content/help.html';
+    var url = 'chrome://brailchem/locale/help.html';
     if (section)
         url = url + '#' + section;
     window.open (url, 'brailchem-help');
