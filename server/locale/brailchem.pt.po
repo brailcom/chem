@@ -1,4 +1,4 @@
-# Czech localization for the brailchem server
+# Portuguese localization for the brailchem server
 # Copyright (C) 2007 Bedrich Kosata
 # This file is distributed under the same license as the brailchem package.
 # Bedrich Kosata <kosatab@vscht.cz>, 2007.
@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: devel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-08 10:53+0200\n"
+"POT-Creation-Date: 2008-06-19 10:33+0200\n"
 "PO-Revision-Date: 2008-06-19 10:39+0200\n"
 "Last-Translator: Bedrich Kosata <kosatab@vscht.cz>\n"
 "Language-Team: \n"
@@ -24,285 +24,285 @@ msgstr "Molfile"
 
 #: ../src/chem_reader.py:38 ../src/data_types.py:38
 msgid "Summary formula"
-msgstr "Sumární vzorec"
+msgstr "Fórmula molecular" 
 
 #: ../src/chem_reader.py:39 ../src/data_types.py:36
 msgid "Name"
-msgstr "Jméno"
+msgstr "Nome"
 
-#: ../src/chem_reader.py:178
+#: ../src/chem_reader.py:173
 #, python-format
 msgid "%d shared atoms"
-msgstr "%d společných atomů"
+msgstr "%d átomos partilhados"
 
-#: ../src/chem_reader.py:179
+#: ../src/chem_reader.py:174
 #, python-format
 msgid "The ring shares %d atoms with the neighbor ring"
-msgstr "Kruh sdílí %d atomů se sousedním kruhem"
+msgstr " O anel partilha %d átomos com o anel vizinho "
 
 #: ../src/data_types.py:33
 msgid "Result"
-msgstr "Výsledek"
+msgstr "Resultado"
 
 #: ../src/data_types.py:35
 msgid "Picture"
-msgstr "Obrázek"
+msgstr "Esquema"
 
 #: ../src/data_types.py:35
 msgid "Picture of the molecule"
-msgstr "Obrázek molekuly"
+msgstr "Esquema da molécula"
 
 #: ../src/data_types.py:36
 msgid "Compound name"
-msgstr "Jméno sloučeniny"
+msgstr "Nome do composto"
 
 #: ../src/data_types.py:37
 msgid "Molecular formula"
-msgstr "Molekulový vzorec"
+msgstr "Fórmula molecular"
 
 #: ../src/data_types.py:39 ../src/data_types.py:59
 msgid "Charge"
-msgstr "Náboj"
+msgstr "Carga"
 
 #: ../src/data_types.py:39
 msgid "Net charge of the molecule"
-msgstr "Celkový náboj molekuly"
+msgstr "Carga global da molécula"
 
 #: ../src/data_types.py:40
 msgid "Molecule encoded in SMILES format"
-msgstr "Molekula zapsaná ve formátu SMILES"
+msgstr "Molécula codificada no formato SMILES"
 
 #: ../src/data_types.py:41
 msgid "Molecular weight"
-msgstr "Molekulová hmotnost"
+msgstr "Peso Molecular"
 
 #: ../src/data_types.py:42
 msgid "Fragments"
-msgstr "Fragmenty"
+msgstr "Fragmentos"
 
 #: ../src/data_types.py:42
 msgid "Molecular fragments"
-msgstr "Molekulové fragmenty"
+msgstr "Fragmentos moleculares"
 
 #: ../src/data_types.py:43
 msgid "Atoms"
-msgstr "Atomy"
+msgstr "Átomos"
 
 #: ../src/data_types.py:45
 msgid "Atom"
-msgstr "Atom"
+msgstr "Átomo"
 
 #: ../src/data_types.py:46
 msgid "Fragment"
-msgstr "Fragment"
+msgstr "Fragmento"
 
 #: ../src/data_types.py:46
 msgid "Molecular fragment"
-msgstr "Molekulový fragment"
+msgstr " Fragmento molecular "
 
 #: ../src/data_types.py:47
 msgid "Reaction"
-msgstr "Reakce"
+msgstr "Reacção"
 
 #: ../src/data_types.py:47
 msgid "Chemical reaction"
-msgstr "Chemická reakce"
+msgstr "Reacção química"
 
 #: ../src/data_types.py:48
 msgid "Reactants"
-msgstr "Reaktanty"
+msgstr "Reagentes"
 
 #: ../src/data_types.py:48
 msgid "Starting compounds of a reaction"
-msgstr "Výchozí sloučeniny reakce"
+msgstr "Material de partida da reacção"
 
 #: ../src/data_types.py:49
 msgid "Reagents"
-msgstr "Reagenty"
+msgstr "Reagentes químicos"
 
 #: ../src/data_types.py:49
 msgid "Additional components of a reaction - solvent, catalyst, etc."
-msgstr "Další součásti reakce - rozpouštědlo, katalyzátor, etc."
+msgstr "Componentes adicionais da reacção – solvente, catalisador, etc"
 
 #: ../src/data_types.py:50
 msgid "Products"
-msgstr "Produkty"
+msgstr "Produtos"
 
 #: ../src/data_types.py:50
 msgid "Products of a chemical reaction"
-msgstr "Produkty chemické reakce"
+msgstr "Produtos de uma reacção química"
 
 #: ../src/data_types.py:51
 msgid "Reaction components"
-msgstr "Reakční složka"
+msgstr "Componentes da reacção"
 
 #: ../src/data_types.py:51
 msgid "Components of a chemical reaction"
-msgstr "Složka chemické reakce"
+msgstr "Componentes de uma reacção química"
 
 #: ../src/data_types.py:52
 msgid "Molecule"
-msgstr "Molekula"
+msgstr "Molécula"
 
 #: ../src/data_types.py:54
 msgid "Fragment name"
-msgstr "Jméno fragmentu"
+msgstr "Nome do fragmento"
 
 #: ../src/data_types.py:54
 msgid "Name of the chemical group this fragment represents"
-msgstr "Jméno chemické skupiny, kterou tento fragment reprezentuje"
+msgstr "Nome do grupo químico representado por este fragmento"
 
 #: ../src/data_types.py:55
 msgid "Compound type"
-msgstr "Typ sloučeniny"
+msgstr "Tipo de composto"
 
 #: ../src/data_types.py:55
 msgid "Type of compound this fragment represents"
-msgstr "Typ sloučeniny, kterou tento fragment reprezentuje"
+msgstr "Tipo de composto representado por este fragmento"
 
 #: ../src/data_types.py:57
 msgid "Symbol"
-msgstr "Symbol"
+msgstr "Símbolo"
 
 #: ../src/data_types.py:57
 msgid "Atom symbol"
-msgstr "Symbol atomu"
+msgstr "Símbolo atómico"
 
 #: ../src/data_types.py:58
 msgid "Element name"
-msgstr "Jméno prvku"
+msgstr "Nome do elemento"
 
 #: ../src/data_types.py:59
 msgid "Atom charge"
-msgstr "Náboj atomu"
+msgstr "Carga do átomo"
 
 #: ../src/data_types.py:60
 msgid "Proton number"
-msgstr "Protonové číslo"
+msgstr "Número de Protões"
 
 #: ../src/data_types.py:61
 msgid "Column"
-msgstr "Sloupec"
+msgstr "Coluna"
 
 #: ../src/data_types.py:61
 msgid "Periodic table column"
-msgstr "Sloupec periodické tabulky"
+msgstr "Coluna da tabela periódica"
 
 #: ../src/data_types.py:62
 msgid "Row"
-msgstr "Řádek"
+msgstr "linha"
 
 #: ../src/data_types.py:62
 msgid "Periodic table row"
-msgstr "Řádek periodické tabulky"
+msgstr "Linha da tabela periódica"
 
 #: ../src/data_types.py:63
 msgid "Element group"
-msgstr "Skupina prvků"
+msgstr "Grupo do elemento"
 
 #: ../src/data_types.py:64
 msgid "Valence electrons"
-msgstr "Valenční elektrony"
+msgstr "Electrões de valência"
 
 #: ../src/data_types.py:64
 msgid "Number of valence electrons"
-msgstr "Počet valenčních elektronů"
+msgstr "Número de electrões de valência"
 
 #: ../src/data_types.py:65
 msgid "Oxidation numbers"
-msgstr "Oxidační čísla"
+msgstr "Números de oxidação"
 
 #: ../src/data_types.py:65
 msgid "Possible oxidation numbers for an atom"
-msgstr "Možná oxidační čísla atomu"
+msgstr "Números de oxidação possíveis para um átomo"
 
 #: ../src/data_types.py:66
 msgid "Electron structure"
-msgstr "Elektronová struktura"
+msgstr "Estrutura electrónica"
 
 #: ../src/data_types.py:66
 msgid "Electron structure of occupied orbitals"
-msgstr "Elektronová struktura obsazených orbitalů"
+msgstr "Estrutura electrónica das orbitais ocupadas"
 
 #: ../src/data_types.py:67
 msgid "Atomic weight"
-msgstr "Atomová hmotnost"
+msgstr "Peso atómico"
 
 #: ../src/data_types.py:68
 msgid "Electronegativity"
-msgstr "Elektronegativita"
+msgstr "Electronegatividade"
 
 #: ../src/data_types.py:69
 msgid "Latin element name"
-msgstr "Latinské jméno prvku"
+msgstr "Nome do elemento em Latim"
 
 #: ../src/data_types.py:70
 msgid "Description"
-msgstr "Popis"
+msgstr "Descrição"
 
 #: ../src/data_types.py:72
 msgid "Reactant"
-msgstr "Reaktant"
+msgstr "Reagente"
 
 #: ../src/data_types.py:72
 msgid "Reactant of a reaction"
-msgstr "Reaktant reakce"
+msgstr "Reagente de uma reacção"
 
 #: ../src/data_types.py:73
 msgid "Product"
-msgstr "Produkt"
+msgstr "Produto"
 
 #: ../src/data_types.py:73
 msgid "Product of a reaction"
-msgstr "Produkt reakce"
+msgstr "Produto de uma reacção"
 
 #: ../src/data_types.py:74
 msgid "Single bond"
-msgstr "Jednoduchá vazba"
+msgstr "Ligação simples"
 
 #: ../src/data_types.py:75
 msgid "Double bond"
-msgstr "Dvojná vazba"
+msgstr "Ligação dupla"
 
 #: ../src/data_types.py:76
 msgid "Triple bond"
-msgstr "Trojná vazba"
+msgstr "Ligação tripla"
 
 #: ../src/data_types.py:77
 msgid "Aromatic bond"
-msgstr "Aromatická vazba"
+msgstr "Ligação aromática"
 
 #: ../src/data_types.py:78
 msgid "Composed from"
-msgstr "Skládá se z"
+msgstr "Constituído por"
 
 #: ../src/data_types.py:79
 msgid "Reacts with"
-msgstr "Reaguje s"
+msgstr "Reage com"
 
 #: ../src/data_types.py:80
 msgid "Produces"
-msgstr "Poskytuje"
+msgstr "Produz"
 
 #: ../src/data_types.py:81
 msgid "Produced from"
-msgstr "Vytvořeno z"
+msgstr "Produzido a partir de"
 
 #: ../src/data_types.py:82
 msgid "Opposite to"
-msgstr "Na opačné straně"
+msgstr " Oposto ao "
 
 #: ../src/data_types.py:82
 msgid "Atom is on opposite side relative to the referenced atom"
-msgstr "Atom je na opačné straně vzhledem k odkazovanému atomu"
+msgstr "O átomo está no lado oposto em relação ao átomo de referência"
 
 #: ../src/data_types.py:83
 msgid "On the same side as"
-msgstr "Na stejné straně"
+msgstr "Do mesmo lado que"
 
 #: ../src/data_types.py:83
 msgid "Atom is on the same side relative to the referenced atom"
-msgstr "Atom je na stejné straně vzhledem k odkazovanému atomu"
+msgstr "O átomo está do mesmo lado em relação ao átomo de referência "
 
 #~ msgid "Molecule name"
-#~ msgstr "Jméno molekuly"
+#~ msgstr "Nome da molécula"

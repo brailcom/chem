@@ -73,6 +73,7 @@ class ChemReader:
     def process_string(self, text, format="SMILES"):
         """this is the main method used to process chemical data in a string format to
         the internal representation;"""
+        print text
         # check if the format is supported
         if format in self.formats:
             method,name = self.formats[format]
