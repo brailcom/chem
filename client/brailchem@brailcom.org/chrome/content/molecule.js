@@ -68,7 +68,14 @@ function brailchem_browse_molecule ()
     var format = document.getElementById ('molecule-format').value;
     if (format == 'name')
         return brailchem_browse_name ();
-    var molecule = document.getElementById ('molecule-textbox').value;
+    var molecule_or_uri = document.getElementById ('molecule-textbox').value;
+    var prefix = molecule_or_uri.substring (0, 5);
+    if (prefix == 'file:' || prefix == 'http:') {
+        var molecule = brailchem_read_url (molecule_or_uri);
+    }
+    else {
+        var molecule = molecule_or_uri;
+    }
     brailchem_display_object (document, molecule, format);
 }
 
@@ -84,8 +91,7 @@ function brailchem_mol_insert_file ()
     if (! file)
         return;
     var url = 'file:' + file.path;
-    text = brailchem_read_url (url);
-    document.getElementById ('molecule-textbox').value = text;
+    document.getElementById ('molecule-textbox').value = url;
 }
     
 function brailchem_mol_element_text (element) {
