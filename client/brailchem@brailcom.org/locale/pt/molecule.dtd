@@ -1,8 +1,8 @@
-<!ENTITY molecule.header "Molecule Browser">
-<!ENTITY molecule.text.intro "Write a molecule name or a molecule/reaction in the SMILES notation to the input box and press one of the following buttons to inspect the molecule.">
-<!ENTITY molecule.label.smiles "Molecule or reaction">
-<!ENTITY molecule.label.format "Notation format">
-<!ENTITY molecule.label.molname "Molecule name">
-<!ENTITY molecule.button.browse "Inspect molecule or reaction">
-<!ENTITY molecule.button.insert-file "From file...">
-<!ENTITY molecule.display-groups "Display atom groups">
+<!ENTITY molecule.header "Editor Molecular">
+<!ENTITY molecule.text.intro "Escrever o nome da molécula ou a notaçăo SMILES da molécula/reacçăo na caixa de entrada e pressionar num dos seguintes botőes para analisar a molécula.">
+<!ENTITY molecule.label.smiles "Molécula ou reacçăo">
+<!ENTITY molecule.label.format "Formato da notaçăo">
+<!ENTITY molecule.label.molname "Nome da molécula">
+<!ENTITY molecule.button.browse "Analisar molécula ou reacçăo">
+<!ENTITY molecule.button.insert-file "Do ficheiro...">
+<!ENTITY molecule.display-groups "Apresentaçăo de grupos de átomos">

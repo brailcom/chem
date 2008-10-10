@@ -1,34 +1,34 @@
-<!ENTITY main.menu.file "File">
+<!ENTITY main.menu.file "Ficheiro">
 <!ENTITY main.menu.file-key "F">
-<!ENTITY main.menu.applications "Applications">
+<!ENTITY main.menu.applications "Aplicaçăo">
 <!ENTITY main.menu.applications-key "A">
-<!ENTITY main.menu.help "Help">
+<!ENTITY main.menu.help "Ajuda">
 <!ENTITY main.menu.help-key "H">
 
-<!ENTITY main.menu.file.window "New Window">
+<!ENTITY main.menu.file.window "Nova Janela">
 <!ENTITY main.menu.file.window-key "N">
-<!ENTITY main.menu.file.settings "Preferences">
+<!ENTITY main.menu.file.settings "Preferęncias">
 <!ENTITY main.menu.file.settings-key "P">
-<!ENTITY main.menu.file.upgrade "Upgrade Brailchem">
+<!ENTITY main.menu.file.upgrade "Actualizaçăo do Brailchem">
 <!ENTITY main.menu.file.upgrade-key "U">
-<!ENTITY main.menu.file.quit "Quit">
+<!ENTITY main.menu.file.quit "Sair">
 <!ENTITY main.menu.file.quit-key "Q">
 
-<!ENTITY main.menu.applications.molecule "Molecule Browser">
+<!ENTITY main.menu.applications.molecule "Editor Molecular">
 <!ENTITY main.menu.applications.molecule-key "M">
-<!ENTITY main.menu.applications.periodic "Periodic Table">
+<!ENTITY main.menu.applications.periodic "Tabela Periódica">
 <!ENTITY main.menu.applications.periodic-key "P">
 
-<!ENTITY main.menu.help.introduction "Introduction">
+<!ENTITY main.menu.help.introduction "Introduçăo">
 <!ENTITY main.menu.help.introduction-key "I">
-<!ENTITY main.menu.help.keys "Keyboard Commands">
+<!ENTITY main.menu.help.keys "Comandos do Teclado">
 <!ENTITY main.menu.help.keys-key "K">
-<!ENTITY main.menu.help.homepage "Brailchem Home Page">
+<!ENTITY main.menu.help.homepage "Página Inicial do Brailchem">
 <!ENTITY main.menu.help.homepage-key "H">
-<!ENTITY main.menu.help.about "About">
+<!ENTITY main.menu.help.about "Acerca">
 <!ENTITY main.menu.help.about-key "A">
 
-<!ENTITY main.intro.message "Welcome in Brailchem.
-Use menus to control the application.
-See Help menu for introductory information.
+<!ENTITY main.intro.message "Bem-vindo ao Brailchem.
+Usar os menus para controlar a aplicaçăo.
+Ver o menu de ajuda para a informaçăo introdutória.
 ">

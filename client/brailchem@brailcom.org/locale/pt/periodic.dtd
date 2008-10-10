@@ -1,14 +1,14 @@
-<!ENTITY periodic.header "Periodic Table">
-<!ENTITY periodic.element-info "Press some element button in the periodic table to view element details.">
-<!ENTITY periodic.filters.from "from">
-<!ENTITY periodic.filters.to "to">
-<!ENTITY periodic.filters.enable "Enable filters">
-<!ENTITY periodic.filters.label "Filters">
-<!ENTITY periodic.filters.group "Group">
-<!ENTITY periodic.filters.electronegativity "Electronegativity">
-<!ENTITY periodic.filters.oxidation "Oxidation number">
-<!ENTITY periodic.filters.selected-elements "Set of elements">
-<!ENTITY periodic.filters.select-elements "Change">
-<!ENTITY periodic.label.table "Periodic table">
-<!ENTITY periodic.label.details "Element details">
-<!ENTITY periodic.filters.all "all">
+<!ENTITY periodic.header "Tabela Periódica">
+<!ENTITY periodic.element-info "Pressione no botăo de um dado elemento da tabela periódica para ter acesso aos detalhes desse elemento.">
+<!ENTITY periodic.filters.from "De">
+<!ENTITY periodic.filters.to "Para">
+<!ENTITY periodic.filters.enable "Permita filtros">
+<!ENTITY periodic.filters.label "Filtros">
+<!ENTITY periodic.filters.group "Grupo">
+<!ENTITY periodic.filters.electronegativity "Electronegatividade">
+<!ENTITY periodic.filters.oxidation "Número de Oxidaçăo">
+<!ENTITY periodic.filters.selected-elements "Conjunto de elementos">
+<!ENTITY periodic.filters.select-elements "Mudança">
+<!ENTITY periodic.label.table "Tabela Periódica">
+<!ENTITY periodic.label.details "Detalhes do elemento">
+<!ENTITY periodic.filters.all "todos">
