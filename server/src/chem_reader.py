@@ -118,6 +118,8 @@ class ChemReader:
         mol_data_atoms = Complex(id2t("ATOMS"))
         mol_data.add_view(mol_data_atoms)
         _atom_to_a_data = {} # maps oasa atoms to brailchem data
+        # _rings are used for statistical information on an atom
+        _rings = mol.get_smallest_independent_cycles()
         for atom in mol.atoms:
             a_data = PartMultiView(id2t("ATOM"))
             # charge
@@ -127,20 +129,30 @@ class ChemReader:
             # description is also langugage dependent
             if symbol2properties[atom.symbol]['DESC']:
                 a_data.add_view(LanguageDependentValue(id2t("DESC"), symbol2properties[atom.symbol]['DESC']))
+            # group also
+            if symbol2properties[atom.symbol]['group']:
+                a_data.add_view(LanguageDependentValue(id2t("ELEMENT_GROUP"), symbol2properties[atom.symbol]['group']))
             # other atom data
             for key,dtype in self.table_key_to_data_type.iteritems():
-                if key in symbol2properties[atom.symbol] and key != 'NAMES':
+                if key in symbol2properties[atom.symbol] and key not in ('NAMES','group'):
                     value = symbol2properties[atom.symbol][key]
                     if type(value) == type([]):
                         value = ",".join(map(str, value))
                     else:
                         a_data.add_view(Value(id2t(dtype), value))
+            # statistical topological data
+            _num_rings = len([rng for rng in _rings if atom in rng])
+            a_data.add_view(Value(id2t("PART_OF_RINGS"), _num_rings))
             _atom_to_a_data[atom] = a_data
             mol_data_atoms.add_part(Relation(id2t('REL_COMPOSED_FROM'), a_data))
+        # before processing bonds, we must detect aromatic bonds
+        mol.mark_aromatic_bonds()
         for atom in mol.atoms:
             a_data = _atom_to_a_data[atom]
             for e,n in atom.get_neighbor_edge_pairs():
-                a_data.add_neighbor(Relation(id2t(self.bond_order_to_relation[e.order]), _atom_to_a_data[n]))
+                rel = Relation(id2t(self.bond_order_to_relation[e.order]), _atom_to_a_data[n])
+                rel.set_property("aromatic",e.aromatic)
+                a_data.add_neighbor(rel)
         # stereochemistry support
         for stereo in mol.stereochemistry:
             if stereo.__class__.__name__ == "cis_trans_stereochemistry":

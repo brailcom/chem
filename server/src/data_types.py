@@ -68,6 +68,7 @@ class DataTypeFactory:
                    "EN": (_("Electronegativity"), _("Electronegativity"), 60),
                    "LATIN_ELEMENT_NAME": (_("Latin element name"), _("Latin element name"), 40),
                    "DESC": (_("Description"), _("Description"), 20),
+                   "PART_OF_RINGS": (_("Part of rings"), _("Of how many rings this atom is part"), 182),
                    
                    "REL_REACTANT": (_("Reactant"), _("Reactant of a reaction"), 1),
                    "REL_PRODUCT": (_("Product"), _("Product of a reaction"), 1),

@@ -289,9 +289,20 @@ class Relation (Data):
     def __init__(self, data_type, target):
         super(Relation, self).__init__(data_type)
         self._target = target
+        self._properties = {}
 
     def target(self):
         return self._target
+
+    def properties(self):
+        import copy
+        return copy.copy(self._properties)
+
+    def get_property(self, key):
+        return self._properties.get(key, None)
+
+    def set_property(self, key, value):
+        self._properties[key] = value
 
     def text_dump(self, recursive=False, _level=0, _top_level=True):
         ret = []
