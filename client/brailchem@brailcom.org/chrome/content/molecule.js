@@ -274,7 +274,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         var id = item.getAttribute ('id');
         var node_data = item.getElementsByTagName ('data');
         var label = '';
-        var charge = 0;
+        var charge = '0';
+        var multiplicity = '1';
         for (var j = 0; j < node_data.length; j++) {
             var node_data_j = node_data[j];
             var node_data_type = node_data_j.getAttribute ('type');
@@ -282,6 +283,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 label = brailchem_mol_element_value (node_data_j);
             else if (node_data_type == 'ATOM_CHARGE')
                 charge = brailchem_mol_element_value (node_data_j);
+            else if (node_data_type == 'MULTIPLICITY')
+                multiplicity = brailchem_mol_element_value (node_data_j);                
         }
         if (charge != '0') {
             var charge_label = (charge == '1' ? '+' :
@@ -293,13 +296,14 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         var number = (item_numbers[label] || 0) + 1;
         item_numbers[label] = number;
         var neighbors = [];
-        item_data[id] = {id: id, label: label, number: number, neighbors: neighbors, in_fragment: null};
+        item_data[id] = {id: id, label: label, number: number, neighbors: neighbors, in_fragment: null, multiplicity: multiplicity};
         var neighbor_elements = item.getElementsByTagName ('link');
         for (var j = 0; j < neighbor_elements.length; j++) {
             var link = neighbor_elements[j];
             var bond = link.getAttribute ('description');
             var target = link.getAttribute ('id');
-            neighbors.push ({bond: bond, id: target});
+            var aromatic = link.getAttribute ('aromatic') == '1';
+            neighbors.push ({bond: bond, id: target, aromatic: aromatic});
         }
     }    
     var items = fragments_element.getElementsByTagName ('parts')[0].childNodes;
@@ -357,7 +361,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 var neighbor_id = neighbor.id;
                 var item_id = (((! is_exposed_fragment_item) && fragment_items[neighbor_id]) || neighbor_id);                
                 var neighbor_data = item_data[item_id];
-                var label = neighbor_data.label + neighbor_data.separator + neighbor_data.number + '[' + neighbor.bond + ']';
+                var bond_description = '[' + neighbor.bond + (neighbor.aromatic ? ' A' : '') + ']';
+                var label = neighbor_data.label + neighbor_data.separator + neighbor_data.number + bond_description;
                 var attributes = {'brailchem-target': neighbor_data.id,
                                   value: label,
                                   'class': 'brailchem-reference',
@@ -411,6 +416,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                                        {id: id, class: item_class, 'brailchem-fragment': (item.in_fragment || ''),
                                         onfocus: 'brailchem_mol_atom_focus(this.parentNode.parentNode,'+id+')'},
                                        label);
+                if (item.multiplicity && item.multiplicity != '1')
+                    brailchem_add_element (hbox, 'description', {}, ' x'+item.multiplicity);
                 var terminals = [];
                 var nonterminals = [];
                 for (var j in neighbors) {
