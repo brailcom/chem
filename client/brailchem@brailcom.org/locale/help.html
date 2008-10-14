@@ -79,23 +79,24 @@
     </a>
 
     <p>Molecule browser is capable of inspecting molecule structures and
-      chemical reactions given in SMILES notation.  The molecule or reaction is
-      written into the input box in the application and by pressing the
-      attached button the given molecule or a chemical reaction consisting of
-      several molecules is inserted in a browsable expanded form.</p>
+      chemical reactions written in one of supported chemical notations or
+      specified by their names.  The molecule or reaction is written into the
+      input box in the application.  Alternatively you can write a URL of a
+      location containing the molecule or reaction descripition into the input
+      box.  <code>file</code> and <code>http</code> URLs are supported.</p>
 
-    <p>Alternatively you can write molecule name to the input box instead of a
-      SMILES identifier and press the <code>Inspect by molecule name</code>
-      button.  If the molecule name is recognized, the corresponding molecule
-      is displayed.</p>
+    <p>Then specify the input format in the following combo box and press the
+      submit button.  If the molecule input is recognized, the given molecule
+      or a chemical reaction consisting of several molecules is inserted in a
+      browsable expanded form to the application window.</p>
 
     <p>The application works by connecting to the server part of Brailchem and
-      asking it for information represented by the given SMILES string.  The
-      server tries to identify molecule names and to expand molecules into
-      sequences of atoms and <em>fragments</em> connected by bonds.  Fragments
-      are well known groups of atoms identified by the server (e.g. carboxyl
-      group) which can be represented by a single item rather than an
-      unnecessarily complex list of single atoms.</p>
+      asking it for information represented by the given notation.  The server
+      tries to identify molecule names and to expand molecules into sequences
+      of atoms and <em>fragments</em> connected by bonds.  Fragments are well
+      known groups of atoms identified by the server (e.g. carboxyl group)
+      which can be represented by a single item rather than an unnecessarily
+      complex list of single atoms.</p>
 
     <p>When a molecule is inspected (for instance <em>acetic acid</em> is
       written as <code>CC(=O)O</code> in SMILES notation), its name, list of
@@ -161,8 +162,8 @@
     <p>For the purpose of easier orientation the periodic table is split
       according to the traditional presentation style in two parts: The main
       periodic table and the table of lanthanoids and actinoids.  You can jump
-      into the main table by pressing <kbd>Control+T</kbd> and into the table
-      of lanthanoids and actinoids by pressing <kbd>Control+Shift+T</kbd>.
+      into the main table by pressing <code>Control+T</code> and into the table
+      of lanthanoids and actinoids by pressing <code>Control+Shift+T</code>.
 
     <p>Summary of basic periodic table command keys:</p>
 
@@ -195,7 +196,7 @@
     </table>
 
     <p>These shortcuts are composed of sequences of several keys.  First press
-      the <kbd>Control+F</kbd> key and then the second key.</p>
+      the <code>Control+F</code> key and then the second key.</p>
 
     <p>A special filter is the <em>Set of elements</em> filter.  You activate
       it by pressing the <samp>Change</samp> button in the <em>Set of
