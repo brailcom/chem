@@ -57,6 +57,7 @@ class DataTypeFactory:
                    "ATOM_SYMBOL": (_("Symbol"), _("Atom symbol"), 200),
                    "ELEMENT_NAME": (_("Element name"), _("Element name"), 190),
                    "ATOM_CHARGE": (_("Charge"), _("Atom charge"), 185),
+                   "MULTIPLICITY": (_("Multiplicity"), _("Number of unpaired electrons plus one"), 184),
                    "PROTON_NUMBER": (_("Proton number"), _("Proton number"), 180),
                    "PERIODIC_TABLE_COLUMN": (_("Column"), _("Periodic table column"), 170),
                    "PERIODIC_TABLE_ROW": (_("Row"), _("Periodic table row"), 160),

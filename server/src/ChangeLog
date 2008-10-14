@@ -4,12 +4,14 @@
 	ELEMENT_GROUP is now properly sent as LanguageDependentValue;
 	statistical topological information requested by testers was added to the atom
 	- 'PART_OF_RINGS' - of how many rings is an atom part. More may be added in future;
-	information about aromaticity added to bonds
+	information about aromaticity added to bonds;
+	multiplicity added to atom data
 	* object_types.py:
 	Relation is now capable of storing additional information in properties dict
 	(used for transfer of information about aromaticity of bonds)
 	* twistd/server.py:
 	serialization of Relation properties added
+	
 	
 2008-10-08   Beda Kosata <kosatab@vscht.cz>
 

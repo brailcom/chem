@@ -122,8 +122,9 @@ class ChemReader:
         _rings = mol.get_smallest_independent_cycles()
         for atom in mol.atoms:
             a_data = PartMultiView(id2t("ATOM"))
-            # charge
+            # charge and multiplicity
             a_data.add_view(Value(id2t("ATOM_CHARGE"), atom.charge))
+            a_data.add_view(Value(id2t("MULTIPLICITY"), atom.multiplicity))
             # element names in diffent languages
             a_data.add_view(LanguageDependentValue(id2t("ELEMENT_NAME"), symbol2properties[atom.symbol]['NAMES']))
             # description is also langugage dependent
