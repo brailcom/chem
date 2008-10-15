@@ -283,7 +283,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 label = brailchem_mol_element_value (node_data_j);
             else if (node_data_type == 'ATOM_CHARGE')
                 charge = brailchem_mol_element_value (node_data_j);
-            else if (node_data_type == 'MULTIPLICITY')
+            else if (node_data_type == 'ATOM_MULTIPLICITY')
                 multiplicity = brailchem_mol_element_value (node_data_j);                
         }
         if (charge != '0') {
