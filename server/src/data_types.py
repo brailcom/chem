@@ -25,6 +25,8 @@ class DataType:
     def default_priority(self):
         return self._default_priority
 
+    def set_default_priority(self, value):
+        self._default_priority = value
 
 
 class DataTypeFactory:
@@ -37,7 +39,8 @@ class DataTypeFactory:
                    'MF': (_('Molecular formula'),_('Molecular formula'), 15),
                    'SUM': (_("Summary formula"), _("Summary formula"), 10),
                    'MOL_CHARGE': (_("Charge"), _("Net charge of the molecule"), 9),
-                   'SMILES': (_('SMILES'), _('Molecule encoded in SMILES format'), 8),
+                   'MOL_MULTIPLICITY': (_("Multiplicity"), _("Net multiplicity of the molecule"), 8),
+                   'SMILES': (_('SMILES'), _('Molecule encoded in SMILES format'), 7),
                    'MW': (_('Molecular weight'), _('Molecular weight'), 5),
                    "FRAGMENTS": (_("Fragments"), _("Molecular fragments"), 4),
                    "ATOMS": (_("Atoms"), _("Atoms"), 3),
@@ -57,7 +60,7 @@ class DataTypeFactory:
                    "ATOM_SYMBOL": (_("Symbol"), _("Atom symbol"), 200),
                    "ELEMENT_NAME": (_("Element name"), _("Element name"), 190),
                    "ATOM_CHARGE": (_("Charge"), _("Atom charge"), 185),
-                   "MULTIPLICITY": (_("Multiplicity"), _("Number of unpaired electrons plus one"), 184),
+                   "ATOM_MULTIPLICITY": (_("Multiplicity"), _("Number of unpaired electrons plus one"), 184),
                    "PROTON_NUMBER": (_("Proton number"), _("Proton number"), 180),
                    "PERIODIC_TABLE_COLUMN": (_("Column"), _("Periodic table column"), 170),
                    "PERIODIC_TABLE_ROW": (_("Row"), _("Periodic table row"), 160),

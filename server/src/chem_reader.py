@@ -113,6 +113,7 @@ class ChemReader:
         mol_data.add_view(Value(id2t("MW"), mol.weight))
         mol_data.add_view(Value(id2t("SUM"), str(mol.get_formula_dict())))
         mol_data.add_view(Value(id2t("MOL_CHARGE"), mol.charge))
+        mol_data.add_view(Value(id2t("MOL_MULTIPLICITY"), 1+sum([v.multiplicity-1 for v in mol.vertices])))
         mol_data_frags = Complex(id2t("FRAGMENTS"))
         mol_data.add_view(mol_data_frags)
         mol_data_atoms = Complex(id2t("ATOMS"))
@@ -124,7 +125,7 @@ class ChemReader:
             a_data = PartMultiView(id2t("ATOM"))
             # charge and multiplicity
             a_data.add_view(Value(id2t("ATOM_CHARGE"), atom.charge))
-            a_data.add_view(Value(id2t("MULTIPLICITY"), atom.multiplicity))
+            a_data.add_view(Value(id2t("ATOM_MULTIPLICITY"), atom.multiplicity))
             # element names in diffent languages
             a_data.add_view(LanguageDependentValue(id2t("ELEMENT_NAME"), symbol2properties[atom.symbol]['NAMES']))
             # description is also langugage dependent
