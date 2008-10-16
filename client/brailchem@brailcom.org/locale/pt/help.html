@@ -64,17 +64,18 @@ específicos de cada uma das sub-aplicações do Brailchem.&nbsp; </p>
       <h2>Aplicação Editor Molecular</h2>
     </a>
 
-    <p>O
-editor molecular é capaz de analisar as estruturas moleculares e as
-reacções químicas em notação SMILES. O SMILES da molécula ou da reacção
-é escrito na caixa da entrada da aplicação e pressionando o botão
-adjacente origina uma descrição editável e expandida da molécula
-correspondente, ou da reacção química que consiste de diversas
-moléculas.</p>
+<p> O editor molecular é capaz de analisar as estruturas moleculares e as
+reacções químicas escritas em qualquer um dos sistemas de notação química
+suportados pelo servidor ou identificados pelo seus nomes. A molécula ou a
+reacção é escrita na caixa de entrada da aplicação. Alternativamente pode
+escrever o URL da localização que contem a molécula ou a descrição da reacção
+na caixa de entrada.  <code>file</code> e <code>http</code> Os URLs são
+suportados.</p>
 
-    <p>Alternativamente é possível escrever o nome da
-molécula na caixa de entrada em vez da identificação pelo SMILES e
-pressionar o botão <code>Análise da molécula pelo nome</code>. Se o nome da molécula for reconhecido pelo servidor, será indicada a correspondente descrição da molécula.</p>
+<p>De seguida especifique o formato de entrada na caixa combinada seguinte e
+pressione o botão de análise.  Se a molécula de entrada é reconhecida, é
+originada uma descrição editável e expandida dessa dada molécula, ou da reacção
+química que consiste de diversas moléculas, na janela da aplicação.</p>
 
     <p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;" lang="PT">A aplicação funciona através da ligação ao
 servidor do Brailchem e solicitação da informação representada por uma dada
@@ -95,7 +96,14 @@ apenas a este átomo e a nada mais (logo não há necessidade de saltar
 para eles para explorar a estrutura da molécula) e vizinhos que podem
 estar ligados a vários átomos.</p>
 
-    <p>Pode navegar através dos itens usando os comandos <code>TAB</code> e<code> Shift+TAB</code>, comandos de navegação do Firefox ou usando um dos comandos especiais desta aplicação:</p>
+    <p>Existem resultados especiais para alguns átomos e para as propriedades das ligações:</p>
+    <ul> 
+      <li> Se um dado átomo faz parte de um anel ou de um grupo de anéis, isto é indicado após o símbolo do átomo pelo <code>R</code> caracteres, um <code>R</code> caracter por cada anel.</li>
+      <li>Se a multiplicidade de um dado átomo é diferente de 1, isto é indicado após o símbolo do átomo pelo símbolo <code>xNÚMERO</code> onde <code>NÚMERO</code> é a multiplicidade do átomo.</li>
+      <li>As ligações aromáticas são indicadas pela letra <code>A</code> no fim da sua descrição.</li>
+    </ul>
+
+    <p>Pode navegar através dos itens usando os comandos <code>TAB</code> e <code>Shift+TAB</code>, comandos de navegação do Firefox ou usando um dos comandos especiais desta aplicação:</p>
 
     <table>
       <tbody><tr><td><code>Control+A</code></td><td>saltar
