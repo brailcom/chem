@@ -41,7 +41,7 @@ class ChemReader:
 
     # the following is a list of most important supported formats (when openbabel is available)
     # this is mainly here for the client to be able to suggest most common formats
-    important_formats = ["SMILES","Molfile","name","cdx","cdxml","cml","inchi","pdb","sdf"]
+    important_formats = ["SMILES","name","cdx","cdxml","cml","inchi","pdb","sdf"]
 
     table_key_to_data_type = {'ATOM_SYMBOL':'ATOM_SYMBOL',
                               'VAL_ELECTRONS':'VAL_ELECTRONS',
@@ -73,7 +73,6 @@ class ChemReader:
     def process_string(self, text, format="SMILES"):
         """this is the main method used to process chemical data in a string format to
         the internal representation;"""
-        print text
         # check if the format is supported
         if format in self.formats:
             method,name = self.formats[format]

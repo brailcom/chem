@@ -1,3 +1,7 @@
+2008-10-20   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py: duplicit entry Molfile removed from the list of supported formats
+	
 2008-10-17   Beda Kosata <kosatab@vscht.cz>
 
 	* detail_periodic_table.py: Portuguese translation of element group names was added
