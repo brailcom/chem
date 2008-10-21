@@ -82,7 +82,7 @@ class ChemReader:
         the internal representation;"""
         # check if the format is supported
         if format in self.formats:
-            method,name = self.formats[format]
+            method,name,_ext = self.formats[format]
             if callable(method):
                 chem_objects = method(text)
             else:
