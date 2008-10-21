@@ -220,12 +220,14 @@ class ChemInterface(object):
         doc = self._create_dom()
         root = doc.createElement("formats")
         doc.appendChild(root)
+        # sort most important first and then by desc, those without extension go first
+        # among the important ones
         to_sort = []
         for name,desc,exts in brailchem.chem_reader.ChemReader.known_format_descriptions():
             to_sort.append((name not in brailchem.chem_reader.ChemReader.important_formats,
-                            desc, name, exts))
+                            bool(exts), desc, name, exts))
         to_sort.sort()
-        for not_common,desc,name,exts in to_sort:
+        for not_common,_tmp,desc,name,exts in to_sort:
             elem = doc.createElement("format")
             common = not not_common
             if common:
