@@ -220,10 +220,18 @@ class ChemInterface(object):
         doc = self._create_dom()
         root = doc.createElement("formats")
         doc.appendChild(root)
-        for name,desc in brailchem.chem_reader.ChemReader.known_format_names():
+        to_sort = []
+        for name,desc,exts in brailchem.chem_reader.ChemReader.known_format_descriptions():
+            to_sort.append((name not in brailchem.chem_reader.ChemReader.important_formats,
+                            desc, name, exts))
+        to_sort.sort()
+        for not_common,desc,name,exts in to_sort:
             elem = doc.createElement("format")
-            if name in brailchem.chem_reader.ChemReader.important_formats:
+            common = not not_common
+            if common:
                 elem.setAttribute('common','True')
+            if exts:
+                elem.setAttribute('extensions', " ".join(exts))
             root.appendChild(elem)
             name_el = doc.createElement("name")
             name_el.appendChild(doc.createTextNode(name))

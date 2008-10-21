@@ -1,3 +1,11 @@
+2008-10-21   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py:
+	* twistd/server.py:
+	output of available formats was reorganized (most important formats first)
+	and extensions attribute was added that lists filename extensions normally
+	used for files of this type
+	
 2008-10-20   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py: duplicit entry Molfile removed from the list of supported formats

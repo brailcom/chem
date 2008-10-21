@@ -33,10 +33,10 @@ class ChemReader:
         }
 
     # known formats
-    formats = { "SMILES": ("_read_smiles", _("SMILES")),
-                "Molfile": ("_read_molfile", _("Molfile")),
-                "summary": ("_read_summary_formula", _("Summary formula")),
-                "name": ("_read_name", _("Name")),
+    formats = { "SMILES": ("_read_smiles", _("SMILES"), ()),
+                "Molfile": ("_read_molfile", _("Molfile"), ('mol',)),
+                "summary": ("_read_summary_formula", _("Summary formula"), ()),
+                "name": ("_read_name", _("Name"), ()),
                 }
 
     # the following is a list of most important supported formats (when openbabel is available)
@@ -68,6 +68,13 @@ class ChemReader:
         keys = self.formats.keys()
         keys.sort()
         return [(key,self.formats[key][1]) for key in keys]
+
+    @classmethod
+    def known_format_descriptions(self):
+        """returns a list of tuples of currently supported formats and their descriptions."""
+        keys = self.formats.keys()
+        keys.sort()
+        return [(key,self.formats[key][1],self.formats[key][2]) for key in keys]
 
     @classmethod
     def process_string(self, text, format="SMILES"):
@@ -315,5 +322,8 @@ if hasattr(oasa, 'pybel_bridge'):
     def create_read_func( format):
         return lambda text: ChemReader._read_pybel_text(format, text)
     for format,name in pybel.informats.iteritems():
-        ChemReader.formats[format] = (create_read_func(format), name)
-
+        if format == "sdf":
+            # add mol and mdl to sdf - these are the same
+            ChemReader.formats[format] = (create_read_func(format), name, (format,"mol","mdl"))
+        else:
+            ChemReader.formats[format] = (create_read_func(format), name, (format,))
