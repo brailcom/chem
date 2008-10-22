@@ -43,9 +43,7 @@
     <hbox>
       <label control="molecule-format">&molecule.label.format;</label>
       <menulist id="molecule-format">
-        <menupopup id="molecule-format-menu">
-          <menuitem value="name" label="&molecule.label.molname;" selected="true"/>
-        </menupopup>
+        <menupopup id="molecule-format-menu"/>
       </menulist>
     </hbox>
     <hbox>
