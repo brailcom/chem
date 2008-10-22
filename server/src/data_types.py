@@ -61,6 +61,7 @@ class DataTypeFactory:
                    "ELEMENT_NAME": (_("Element name"), _("Element name"), 190),
                    "ATOM_CHARGE": (_("Charge"), _("Atom charge"), 185),
                    "ATOM_MULTIPLICITY": (_("Multiplicity"), _("Number of unpaired electrons plus one"), 184),
+                   "STEREOCHEMISTRY": (_("Stereochemistry"), _("Tetrahedral stereochemistry"), 183),
                    "PROTON_NUMBER": (_("Proton number"), _("Proton number"), 180),
                    "PERIODIC_TABLE_COLUMN": (_("Column"), _("Periodic table column"), 170),
                    "PERIODIC_TABLE_ROW": (_("Row"), _("Periodic table row"), 160),
@@ -98,3 +99,8 @@ class DataTypeFactory:
         else:
             return None
 
+
+# the following is here to simplify translation of some common terms
+COMMON_TERMS = {"left": _("left"),
+                "right": _("right"),
+                }

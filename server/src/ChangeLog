@@ -1,3 +1,10 @@
+2008-10-22   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py:
+	* data_types.py:
+	test support (fake) added to the server - test is available when a name of
+	"test_stereo" is supplied.
+
 2008-10-21   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py:

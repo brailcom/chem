@@ -1,5 +1,5 @@
 from object_types import Value, Part, Complex, MultiView, Relation, PartMultiView, ValuePart, LanguageDependentValue
-from data_types import DataTypeFactory, DataType
+from data_types import DataTypeFactory, DataType, COMMON_TERMS
 import oasa
 import os, sys
 from error_logger import ErrorLogger
@@ -170,7 +170,13 @@ class ChemReader:
                 a_data2 = _atom_to_a_data[atom2]
                 relation_name = self.stereochemistry_to_relation[stereo.value]
                 a_data1.add_neighbor(Relation(id2t(relation_name), a_data2))
-                a_data2.add_neighbor(Relation(id2t(relation_name), a_data1))                                     
+                a_data2.add_neighbor(Relation(id2t(relation_name), a_data1))
+        # this is just test support of tetrahedral stereochemistry
+        for v in mol.vertices:
+            if 'stereo' in v.properties_:
+                stereo_data = Value(id2t("STEREOCHEMISTRY"),v.properties_['stereo'].upper())
+                a_data = _atom_to_a_data[v]
+                a_data.add_view(stereo_data)
         # fragment support
         ssm = oasa.subsearch.substructure_search_manager()
         hits = ssm.find_substructures_in_mol(mol)
@@ -286,6 +292,14 @@ class ChemReader:
             return len(hit[3])
         mols = []
         for line in text.splitlines():
+            # this is for testing purposes only
+            if line == "test_stereo":
+               converter = oasa.smiles.converter()
+               mol = converter.read_text("CC([H])(O)CC")[0]
+               [v for v in mol.vertices if v.degree==4][0].properties_['stereo'] = COMMON_TERMS["left"]
+               mols.append( mol)
+               continue
+            # end of test
             res = oasa.structure_database.get_compounds_from_database(name=line)
             res += oasa.structure_database.get_compounds_from_database(synonym=line) 
             # find the hit with shortest smiles - this should be appropriate in most cases
