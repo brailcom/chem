@@ -80,17 +80,17 @@ function brailchem_browse_on_start (document, value, format)
     brailchem_display_object (document, value, format);
 }
 
+function brailchem_is_url (molecule_or_uri)
+{
+    var prefix = molecule_or_uri.substring (0, 5);
+    return (prefix == 'file:' || prefix == 'http:');
+}
+
 function brailchem_browse_molecule ()
 {
     var format = document.getElementById ('molecule-format').value;
     var molecule_or_uri = document.getElementById ('molecule-textbox').value;
-    var prefix = molecule_or_uri.substring (0, 5);
-    if (prefix == 'file:' || prefix == 'http:') {
-        var molecule = brailchem_read_url (molecule_or_uri);
-    }
-    else {
-        var molecule = molecule_or_uri;
-    }
+    var molecule = (brailchem_is_url (molecule_or_uri) ? brailchem_read_url (molecule_or_uri) : molecule_or_uri);
     brailchem_display_object (document, molecule, format);
 }
 
@@ -555,6 +555,8 @@ function brailchem_mol_toggle_fragments (element)
 function brailchem_mol_set_format (element)
 {
     var value = element.value;
+    if (! brailchem_is_url (value))
+        return;
     var extension_index = value.lastIndexOf ('.');
     if (extension_index == -1)
         return;
