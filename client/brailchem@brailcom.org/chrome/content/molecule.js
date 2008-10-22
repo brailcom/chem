@@ -42,7 +42,23 @@ function brailchem_molecule_formats (page)
         if (format.getAttribute ('common')) {
             var name = brailchem_mol_element_text (format.getElementsByTagName ('name')[0]);
             var description = brailchem_mol_element_text (format.getElementsByTagName ('description')[0]);
-            attributes = {value: name, label: description};
+            // XUL, oh, XUL, ...  It's not possible to store data about file
+            // extensions to a global variable, because its in some different
+            // scope during initialization.  Attributes fortunately survive...
+            var extension_string = format.getAttribute ('extensions');
+            if (extension_string) {
+                extension_string = extension_string + ' ';
+                var extension_list = '';
+                while (extension_string) {
+                    var space_index = extension_string.indexOf (' ');
+                    var extension = extension_string.substring (0, space_index);
+                    extension_list = extension_list + '[' + extension + ']';
+                    extension_string = extension_string.substring (space_index + 1);
+                }
+            }
+            else
+                extension_list = '';
+            attributes = {value: name, label: description, 'brailchem-extensions': extension_list};
             brailchem_add_element (menu, 'menuitem', attributes);
         }
     }
@@ -90,7 +106,9 @@ function brailchem_mol_insert_file ()
     if (! file)
         return;
     var url = 'file:' + file.path;
-    document.getElementById ('molecule-textbox').value = url;
+    var input_field = document.getElementById ('molecule-textbox');
+    input_field.value = url;
+    brailchem_mol_set_format (input_field);
 }
     
 function brailchem_mol_element_text (element) {
@@ -532,6 +550,23 @@ function brailchem_mol_toggle_fragments (element)
     var to_show = document.getElementsByAttribute ('brailchem-ghost-akin', showing_akin);
     for (var i = 0; i < to_show.length; i++)
         to_show[i].setAttribute ('hidden', '0');
+}
+
+function brailchem_mol_set_format (element)
+{
+    var value = element.value;
+    var extension_index = value.lastIndexOf ('.');
+    if (extension_index == -1)
+        return;
+    var extension = '[' + value.substring (extension_index + 1) + ']';
+    var menu_items = document.getElementById ('molecule-format-menu').getElementsByTagName ('menuitem');
+    for (var i = 0; i < menu_items.length; i++) {
+        var extension_list = menu_items[i].getAttribute ('brailchem-extensions');
+        if (extension_list.indexOf (extension) > -1) {
+            document.getElementById('molecule-format').selectedIndex = i;
+            break;
+        }
+    }
 }
 
 // Commands

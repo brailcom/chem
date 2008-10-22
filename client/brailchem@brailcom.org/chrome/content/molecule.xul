@@ -37,7 +37,7 @@
   <vbox id="molecule-input-box">
     <hbox>
       <label control="molecule-textbox">&molecule.label.smiles;</label>
-      <textbox id="molecule-textbox" accesskey="M"/>
+      <textbox id="molecule-textbox" onchange="brailchem_mol_set_format(this)" accesskey="M"/>
       <button id="molecule-file" label="&molecule.button.insert-file;" oncommand="brailchem_mol_insert_file()"/>
     </hbox>
     <hbox>
