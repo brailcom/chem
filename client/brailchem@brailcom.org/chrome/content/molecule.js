@@ -321,6 +321,9 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         var neighbor_elements = item.getElementsByTagName ('link');
         for (var j = 0; j < neighbor_elements.length; j++) {
             var link = neighbor_elements[j];
+            var link_type = link.getAttribute ('type');
+            if (link_type.indexOf ('BOND') == -1)
+                continue;
             var bond = link.getAttribute ('description');
             var target = link.getAttribute ('id');
             var aromatic = link.getAttribute ('aromatic') == '1';
