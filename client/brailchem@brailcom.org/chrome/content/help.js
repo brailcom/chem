@@ -28,7 +28,7 @@ function brailchem_help (section)
 
 function brailchem_help_homepage ()
 {
-    window.open ('http://ict.brailcom.org/brailchem', 'brailchem-help');
+    window.open ('http://ict.brailcom.org/software', 'brailchem-help');
 }
 
 function brailchem_help_about ()
