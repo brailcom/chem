@@ -294,6 +294,7 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         var charge = '0';
         var multiplicity = '1';
         var part_of_rings = 0;
+        var stereochemistry = null;
         for (var j = 0; j < node_data.length; j++) {
             var node_data_j = node_data[j];
             var node_data_type = node_data_j.getAttribute ('type');
@@ -305,6 +306,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 multiplicity = brailchem_mol_element_value (node_data_j);
             else if (node_data_type == 'PART_OF_RINGS')
                 part_of_rings = 0 + brailchem_mol_element_value (node_data_j);
+            else if (node_data_type == 'STEREOCHEMISTRY')
+                stereochemistry = brailchem_mol_element_value (node_data_j);
         }
         if (charge != '0') {
             var charge_label = (charge == '1' ? '+' :
@@ -317,7 +320,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
         item_numbers[label] = number;
         var neighbors = [];
         item_data[id] = {id: id, label: label, number: number, neighbors: neighbors, in_fragment: null,
-                         multiplicity: multiplicity, part_of_rings: part_of_rings};
+                         multiplicity: multiplicity, part_of_rings: part_of_rings,
+                         stereochemistry: stereochemistry};
         var neighbor_elements = item.getElementsByTagName ('link');
         for (var j = 0; j < neighbor_elements.length; j++) {
             var link = neighbor_elements[j];
@@ -448,6 +452,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 }
                 if (item.multiplicity && item.multiplicity != '1')
                     brailchem_add_element (hbox, 'description', {}, ' x'+item.multiplicity);
+                if (item.stereochemistry)
+                    brailchem_add_element (hbox, 'description', {}, 'STEREO:'+item.stereochemistry);
                 var terminals = [];
                 var nonterminals = [];
                 for (var j in neighbors) {
