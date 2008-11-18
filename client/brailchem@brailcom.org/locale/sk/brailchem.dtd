@@ -23,6 +23,8 @@
 <!ENTITY main.menu.help.introduction-key "V">
 <!ENTITY main.menu.help.keys "Klávesové príkazy">
 <!ENTITY main.menu.help.keys-key "K">
+<!ENTITY main.menu.help.terms "Základné pojmy">
+<!ENTITY main.menu.help.terms-key "Z">
 <!ENTITY main.menu.help.homepage "Domovská stránka Brailchemu">
 <!ENTITY main.menu.help.homepage-key "D">
 <!ENTITY main.menu.help.about "O Brailcheme">

@@ -26,6 +26,11 @@ function brailchem_help (section)
     window.open (url, 'brailchem-help');
 }
 
+function brailchem_help_terms ()
+{
+    window.open ('chrome://brailchem/locale/basic_terms.xhtml', 'brailchem-help');
+}
+
 function brailchem_help_homepage ()
 {
     window.open ('http://ict.brailcom.org/software', 'brailchem-help');

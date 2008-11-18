@@ -23,6 +23,8 @@
 <!ENTITY main.menu.help.introduction-key "I">
 <!ENTITY main.menu.help.keys "Keyboard Commands">
 <!ENTITY main.menu.help.keys-key "K">
+<!ENTITY main.menu.help.terms "Basic Terms">
+<!ENTITY main.menu.help.terms-key "B">
 <!ENTITY main.menu.help.homepage "Brailchem Home Page">
 <!ENTITY main.menu.help.homepage-key "H">
 <!ENTITY main.menu.help.about "About">
