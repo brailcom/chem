@@ -16,7 +16,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-var VERSION = '0.1';
+var VERSION = '1.0';
 
 function brailchem_help (section)
 {
