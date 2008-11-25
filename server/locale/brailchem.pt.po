@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: devel\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-19 10:33+0200\n"
+"POT-Creation-Date: 2008-11-20 13:23+0100\n"
 "PO-Revision-Date: 2008-06-19 10:39+0200\n"
 "Last-Translator: Bedrich Kosata <kosatab@vscht.cz>\n"
 "Language-Team: \n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/chem_reader.py:36 ../src/data_types.py:40
+#: ../src/chem_reader.py:36 ../src/data_types.py:43
 msgid "SMILES"
 msgstr "SMILES"
 
@@ -22,287 +22,325 @@ msgstr "SMILES"
 msgid "Molfile"
 msgstr "Molfile"
 
-#: ../src/chem_reader.py:38 ../src/data_types.py:38
+#: ../src/chem_reader.py:38 ../src/data_types.py:40
 msgid "Summary formula"
-msgstr "Fórmula molecular" 
+msgstr "Fórmula molecular"
 
-#: ../src/chem_reader.py:39 ../src/data_types.py:36
+#: ../src/chem_reader.py:39 ../src/data_types.py:38
 msgid "Name"
 msgstr "Nome"
 
-#: ../src/chem_reader.py:173
+#: ../src/chem_reader.py:204
 #, python-format
 msgid "%d shared atoms"
 msgstr "%d átomos partilhados"
 
-#: ../src/chem_reader.py:174
+#: ../src/chem_reader.py:205
 #, python-format
 msgid "The ring shares %d atoms with the neighbor ring"
 msgstr " O anel partilha %d átomos com o anel vizinho "
 
-#: ../src/data_types.py:33
+#: ../src/data_types.py:35
 msgid "Result"
 msgstr "Resultado"
 
-#: ../src/data_types.py:35
+#: ../src/data_types.py:37
 msgid "Picture"
 msgstr "Esquema"
 
-#: ../src/data_types.py:35
+#: ../src/data_types.py:37
 msgid "Picture of the molecule"
 msgstr "Esquema da molécula"
 
-#: ../src/data_types.py:36
+#: ../src/data_types.py:38
 msgid "Compound name"
 msgstr "Nome do composto"
 
-#: ../src/data_types.py:37
+#: ../src/data_types.py:39
 msgid "Molecular formula"
 msgstr "Fórmula molecular"
 
-#: ../src/data_types.py:39 ../src/data_types.py:59
+#: ../src/data_types.py:41 ../src/data_types.py:62
 msgid "Charge"
 msgstr "Carga"
 
-#: ../src/data_types.py:39
+#: ../src/data_types.py:41
 msgid "Net charge of the molecule"
 msgstr "Carga global da molécula"
 
-#: ../src/data_types.py:40
+#: ../src/data_types.py:42 ../src/data_types.py:63
+msgid "Multiplicity"
+msgstr ""
+
+#: ../src/data_types.py:42
+#, fuzzy
+msgid "Net multiplicity of the molecule"
+msgstr "Carga global da molécula"
+
+#: ../src/data_types.py:43
 msgid "Molecule encoded in SMILES format"
 msgstr "Molécula codificada no formato SMILES"
 
-#: ../src/data_types.py:41
+#: ../src/data_types.py:44
 msgid "Molecular weight"
 msgstr "Peso Molecular"
 
-#: ../src/data_types.py:42
+#: ../src/data_types.py:45
 msgid "Fragments"
 msgstr "Fragmentos"
 
-#: ../src/data_types.py:42
+#: ../src/data_types.py:45
 msgid "Molecular fragments"
 msgstr "Fragmentos moleculares"
 
-#: ../src/data_types.py:43
+#: ../src/data_types.py:46
 msgid "Atoms"
 msgstr "Átomos"
 
-#: ../src/data_types.py:45
+#: ../src/data_types.py:48
 msgid "Atom"
 msgstr "Átomo"
 
-#: ../src/data_types.py:46
+#: ../src/data_types.py:49
 msgid "Fragment"
 msgstr "Fragmento"
 
-#: ../src/data_types.py:46
+#: ../src/data_types.py:49
 msgid "Molecular fragment"
 msgstr " Fragmento molecular "
 
-#: ../src/data_types.py:47
+#: ../src/data_types.py:50
 msgid "Reaction"
 msgstr "Reacção"
 
-#: ../src/data_types.py:47
+#: ../src/data_types.py:50
 msgid "Chemical reaction"
 msgstr "Reacção química"
 
-#: ../src/data_types.py:48
+#: ../src/data_types.py:51
 msgid "Reactants"
 msgstr "Reagentes"
 
-#: ../src/data_types.py:48
+#: ../src/data_types.py:51
 msgid "Starting compounds of a reaction"
 msgstr "Material de partida da reacção"
 
-#: ../src/data_types.py:49
+#: ../src/data_types.py:52
 msgid "Reagents"
 msgstr "Reagentes químicos"
 
-#: ../src/data_types.py:49
+#: ../src/data_types.py:52
 msgid "Additional components of a reaction - solvent, catalyst, etc."
 msgstr "Componentes adicionais da reacção – solvente, catalisador, etc"
 
-#: ../src/data_types.py:50
+#: ../src/data_types.py:53
 msgid "Products"
 msgstr "Produtos"
 
-#: ../src/data_types.py:50
+#: ../src/data_types.py:53
 msgid "Products of a chemical reaction"
 msgstr "Produtos de uma reacção química"
 
-#: ../src/data_types.py:51
+#: ../src/data_types.py:54
 msgid "Reaction components"
 msgstr "Componentes da reacção"
 
-#: ../src/data_types.py:51
+#: ../src/data_types.py:54
 msgid "Components of a chemical reaction"
 msgstr "Componentes de uma reacção química"
 
-#: ../src/data_types.py:52
+#: ../src/data_types.py:55
 msgid "Molecule"
 msgstr "Molécula"
 
-#: ../src/data_types.py:54
+#: ../src/data_types.py:57
 msgid "Fragment name"
 msgstr "Nome do fragmento"
 
-#: ../src/data_types.py:54
+#: ../src/data_types.py:57
 msgid "Name of the chemical group this fragment represents"
 msgstr "Nome do grupo químico representado por este fragmento"
 
-#: ../src/data_types.py:55
+#: ../src/data_types.py:58
 msgid "Compound type"
 msgstr "Tipo de composto"
 
-#: ../src/data_types.py:55
+#: ../src/data_types.py:58
 msgid "Type of compound this fragment represents"
 msgstr "Tipo de composto representado por este fragmento"
 
-#: ../src/data_types.py:57
+#: ../src/data_types.py:60
 msgid "Symbol"
 msgstr "Símbolo"
 
-#: ../src/data_types.py:57
+#: ../src/data_types.py:60
 msgid "Atom symbol"
 msgstr "Símbolo atómico"
 
-#: ../src/data_types.py:58
+#: ../src/data_types.py:61
 msgid "Element name"
 msgstr "Nome do elemento"
 
-#: ../src/data_types.py:59
+#: ../src/data_types.py:62
 msgid "Atom charge"
 msgstr "Carga do átomo"
 
-#: ../src/data_types.py:60
+#: ../src/data_types.py:63
+#, fuzzy
+msgid "Number of unpaired electrons plus one"
+msgstr "Número de electrões de valência"
+
+#: ../src/data_types.py:64
+msgid "Stereochemistry"
+msgstr ""
+
+#: ../src/data_types.py:64
+msgid "Tetrahedral stereochemistry"
+msgstr ""
+
+#: ../src/data_types.py:65
 msgid "Proton number"
 msgstr "Número de Protões"
 
-#: ../src/data_types.py:61
+#: ../src/data_types.py:66
 msgid "Column"
 msgstr "Coluna"
 
-#: ../src/data_types.py:61
+#: ../src/data_types.py:66
 msgid "Periodic table column"
 msgstr "Coluna da tabela periódica"
 
-#: ../src/data_types.py:62
+#: ../src/data_types.py:67
 msgid "Row"
 msgstr "linha"
 
-#: ../src/data_types.py:62
+#: ../src/data_types.py:67
 msgid "Periodic table row"
 msgstr "Linha da tabela periódica"
 
-#: ../src/data_types.py:63
+#: ../src/data_types.py:68
 msgid "Element group"
 msgstr "Grupo do elemento"
 
-#: ../src/data_types.py:64
+#: ../src/data_types.py:69
 msgid "Valence electrons"
 msgstr "Electrões de valência"
 
-#: ../src/data_types.py:64
+#: ../src/data_types.py:69
 msgid "Number of valence electrons"
 msgstr "Número de electrões de valência"
 
-#: ../src/data_types.py:65
+#: ../src/data_types.py:70
 msgid "Oxidation numbers"
 msgstr "Números de oxidação"
 
-#: ../src/data_types.py:65
+#: ../src/data_types.py:70
 msgid "Possible oxidation numbers for an atom"
 msgstr "Números de oxidação possíveis para um átomo"
 
-#: ../src/data_types.py:66
+#: ../src/data_types.py:71
 msgid "Electron structure"
 msgstr "Estrutura electrónica"
 
-#: ../src/data_types.py:66
+#: ../src/data_types.py:71
 msgid "Electron structure of occupied orbitals"
 msgstr "Estrutura electrónica das orbitais ocupadas"
 
-#: ../src/data_types.py:67
+#: ../src/data_types.py:72
 msgid "Atomic weight"
 msgstr "Peso atómico"
 
-#: ../src/data_types.py:68
+#: ../src/data_types.py:73
 msgid "Electronegativity"
 msgstr "Electronegatividade"
 
-#: ../src/data_types.py:69
+#: ../src/data_types.py:74
 msgid "Latin element name"
 msgstr "Nome do elemento em Latim"
 
-#: ../src/data_types.py:70
+#: ../src/data_types.py:75
 msgid "Description"
 msgstr "Descrição"
 
-#: ../src/data_types.py:72
+#: ../src/data_types.py:76
+msgid "Part of rings"
+msgstr ""
+
+#: ../src/data_types.py:76
+msgid "Of how many rings this atom is part"
+msgstr ""
+
+#: ../src/data_types.py:78
 msgid "Reactant"
 msgstr "Reagente"
 
-#: ../src/data_types.py:72
+#: ../src/data_types.py:78
 msgid "Reactant of a reaction"
 msgstr "Reagente de uma reacção"
 
-#: ../src/data_types.py:73
+#: ../src/data_types.py:79
 msgid "Product"
 msgstr "Produto"
 
-#: ../src/data_types.py:73
+#: ../src/data_types.py:79
 msgid "Product of a reaction"
 msgstr "Produto de uma reacção"
 
-#: ../src/data_types.py:74
+#: ../src/data_types.py:80
 msgid "Single bond"
 msgstr "Ligação simples"
 
-#: ../src/data_types.py:75
+#: ../src/data_types.py:81
 msgid "Double bond"
 msgstr "Ligação dupla"
 
-#: ../src/data_types.py:76
+#: ../src/data_types.py:82
 msgid "Triple bond"
 msgstr "Ligação tripla"
 
-#: ../src/data_types.py:77
+#: ../src/data_types.py:83
 msgid "Aromatic bond"
 msgstr "Ligação aromática"
 
-#: ../src/data_types.py:78
+#: ../src/data_types.py:84
 msgid "Composed from"
 msgstr "Constituído por"
 
-#: ../src/data_types.py:79
+#: ../src/data_types.py:85
 msgid "Reacts with"
 msgstr "Reage com"
 
-#: ../src/data_types.py:80
+#: ../src/data_types.py:86
 msgid "Produces"
 msgstr "Produz"
 
-#: ../src/data_types.py:81
+#: ../src/data_types.py:87
 msgid "Produced from"
 msgstr "Produzido a partir de"
 
-#: ../src/data_types.py:82
+#: ../src/data_types.py:88
 msgid "Opposite to"
 msgstr " Oposto ao "
 
-#: ../src/data_types.py:82
+#: ../src/data_types.py:88
 msgid "Atom is on opposite side relative to the referenced atom"
 msgstr "O átomo está no lado oposto em relação ao átomo de referência"
 
-#: ../src/data_types.py:83
+#: ../src/data_types.py:89
 msgid "On the same side as"
 msgstr "Do mesmo lado que"
 
-#: ../src/data_types.py:83
+#: ../src/data_types.py:89
 msgid "Atom is on the same side relative to the referenced atom"
 msgstr "O átomo está do mesmo lado em relação ao átomo de referência "
+
+#: ../src/data_types.py:104
+msgid "left"
+msgstr ""
+
+#: ../src/data_types.py:105
+msgid "right"
+msgstr ""
 
 #~ msgid "Molecule name"
 #~ msgstr "Nome da molécula"
