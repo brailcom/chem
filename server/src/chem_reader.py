@@ -157,7 +157,15 @@ class ChemReader:
         mol.mark_aromatic_bonds()
         for atom in mol.atoms:
             a_data = _atom_to_a_data[atom]
-            for e,n in atom.get_neighbor_edge_pairs():
+            # in case this is stereo-center we return the atoms
+            # in order of stereochemistry reference
+            st = mol.get_stereochemistry_by_center(atom)
+            if st:
+                neighbors = st.references
+            else:
+                neighbors = atom.neighbors
+            for n in neighbors:
+                e = atom.get_edge_leading_to(n)
                 rel = Relation(id2t(self.bond_order_to_relation[e.order]), _atom_to_a_data[n])
                 rel.set_property("aromatic",e.aromatic)
                 a_data.add_neighbor(rel)
@@ -173,8 +181,10 @@ class ChemReader:
                 a_data2.add_neighbor(Relation(id2t(relation_name), a_data1))
         # this is just test support of tetrahedral stereochemistry
         for v in mol.vertices:
-            if 'stereo' in v.properties_:
-                stereo_data = Value(id2t("STEREOCHEMISTRY"),v.properties_['stereo'].upper())
+            st = mol.get_stereochemistry_by_center(v)
+            if st:
+                hand = st.value == st.CLOCKWISE and COMMON_TERMS['right'] or COMMON_TERMS['left']
+                stereo_data = Value(id2t("STEREOCHEMISTRY"),hand.upper())
                 a_data = _atom_to_a_data[v]
                 a_data.add_view(stereo_data)
         # fragment support
@@ -195,7 +205,7 @@ class ChemReader:
         # add relations between rings
         for i,ring1 in enumerate(rings):
             for ring2 in rings[i+1:]:
-                common_atoms = set( ring1.get_significant_atoms()) & set( ring2.get_significant_atoms())
+                common_atoms = set(ring1.get_significant_atoms()) & set(ring2.get_significant_atoms())
                 if common_atoms:
                     d1 = _hit_to_data[ring1]
                     d2 = _hit_to_data[ring2]
@@ -229,30 +239,30 @@ class ChemReader:
         r_data = MultiView(id2t("REACTION"))
         r_component_data = Complex(id2t("REACTION_COMPONENTS"))
         r_data.add_view(r_component_data)
-        add_reaction_components_to_reaction( "REACTANTS", react.reactants)
-        add_reaction_components_to_reaction( "REAGENTS", react.reagents)
-        add_reaction_components_to_reaction( "PRODUCTS", react.products)
+        add_reaction_components_to_reaction("REACTANTS", react.reactants)
+        add_reaction_components_to_reaction("REAGENTS", react.reagents)
+        add_reaction_components_to_reaction("PRODUCTS", react.products)
         return r_data
 
     ## ---------- private methods ----------
 
     @classmethod
     def _generate_svg(self, mol):
-        def add_circles( self):
+        def add_circles(self):
           for v in self.molecule.vertices:
             if 'svg_id' in v.properties_:
               id = "h-" + v.properties_['svg_id']
             else:
               id = ""
-            self._draw_circle( self.top,
-                               self.transformer.transform_xy(v.x,v.y),
-                               radius=8,
-                               fill_color="#f00",
-                               stroke_color="#000",
-                               id=id)
+            self._draw_circle(self.top,
+                              self.transformer.transform_xy(v.x,v.y),
+                              radius=8,
+                              fill_color="#f00",
+                              stroke_color="#000",
+                              id=id)
         from oasa import svg_out
         svg_out = svg_out.svg_out()
-        mol.normalize_bond_length( 30)
+        mol.normalize_bond_length(30)
         svg = svg_out.mol_to_svg(mol, after=add_circles)
         return svg.toxml()
 
@@ -261,6 +271,7 @@ class ChemReader:
     @classmethod
     def _read_smiles(self, text):
         converter = oasa.smiles.converter()
+        converter.configuration['R_EXPLICIT_HYDROGENS_TO_REAL_ATOMS'] = True
         mols = []
         for line in text.splitlines():
             mols += converter.read_text(line)
@@ -297,7 +308,7 @@ class ChemReader:
                converter = oasa.smiles.converter()
                mol = converter.read_text("CC([H])(O)CC")[0]
                [v for v in mol.vertices if v.degree==4][0].properties_['stereo'] = COMMON_TERMS["left"]
-               mols.append( mol)
+               mols.append(mol)
                continue
             # end of test
             res = oasa.structure_database.get_compounds_from_database(name=line)
@@ -333,7 +344,7 @@ class ChemReader:
 
 if hasattr(oasa, 'pybel_bridge'):
     import pybel
-    def create_read_func( format):
+    def create_read_func(format):
         return lambda text: ChemReader._read_pybel_text(format, text)
     for format,name in pybel.informats.iteritems():
         if format == "sdf":

@@ -1,3 +1,8 @@
+2008-11-22   Beda Kosata <kosatab@vscht.cz>
+	
+	* chem_reader.py:
+	tetrahedral stereochemistry support for SMILES input added
+	
 2008-10-22   Beda Kosata <kosatab@vscht.cz>
 
 	* chem_reader.py:
