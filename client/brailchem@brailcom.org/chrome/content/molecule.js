@@ -460,7 +460,9 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                 for (var j in neighbors) {
                     var neighbor = neighbors[j];
                     if (fragment_items[neighbor.id] != id)
-                        (item_data[neighbor.id].neighbors.length > 1 ? nonterminals : terminals).push (neighbor);
+                        // Stereochemistry requires not to split the list
+                        nonterminals.push (neighbor);
+                        //(item_data[neighbor.id].neighbors.length > 1 ? nonterminals : terminals).push (neighbor);
                 }
                 var number_of_neighbors = nonterminals.length + terminals.length;
                 var hbox = brailchem_add_element (item_box, 'hbox');
