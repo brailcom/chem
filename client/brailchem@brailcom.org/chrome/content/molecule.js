@@ -424,7 +424,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                     return 1;
                 return 0;
             }
-            list.sort (sort_atoms);
+            // Sorting atoms disabled to make stereochemistry work
+            // list.sort (sort_atoms);
             for (var i in list) {
                 var item_box = brailchem_add_element (box, 'vbox', {class: box_class, hidden: box_hidden,
                                                                     'brailchem-atom-or-fragment': true, 'brailchem-mol-id': mol_id});
