@@ -26,18 +26,22 @@ BrailchemComponent.prototype = {
     fetch_xml: function (host, port, function_name, arguments) {
         this.error_string = null;
         var uri = 'http://' + host + ':' + port + '/' + function_name;
+        var boundary = '--------XX' + Math.random();
+        var full_boundary = '--' + boundary + '\r\n';
         var data = '';
         for (var i = 0; i < arguments.length; i++) {
             var argument = arguments[i];
-            if (data != '')
-                data = data + '&';
-            data = data + argument.name + '=' + encodeURIComponent (argument.value);
+            data = data + full_boundary;
+            data = data + 'Content-Disposition: form-data; name="' + argument.name + '"\r\n\r\n';
+            data = data + argument.value + '\r\n';            
         }
+        data = data + '--' + boundary + '--\r\n';
         var req  = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"].createInstance (Components.interfaces.nsIXMLHttpRequest);
         try {
             req.open ('POST', uri, false);
-            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.send (data);
+            req.setRequestHeader ("Content-type", "multipart/form-data; boundary=" + boundary);
+            req.setRequestHeader ("Content-length", data.length);
+            req.sendAsBinary (data);
         }
         catch (e) {
             this.error_string = 'Connection to the Brailchem HTTP server failed'
