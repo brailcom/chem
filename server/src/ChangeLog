@@ -1,3 +1,12 @@
+2008-12-16   Beda Kosata <kosatab@vscht.cz>
+
+	* chem_reader.py:
+	fix improper encoding of "aromatic" property of bonds in some cases
+	* testdata/:
+	three new test cases were added
+	* doc/:
+	schema's for XML communication were added to CVS from external source
+	
 2008-11-22   Beda Kosata <kosatab@vscht.cz>
 	
 	* chem_reader.py:

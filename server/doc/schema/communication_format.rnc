@@ -1,0 +1,27 @@
+default namespace = ""
+
+start = data
+data =
+  element data {
+    attribute description { text },
+    attribute id { xsd:integer },
+    attribute long { text },
+    attribute priority { xsd:integer },
+    attribute type { xsd:NCName },
+    (element neighbors {
+       element link {
+         attribute aromatic { xsd:integer },
+         attribute description { text },
+         attribute id { xsd:integer },
+         attribute type { xsd:NCName }
+       }*
+     }
+     | element parts {
+         element ref {
+           attribute id { xsd:integer }
+         }*
+         | data*
+       }
+     | element views { data* })*,
+    element value { text }?
+  }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <ref name="data"/>
+  </start>
+  <define name="data">
+    <element name="data">
+      <attribute name="description"/>
+      <attribute name="id">
+        <data type="integer"/>
+      </attribute>
+      <attribute name="long"/>
+      <attribute name="priority">
+        <data type="integer"/>
+      </attribute>
+      <attribute name="type">
+        <data type="NCName"/>
+      </attribute>
+      <zeroOrMore>
+        <choice>
+          <element name="neighbors">
+            <zeroOrMore>
+              <element name="link">
+                <attribute name="aromatic">
+                  <data type="integer"/>
+                </attribute>
+                <attribute name="description"/>
+                <attribute name="id">
+                  <data type="integer"/>
+                </attribute>
+                <attribute name="type">
+                  <data type="NCName"/>
+                </attribute>
+              </element>
+            </zeroOrMore>
+          </element>
+          <element name="parts">
+            <choice>
+              <zeroOrMore>
+                <element name="ref">
+                  <attribute name="id">
+                    <data type="integer"/>
+                  </attribute>
+                </element>
+              </zeroOrMore>
+              <zeroOrMore>
+                <ref name="data"/>
+              </zeroOrMore>
+            </choice>
+          </element>
+          <element name="views">
+            <zeroOrMore>
+              <ref name="data"/>
+            </zeroOrMore>
+          </element>
+        </choice>
+      </zeroOrMore>
+      <optional>
+        <element name="value">
+          <text/>
+        </element>
+      </optional>
+    </element>
+  </define>
+</grammar>

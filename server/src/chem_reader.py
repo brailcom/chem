@@ -167,7 +167,7 @@ class ChemReader:
             for n in neighbors:
                 e = atom.get_edge_leading_to(n)
                 rel = Relation(id2t(self.bond_order_to_relation[e.order]), _atom_to_a_data[n])
-                rel.set_property("aromatic",e.aromatic)
+                rel.set_property("aromatic",e.aromatic or 0)
                 a_data.add_neighbor(rel)
         # stereochemistry support
         for stereo in mol.stereochemistry:
