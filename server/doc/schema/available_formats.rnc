@@ -1,0 +1,11 @@
+default namespace = ""
+
+start =
+  element formats {
+    element format {
+      attribute common { xsd:NCName }?,
+      attribute extensions { text }?,
+      element name { xsd:NCName },
+      element description { text }
+    }+
+  }

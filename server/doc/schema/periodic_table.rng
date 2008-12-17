@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="periodic">
+      <oneOrMore>
+        <element name="element">
+          <attribute name="symbol">
+            <data type="NCName"/>
+          </attribute>
+          <oneOrMore>
+            <element name="property">
+              <attribute name="label"/>
+              <attribute name="name">
+                <data type="NCName"/>
+              </attribute>
+              <optional>
+                <attribute name="value"/>
+              </optional>
+              <optional>
+                <element name="listvalue">
+                  <zeroOrMore>
+                    <element name="value">
+                      <attribute name="value">
+                        <data type="integer"/>
+                      </attribute>
+                    </element>
+                  </zeroOrMore>
+                </element>
+              </optional>
+            </element>
+          </oneOrMore>
+        </element>
+      </oneOrMore>
+    </element>
+  </start>
+</grammar>
