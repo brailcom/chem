@@ -323,16 +323,18 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                          multiplicity: multiplicity, part_of_rings: part_of_rings,
                          stereochemistry: stereochemistry};
         var neighbor_elements = item.getElementsByTagName ('link');
+        var neighbors_length = 0;
         for (var j = 0; j < neighbor_elements.length; j++) {
             var link = neighbor_elements[j];
             var link_type = link.getAttribute ('type');
-            if (link_type.indexOf ('BOND') == -1)
-                continue;
+            if (link_type.indexOf ('BOND') != -1)
+                neighbors_length++;
             var bond = link.getAttribute ('description');
             var target = link.getAttribute ('id');
             var aromatic = link.getAttribute ('aromatic') == '1';
             neighbors.push ({bond: bond, id: target, aromatic: aromatic});
         }
+        item_data[id].neighbors_length = neighbors_length;
     }    
     var items = fragments_element.getElementsByTagName ('parts')[0].childNodes;
     for (var i = 0; i < items.length; i++) {
@@ -412,8 +414,8 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
             var box_hidden = (! brailchem_mol_display_fragments && kind == 'fragment' ? 'true' : 'false');
             function sort_atoms (id1, id2)
             {
-                var n1 = item_data[id1].neighbors.length;
-                var n2 = item_data[id2].neighbors.length;
+                var n1 = item_data[id1].neighbors_length;
+                var n2 = item_data[id2].neighbors_length;
                 if (n1 > n2)
                     return -1;
                 if (n1 < n2)
@@ -462,9 +464,9 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                     if (fragment_items[neighbor.id] != id)
                         // Stereochemistry requires not to split the list
                         nonterminals.push (neighbor);
-                        //(item_data[neighbor.id].neighbors.length > 1 ? nonterminals : terminals).push (neighbor);
+                        //(item_data[neighbor.id].neighbors_length > 1 ? nonterminals : terminals).push (neighbor);
                 }
-                var number_of_neighbors = nonterminals.length + terminals.length;
+                var number_of_neighbors = item.neighbors_length;
                 var hbox = brailchem_add_element (item_box, 'hbox');
                 var neighbors_string = (number_of_neighbors == 1 ? 'brailchemMoleculeNeighbor1' :
                                         number_of_neighbors == 2 ? 'brailchemMoleculeNeighbor2' :
