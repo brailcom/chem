@@ -1,4 +1,4 @@
-/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008, 2009 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -394,14 +394,28 @@ function brailchem_read_url (url)
     try {
         // Taken from https://developer.mozilla.org/en/Code_snippets/File_I%2f%2fO
         var ios = Components.classes["@mozilla.org/network/io-service;1"].getService (Components.interfaces.nsIIOService);
-        var url = ios.newURI (url, null, null);
-        if (! url || ! url.schemeIs ("file")) throw "Expected a file URL.";
-        var file = url.QueryInterface (Components.interfaces.nsIFileURL).file;
-        var istream = Components.classes["@mozilla.org/network/file-input-stream;1"].createInstance (Components.interfaces.nsIFileInputStream);
-        istream.init (file, -1, -1, false);
-        var bstream = Components.classes["@mozilla.org/binaryinputstream;1"].createInstance (Components.interfaces.nsIBinaryInputStream);
-        bstream.setInputStream (istream);
-        var text = bstream.readBytes (bstream.available());
+        var xurl = ios.newURI (url, null, null);
+        if (! xurl) throw "Invalid URL.";
+        if (xurl.schemeIs ("file")) {
+            var file = xurl.QueryInterface (Components.interfaces.nsIFileURL).file;
+            var istream = Components.classes["@mozilla.org/network/file-input-stream;1"].createInstance (Components.interfaces.nsIFileInputStream);
+            istream.init (file, -1, -1, false);
+            var bstream = Components.classes["@mozilla.org/binaryinputstream;1"].createInstance (Components.interfaces.nsIBinaryInputStream);
+            bstream.setInputStream (istream);
+            var text = bstream.readBytes (bstream.available());
+        }
+        else {
+            // Taken from http://forums.mozillazine.org/viewtopic.php?p=921150#921150
+            var io_service = Components.classes["@mozilla.org/network/io-service;1"].getService (Components.interfaces.nsIIOService);
+            var scriptable_stream = Components.classes["@mozilla.org/scriptableinputstream;1"]
+                .getService (Components.interfaces.nsIScriptableInputStream);
+            var channel = io_service.newChannel (url, null, null);
+            var input = channel.open ();
+            scriptable_stream.init (input);
+            var text = scriptable_stream.read (input.available ());
+            scriptable_stream.close ();
+            input.close ();
+        }
     }
     catch (e) {
         return null;
