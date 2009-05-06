@@ -1,4 +1,4 @@
-/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008, 2009 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -459,14 +459,15 @@ function brailchem_display_molecule_pieces (document_element, atoms_element, fra
                     brailchem_add_element (hbox, 'description', {}, 'STEREO:'+item.stereochemistry);
                 var terminals = [];
                 var nonterminals = [];
+                var number_of_neighbors = 0;
                 for (var j in neighbors) {
                     var neighbor = neighbors[j];
-                    if (fragment_items[neighbor.id] != id)
+                    if (fragment_items[neighbor.id] != id) {
+                        number_of_neighbors++;
                         // Stereochemistry requires not to split the list
                         nonterminals.push (neighbor);
-                        //(item_data[neighbor.id].neighbors_length > 1 ? nonterminals : terminals).push (neighbor);
+                    }
                 }
-                var number_of_neighbors = item.neighbors_length;
                 var hbox = brailchem_add_element (item_box, 'hbox');
                 var neighbors_string = (number_of_neighbors == 1 ? 'brailchemMoleculeNeighbor1' :
                                         number_of_neighbors == 2 ? 'brailchemMoleculeNeighbor2' :
