@@ -18,7 +18,7 @@
 
 function brailchem_periodic_table ()
 {
-    brailchem_switch_page ("chrome://brailchem/content/periodic.xul", 'brailchem-periodic-table-node',
+    brailchem_switch_page ("chrome://brailchem/content/periodic.xul", 'brailchem-primary',
                            function () { brailchem_periodic_display (this); });
 }
 var g_element_data = null;
@@ -493,7 +493,7 @@ function brailchem_element_info (element, hold_focus)
         }
     document.getElementById ('brailchem-element-details-box').setAttribute ('hidden', 'false');
     if (! hold_focus) {
-        brailchem_focus (document.getElementById ('brailchem-element-property-1', true));
+        brailchem_focus (document.getElementById ('brailchem-element-property-1'));
     }
 }
 

@@ -27,7 +27,7 @@
     <key id="brailchem-periodic-element" modifiers="control" key="E" oncommand="brailchem_periodic_jump_to_element()"/>
   </keyset>
   
-  <hbox id="brailchem-primary"><description id="brailchem-heading" class="brailchem-heading" flex="1" value="&periodic.header;"/></hbox>
+  <hbox><description id="brailchem-primary" class="brailchem-heading" flex="1" value="&periodic.header;"/></hbox>
   <scrollbox id="brailchem-scrollbox" orient="vertical" flex="1" style="overflow: auto;">
     <hbox>
       <vbox id="brailchem-periodic-table-box">

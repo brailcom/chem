@@ -1,4 +1,4 @@
-/* Copyright (C) 2007 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2010 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -18,7 +18,7 @@
 
 function brailchem_edit_preferences ()
 {
-    brailchem_switch_page ('chrome://brailchem/content/preferences.xul', 'brailchem-preferences-window', brailchem_update_preferences,
+    brailchem_switch_page ('chrome://brailchem/content/preferences.xul', 'brailchem-primary', brailchem_update_preferences,
                            'brailchem-preferences');
 }
 
