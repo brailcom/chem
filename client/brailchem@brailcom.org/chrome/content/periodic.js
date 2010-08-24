@@ -1,4 +1,4 @@
-/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008, 2010 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -484,14 +484,17 @@ function brailchem_element_info (element, hold_focus)
     var top_node = document.getElementById ('brailchem-element-details');
     brailchem_remove_children (top_node);
     var properties = g_element_data[symbol];
+    var i = 1;
     for (var name in properties)
         if (name[0] != '_') {
             var info = properties[name];
-            brailchem_add_element (top_node, 'description', {}, info.label+': '+info.value);
+            brailchem_add_element (top_node, 'description', {id: 'brailchem-element-property-'+(i++)},
+                                   info.label+': '+info.value);
         }
     document.getElementById ('brailchem-element-details-box').setAttribute ('hidden', 'false');
-    if (! hold_focus)
-        brailchem_focus (document.getElementById ('brailchem-element-details-box', true));
+    if (! hold_focus) {
+        brailchem_focus (document.getElementById ('brailchem-element-property-1', true));
+    }
 }
 
 function brailchem_element_move (element, row_increment, col_increment)
