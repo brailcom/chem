@@ -1,4 +1,4 @@
-/* Copyright (C) 2007, 2008 Brailcom, o.p.s.
+/* Copyright (C) 2007, 2008, 2014 Brailcom, o.p.s.
 
    COPYRIGHT NOTICE
 
@@ -58,7 +58,6 @@ BrailchemComponent.prototype = {
 
 function brailchem_call_server (func, arguments)
 {
-    netscape.security.PrivilegeManager.enablePrivilege ("UniversalXPConnect");
     var brailchem = new BrailchemComponent ();
     if (! arguments)
         arguments = [];
