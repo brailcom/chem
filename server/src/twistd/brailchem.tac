@@ -1,4 +1,5 @@
-# Copyright (C) 2007 Brailcom, o.p.s.
+# -*- python -*-
+# Copyright (C) 2007, 2014 Brailcom, o.p.s.
 #
 # COPYRIGHT NOTICE
 #
@@ -15,17 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import twisted.python
+import twisted.application.internet
+import twisted.application.service
+import twisted.web.server
+import brailchem.twistd.server
 
-import brailchem
+application = twisted.application.service.Application('brailchem')
 
-class Options(twisted.python.usage.Options):
-
-    optParameters = [
-        ['port', 'p', 8000],
-        ['user', 'u', 'daemon'],
-        ['group', 'g', 'daemon'],
-        ]
-
-def makeService(config):
-    return brailchem.twistd.server.make_service(config)
+web_tree = brailchem.twistd.server.WebTree(brailchem.twistd.server.ChemInterface())
+service = twisted.application.internet.TCPServer(8000, twisted.web.server.Site(web_tree))
+service.setServiceParent(application)

@@ -1,4 +1,4 @@
-# Copyright (C) 2007, 2008 Brailcom, o.p.s.
+# Copyright (C) 2007, 2008, 2014 Brailcom, o.p.s.
 #
 # COPYRIGHT NOTICE
 #
@@ -18,10 +18,7 @@
 
 import codecs
 import copy
-import grp
-import pwd
 import xml.dom.minidom
-from sets import Set
 
 import twisted.application.internet
 import twisted.application.service
@@ -30,19 +27,19 @@ import twisted.web.resource
 import twisted.web.server
 
 from brailchem.session import Session
-from brailchem.object_types import *
+from brailchem.object_types import Complex, LanguageDependentValue, MultiView, Part, Value
 import brailchem.chem_reader
 import brailchem.data_types
 import brailchem.detail_periodic_table
 import brailchem.i18n
 
-### Chemical server communication
+# Chemical server communication
 
 class ChemInterface(object):
     """Brailchem server interface."""
 
     def __init__(self, *args, **kwargs):
-        super(ChemInterface, self).__init__(self, *args, **kwargs)
+        super(ChemInterface, self).__init__()
         self._session = Session(1)
         self._periodic_table_xml = {}
         self._language_list_xml = None
@@ -70,7 +67,8 @@ class ChemInterface(object):
             selected_language = 'en'
         else:
             selected_language = language
-        return brailchem.i18n.GettextTranslator(selected_language, default_domain='brailchem', fallback=True)
+        return brailchem.i18n.GettextTranslator(selected_language, default_domain='brailchem',
+                                                fallback=True)
         
     def _retrieve_molecule_data(self, chem_text, format="SMILES"):
         session = self._session
@@ -80,7 +78,7 @@ class ChemInterface(object):
     def _chem_to_dom(self, data, language):
         dom = self._create_dom()
         translator = self._make_translator(language)
-        already_serialized = Set()
+        already_serialized = set()
         def add_element(*args, **kwargs):
             return self._add_dom_element(dom, *args, **kwargs)
         def transform(data, node):
@@ -88,7 +86,7 @@ class ChemInterface(object):
             id = data.id()
             # serialize only once, make references later
             if id in already_serialized:
-                add_element(node,"ref", attributes=dict(id=id))
+                add_element(node, "ref", attributes=dict(id=id))
             else:
                 already_serialized.add(id)
                 data_type_id = data_type.id()
@@ -98,7 +96,8 @@ class ChemInterface(object):
                 long_description = data_type.long_description()
                 if isinstance(long_description, brailchem.i18n.TranslatableText):
                     long_description = long_description.translate(translator)
-                attributes = dict(id=id, type=data_type_id, description=description, long=long_description, priority=data.priority())
+                attributes = dict(id=id, type=data_type_id, description=description,
+                                  long=long_description, priority=data.priority())
                 data_node = add_element(node, 'data', attributes=attributes)
                 if isinstance(data, LanguageDependentValue):
                     value = data.value(language)[1]
@@ -150,10 +149,13 @@ class ChemInterface(object):
         for symbol, properties in periodic_table.items():
             element = add_element(root, 'element', attributes={'symbol': symbol})
             properties = copy.copy(properties)
-            properties['_color'] = brailchem.detail_periodic_table.group2color[properties['group']['en']]
-            property_ids = [brailchem.chem_reader.ChemReader.table_key_to_data_type.get(name, name) for name in properties.keys()]
-            property_labels = [(id, (info_provider.data_type_from_id(name) or brailchem.data_types.DataType(name, name)),)
-                               for id, name in zip (properties.keys(), property_ids)]
+            properties['_color'] = brailchem.detail_periodic_table.group2color[properties['group']
+                                                                               ['en']]
+            property_ids = [brailchem.chem_reader.ChemReader.table_key_to_data_type.get(name, name)
+                            for name in properties.keys()]
+            property_labels = [(id, (info_provider.data_type_from_id(name) or
+                                     brailchem.data_types.DataType(name, name)),)
+                               for id, name in zip(properties.keys(), property_ids)]
             def keyfunction(x):
                 return brailchem.data_types.DataType.default_priority(x[1])
             property_labels.sort(key=keyfunction, reverse=True)
@@ -223,15 +225,15 @@ class ChemInterface(object):
         # sort most important first and then by desc, those without extension go first
         # among the important ones
         to_sort = []
-        for name,desc,exts in brailchem.chem_reader.ChemReader.known_format_descriptions():
+        for name, desc, exts in brailchem.chem_reader.ChemReader.known_format_descriptions():
             to_sort.append((name not in brailchem.chem_reader.ChemReader.important_formats,
                             bool(exts), desc, name, exts))
         to_sort.sort()
-        for not_common,_tmp,desc,name,exts in to_sort:
+        for not_common, _tmp, desc, name, exts in to_sort:
             elem = doc.createElement("format")
             common = not not_common
             if common:
-                elem.setAttribute('common','True')
+                elem.setAttribute('common', 'True')
             if exts:
                 elem.setAttribute('extensions', " ".join(exts))
             root.appendChild(elem)
@@ -244,7 +246,7 @@ class ChemInterface(object):
         xml = doc.toxml()
         return xml
             
-### HTTP output interface
+# HTTP output interface
 
 class WebTree(twisted.web.resource.Resource):
     """Top-level web resource."""
@@ -287,7 +289,8 @@ class SmilesWebResource(XMLWebResource):
         else:
             smiles = self._default_smiles
         language = request.args.get('language', ['en'])[0]
-        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(smiles, "SMILES", language))
+        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(smiles, "SMILES",
+                                                                                  language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
 
@@ -315,7 +318,8 @@ class NameWebResource(XMLWebResource):
         else:
             name = self._default_name
         language = request.args.get('language', ['en'])[0]
-        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(name, "name", language))
+        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(name, "name",
+                                                                                  language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
 
@@ -325,10 +329,11 @@ class ChemFileWebResource(XMLWebResource):
     isLeaf = True
 
     def render_POST(self, request):
-        text = request.args.get('uploaded_file',[""])[0]
-        format = request.args.get('format',['mol'])[0]
+        text = request.args.get('uploaded_file', [""])[0]
+        format = request.args.get('format', ['mol'])[0]
         language = request.args.get('language', ['en'])[0]
-        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(text, format, language))
+        defer = twisted.internet.defer.succeed(self._service.molecule_details_xml(text, format,
+                                                                                  language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
 
@@ -342,15 +347,3 @@ class FormatsWebResource(XMLWebResource):
         defer = twisted.internet.defer.succeed(self._service.supported_formats_xml(language))
         defer.addCallback(self._cb_render_GET, request)
         return twisted.web.server.NOT_DONE_YET
-
-
-### Application setup
-
-def make_service(config):
-    uid = pwd.getpwnam(config['user']).pw_uid
-    gid = grp.getgrnam(config['group']).gr_gid
-    application = twisted.application.service.Application('brailchem', uid=uid, gid=gid)
-    service_collection = twisted.application.service.IServiceCollection(application)
-    tcp_server = twisted.application.internet.TCPServer(int(config['port']), twisted.web.server.Site(WebTree(ChemInterface())))
-    tcp_server.setServiceParent(service_collection)
-    return service_collection
